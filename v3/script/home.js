@@ -710,14 +710,7 @@ $(document).ready(function () {
 		});
 	});
 	$('#icon-intercom').click(function () {
-
-
-		if (document.querySelector(".intercom-lightweight-app"))
-			document.querySelector(".intercom-lightweight-app").hidden = !document.querySelector(".intercom-lightweight-app").hidden;
-		else
-			document.querySelector(".intercom-launcher-frame").style.display == "none" ? document.querySelector(".intercom-launcher-frame").style.display = "" : document.querySelector(".intercom-launcher-frame").style.display = "none";;
-
-
+		if (window.$chatwoot) window.$chatwoot.toggle();
 	});
 	$('#icon-notifications').click(function () {
 

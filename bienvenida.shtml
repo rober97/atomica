@@ -166,6 +166,9 @@
 			name: "<!--#4DVAR vNomUsr-->",
 			email: "<!--#4DVAR vEmail-->"
 		}
+		// HMAC-SHA256(Secret Key del inbox Chatwoot, vLogin), calculado en 4D.
+		// Ver /chatwoot-hmac-sidecar/ (raiz del repo) para el detalle de como generarlo.
+		var chatwootIdentifierHash = "<!--#4DTEXT _V3_chatwoot_hash-->";
 		var companyName = "<!--#4DTEXT _V3_nombre_empresa-->";
 		var companyRut = <!--#4DIF Not(Undefined(_V3_rut_empresa))-->"<!--#4DVAR _V3_rut_empresa-->"<!--#4DELSE-->null<!--#4DENDIF-->;
 		//_V3_rut_empresa:=[Parametros]Rut
@@ -657,37 +660,16 @@
 
 			unaBase.ui.unblock();
 
-			$('html > body > header > button.info').click(function(){
-				let modulo = $('.sidebar li.active').attr('data-name');
-				switch(modulo) {
-					case "cotizaciones":
-						window.open("https://intercom.help/unabase/cotizacion-y-negocio");
-						break;
-					case "negocios":
-						window.open("https://intercom.help/unabase/cotizacion-y-negocio");
-						break;
-					case "gastos":
-						window.open("https://intercom.help/unabase/gastos-ordenes-de-compra-y-rendiciones");
-						break;
-					case "rendiciones":
-						window.open("https://intercom.help/unabase/gastos-ordenes-de-compra-y-rendiciones");
-						break;
-					case "dtv":
-						window.open("https://intercom.help/unabase/documentos-de-venta-facturas-de-venta");
-						break;
-					case "dtc":
-						window.open("https://intercom.help/unabase/documento-de-compra-facturas-de-compra");
-						break;
-					case "usuarios":
-						window.open("https://intercom.help/unabase/cuenta-de-usuario-y-permisos");
-						break;
-					case "presupuestos":
-						window.open("https://intercom.help/unabase/presupuesto-de-gastos");
-						break;
-					default:
-					window.open("https://intercom.help/unabase");
+			function _openChatwootHelp() {
+				let modulo = $('.sidebar li.active').attr('data-name') || 'general';
+				if (window.$chatwoot) {
+					window.$chatwoot.setConversationCustomAttributes({ modulo_ayuda: modulo });
+					window.$chatwoot.toggle('open');
 				}
-			});
+			}
+
+			$('html > body > header > button.info').click(_openChatwootHelp);
+			$('#fp-help-chat').click(_openChatwootHelp);
 
 			$('.goto-tareas > a').click(function(){
 				window.open('http://'+nodejs_public_ipaddr + ':' + nodejs_port + '/tasks/list/pending');
@@ -1597,9 +1579,9 @@
 								
 								
 									<span style="vertical-align:middle;">
-										<a title="Revisa los tutoriales disponibles!" target="_blank" href="https://intercom.help/unabase">
-											<span class="fab fa-intercom fa-2x" style="color: #34CC02;">   </span>
-											<span style="font-size: 10px;vertical-align: super;">¿ Necesitas ayuda?, revisa los tutoriales aqui!</span>
+										<a title="Abrir chat de soporte" id="fp-help-chat" href="javascript:void(0)">
+											<span class="fas fa-comment-dots fa-2x" style="color: #34CC02;">   </span>
+											<span style="font-size: 10px;vertical-align: super;">¿Necesitas ayuda?, escríbenos por chat aquí!</span>
 										</a>
 									</span>
 							

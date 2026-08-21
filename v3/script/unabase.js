@@ -714,7 +714,11 @@ var unaBase = {
         uVar.data = null;
         //$('#viewport').trigger('load');
         try {
-          if (typeof Intercom != "undefined") Intercom("update");
+          if (window.unaChatwoot && typeof window.unaChatwoot.refreshPage === "function") {
+            window.unaChatwoot.refreshPage();
+          } else if (window.$chatwoot) {
+            window.$chatwoot.setCustomAttributes({ current_page: window.location.href, page_title: document.title });
+          }
         } catch (err) {
           console.warn(err);
         }

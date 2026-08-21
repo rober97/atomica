@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ES">
+	<head>
+		<!--#4DSCRIPT/_V3_serverInfo-->
+		<meta charset="utf-8">
+		<title>UnaBase - <!--#4DTEXT _V3_nombre_empresa--></title>
+		<!-- <link rel="icon" href="/favicon.png"> -->
+		<link rel="icon" href="/faviconNew.png">
+		<script>
+		var uVar = {};
+		// var unaBase = {};
+		uVar.ableToDownload = false;
+		uVar.notAskChangePass = <!--#4DIF notAskChangePass -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		uVar.emailMs = <!--#4DIF emailMs -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		uVar.urlEmailMs = "<!--#4DTEXT urlEmailMs-->";
+		uVar.unableChatOnline = <!--#4DIF chatOnline -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		uVar.unableSocket = <!--#4DIF unableSocket -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		uVar.enableChatOnline = <!--#4DIF chatOnline -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		uVar.enableSocket = <!--#4DIF unableSocket -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		uVar.nativePrint = <!--#4DIF nativePrint -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		uVar.serviceNode = <!--#4DIF serviceNode -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		uVar.serviceNodeUrl = "<!--#4DTEXT serviceNodeUrl-->";
+
+		let mostrarInfoContableDTC = <!--#4DIF param_IngresoInfoContable-->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		// uVar.checkIsLogin = <!--#4DIF checkIsLogin -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		// uVar.timeToCheckLogin = <!--#4DTEXT timeToCheckLogin-->;
+
+		const changeUrl = (url)=>{
+			window.location.replace(url)
+		}
+		var base_url = "<!--#4DTEXT _V3_base_url-->";
+		var idleTime = "<!--#4DTEXT idleTime-->" * 60000;
+		var SourceWeb = "<!--#4DTEXT SourceWeb-->";
+		var vSearchOff = <!--#4DIF vSearchOff -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		var calculoSubcategoria = <!--#4DIF calculoSubcategoria -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		var vResults = <!--#4DTEXT vResults-->;
+		let executeSearch;
+		let stopAutoSearch = vSearchOff;
+		let firstSearch = false;
+		let pdf = {}
+		var nodeRestartTimer  = {
+			date:  new Date(),
+			first: true
+		}
+		pdf.microservice = <!--#4DIF pdfMicroservice -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		pdf.url = "<!--#4DTEXT pdfUrl-->"
+		pdf.apiKey = "<!--#4DTEXT pdfApiKey-->"
+
+		let nombreEmpresa = "<!--#4DTEXT _V3_nombre_empresa-->";
+
+
+
+		var habilitarCorrelativoNegEnGASTOS = <!--#4DIF habilitarCorrelativoNegEnGASTOS -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		var notRequestRightNow = <!--#4DIF v3_noShowRequestIni-->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		var enabledBankCards = <!--#4DIF enabledBankCards-->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		var formato_impresion_cotizacion = "<!--4DTEXT formato_impresion_cotizacion-->";
+
+		var ocs_con_valor_cero = <!--#4DIF ocs_con_valor_cero -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		var g_uso_tareas_easy = <!--#4DIF g_uso_tareas_easy -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		// datos usuarios
+		var currentUser = {
+			username: "<!--#4DVAR vLogin-->",
+			name: "<!--#4DVAR vNomUsr-->",
+			email: "<!--#4DVAR vEmail-->"
+		}
+		var companyName = "<!--#4DTEXT _V3_nombre_empresa-->";
+		var companyRut = <!--#4DIF Not(Undefined(_V3_rut_empresa))-->"<!--#4DVAR _V3_rut_empresa-->"<!--#4DELSE-->null<!--#4DENDIF-->;
+		//_V3_rut_empresa:=[Parametros]Rut
+
+		// Nombres de cotización y negocio
+		var etiqueta_cotizacion = "<!--#4DTEXT etiqueta_cotizacion-->";
+		var etiqueta_cotizaciones = "<!--#4DTEXT etiqueta_cotizaciones-->";
+		var etiqueta_negocio = "<!--#4DTEXT etiqueta_negocio-->";
+		var etiqueta_negocios = "<!--#4DTEXT etiqueta_negocios-->";
+		var etiqueta_rendiciones = "<!--#4DTEXT etiqueta_rendiciones-->";
+
+		var modoOfflineRemember = false;
+		var modoOfflineGlobal = false;
+
+		var hash = '<!--#4DHTML _V3_hash-->';
+		var nodejs_port = <!--#4DHTML _V3_nodejs_port-->;
+		var nodejs_public_ipaddr = "<!--#4DHTML _V3_nodejs_public_ipaddr-->";
+		var is_demo = <!--#4DIF _V3_demo -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		var version_Actual = "<!--#4DTEXT _V3_version-->";
+
+		var doc_electronico = <!--#4DIF doc_electronico -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		// var validar_codigo_al_convertir_a_negocio = <!--#4DIF validar_codigo_al_convertir_a_negocio -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		// modo touch perú
+		var campos_personalizados_abajo = <!--#4DIF _V3_campos_peronalizados_abajo -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		// ajuste según pais
+		var country = {
+			label_rut: '<!--#4DTEXT country_label_rut-->',
+			codigo_moneda: '<!--#4DTEXT country_label_rut-->'
+		};
+
+		var currency = {
+			code: '<!--#4DVAR _V3_defaultCurrencyCode-->',
+			name: '<!--#4DVAR _V3_escapeString(_V3_defaultCurrencyName)-->',
+			symbol: '<!--#4DHTML _V3_escapeString(_V3_defaultCurrencySymbol)-->',
+			is_right: <!--#4DIF _V3_defaultCurrencyRight-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			decimals: <!--#4DHTML String(_V3_defaultCurrencyDecimals;"&xml")-->,
+			thousands_sep: '<!--#4DTEXT _V3_defaultCurrencyThousandSep-->',
+			decimals_sep: '<!--#4DTEXT _V3_defaultCurrencyDecimalSep-->',
+			ufValue: '<!--#4DTEXT ufValue-->',
+			ufUpdate: "<!--#4DHTML ufUpdate-->"
+		};
+
+		// files names cot, oc , fxr
+		var file_name_internal_cot = '<!--#4DTEXT file_name_internal_cot-->';
+		var file_name_oficial_cot = '<!--#4DTEXT file_name_oficial_cot-->';
+		var file_name_oficial_oc = '<!--#4DTEXT file_name_oficial_oc-->';
+		var file_name_oficial_fxr = '<!--#4DTEXT file_name_oficial_fxr-->';
+
+		// var current_tab = 0;
+
+
+		</script>
+
+		<script src="/v3/script/jquery/jquery.js" ></script>
+		<script src="/v3/script/socket-0.9.16.js"></script>
+		<!-- <script src="/v3/script/mainSuper.js"></script> -->
+
+		<script src="/v3/script/strings.js" ></script>
+		<script src="/v3/script/sprintf.js" ></script>
+
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="/v3/design/home.css?<!--#4DTEXT _V3_version-->">
+		<link rel="stylesheet" href="/v3/design/testing.css?<!--#4DTEXT _V3_version-->">
+
+		<script src="/v3/script/jquery/plugins/json.fn/jsonfn.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery-cookie/jquery.cookie.js"></script>
+		<script  src="/v3/script/jquery/plugins/jquery-ui/js/jquery-ui.js"></script>
+
+		<script src="/v3/script/jquery/plugins/highcharts/highcharts.js"></script>
+		<script src="/v3/script/jquery/plugins/highcharts/exporting.js"></script>
+		<script src="/v3/script/jquery/plugins/highcharts/highcharts-3d.js"></script>
+
+		<script src="/v3/script/jquery/plugins/offline/offline.js"></script>
+		<script src="/script/mobileCheck.js"></script>
+		<link rel="stylesheet" href="/v3/script/jquery/plugins/offline/offline-theme-chrome.css">
+		<link rel="stylesheet" href="/v3/script/jquery/plugins/offline/offline-language-spanish.mod.css">
+
+		<!-- plugins select2 -->
+
+	<!--     <link href="/v3/script/jquery/plugins/select2-403/css/select2.min.css" rel="stylesheet" />
+		<script src="/v3/script/jquery/plugins/select2-403/js/select2.min.js"></script> -->
+
+		<!-- comment to check if is necesary -->
+		<script  src="/v3/script/jquery/plugins/jquery-migrate/jquery-migrate.js"></script>
+
+		<!-- <script src="/v3/script/jquery/plugins/tippy/tippy.min.js"></script> -->
+		<!-- <script src="/v3/script/jquery/plugins/paged-scroll/jquery-paged-scroll.js"></script> -->
+		<!-- <script src="/v3/script/jquery/plugins/infinite-tabs/jquery.infinite.tabs.js"></script> -->
+		<!-- <script src="/v3/script/jquery/plugins/maskmoney/jquery.maskMoney.js"></script> -->
+		<!-- <script src="/v3/script/jquery/plugins/price_format/jquery.price_format.js"></script> -->
+		<!-- <script src="/v3/script/jquery/plugins/jquery.masterblaster/jquery.masterblaster.js"></script> -->
+		<!-- <script src="/v3/script/jquery/plugins/next-in-dom/nextindom.jquery.js"></script> -->
+		<!-- <script src="/v3/script/jquery/plugins/jquery.tabelizer-master/jquery.tabelizer.min.js"></script> -->
+
+		<!-- comment to check if is necesary -->
+		<script src="/v3/script/jquery/plugins/toastr/toastr.js"></script>
+		<script src="/v3/script/jquery/plugins/tooltipster/js/jquery.tooltipster.js"></script>
+		<!-- prueba con tooltips nueva version -->
+		<!-- <script src="/v3/script/jquery/plugins/tooltipster425/js/jquery.tooltipster.js"></script> -->
+		<script src="/v3/script/jquery/plugins/format-currency/jquery.formatCurrency.js"></script>
+		<script src="/v3/script/jquery/plugins/bindWithDelay/bindWithDelay.js"></script>
+		<script src="/v3/script/jquery/plugins/delayed/jquery.delayed.js"></script>
+
+		<script src="/v3/script/jquery/plugins/emulatetab/emulatetab.joelpurra.js"></script>
+		<script src="/v3/script/jquery/plugins/serializeanything/jquery.serializeanything.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery.qtip/jquery.qtip.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery-number/jquery.number.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery-dropdown/jquery.dropdown.js"></script>
+
+		<script src="/v3/script/jquery/plugins/jquery.fancybox/jquery.fancybox.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery-ui-monthpicker/jquery.ui.monthpicker.js"></script>
+		<script src="/v3/script/jquery/plugins/metrojs.LiveTiles/MetroJs.lt.js"></script>
+
+		<script src="/v3/script/jquery/plugins/Fixed-Header-Table/jquery.fixedheadertable.min.js"></script>
+		<link rel="stylesheet" href="/v3/script/jquery/plugins/Fixed-Header-Table/defaultTheme.css">
+
+		<script src="/v3/script/jquery/plugins/jquery.scrollTo/jquery.scrollTo.js"></script>
+		<script src="/v3/script/jquery/plugins/jQuery-File-Upload/jquery.fileupload.js"></script>
+		<script src="/v3/script/jquery/plugins/toasty/toasty-min.js"></script>
+		<script src="/v3/script/jquery/plugins/enjoyhint/enjoyhint.min.js"></script>
+
+		<script src="/v3/script/chat.js?<!--#4DTEXT _V3_version-->"></script>
+
+
+	<!-- 	<script src="/v3/script/jquery/plugins/select2-4.0.1/dist/js/select2.full.min.js"></script>
+		<script src="/v3/script/jquery/plugins/select2-4.0.1/dist/js/i18n/es.js"></script> -->
+		<script type="text/javascript">
+			// var reqUrl = <!--#4DIF Not(Undefined(reqUrl))-->"<!--#4DVAR reqUrl-->"<!--#4DELSE-->null<!--#4DENDIF-->;
+			
+			var nodeUrl = uVar.serviceNode ? uVar.serviceNodeUrl : `http://${nodejs_public_ipaddr}:${nodejs_port}`;
+			// if(!uVar.unableSocket){
+			// 	// socket start
+			// 	var socketNew
+			// 	const socketUrl = `http://${nodejs_public_ipaddr}:${nodejs_port}/socket.io/socket.io.js`;
+			// 	let nodeAlert = document.querySelector('.nodeAlert');
+
+			// 	let socketScript = document.createElement('script');
+			// 	socketScript.src = socketUrl;
+
+			// 	document.head.append(socketScript);
+
+			// 	// const loadHomeScript  = cb => {
+			// 	// 	let homeUrl = "/v3/script/home.js?<!--#4DTEXT _V3_version-->";
+			// 	// 	let homeScript = document.createElement('script');
+			// 	// 	homeScript.src = homeUrl;
+			// 	// 	document.head.append(homeScript);
+
+
+			// 	// }
+			// 	// const loadChatScript  = cb => {
+			// 	// 	let chatUrl = "/v3/script/chat.js?<!--#4DTEXT _V3_version-->"
+			// 	// 	let chatScript = document.createElement('script');
+			// 	// 	chatScript.src = chatUrl;
+			// 	// 	document.head.append(chatScript);
+
+			// 	// 	chatScript.onload = function(){
+			// 	// 		cb();
+			// 	// 	}
+			// 	// }
+			// 	socketScript.onload = function() {
+
+			// 		console.log('load node success');
+
+			// 		socketNew = io.connect(nodeUrl);
+
+
+			// 		// 
+
+
+			// 		// loadChatScript(function(){
+			// 		// })
+			// 		// Chat.initialize(nodeUrl);
+			// 		if(typeof nodeAlert !== 'undefined' && nodeAlert !== null){
+			// 			nodeAlert.classList.add('nodeAlertHide');
+			// 		}
+
+			// 		// let blockUrl = "/v3/script/block_by_use.js?<!--#4DTEXT _V3_version-->";
+			// 		// let blockScript = document.createElement('script');
+			// 		// blockScript.src = blockUrl;
+			// 		// document.head.append(blockScript);
+
+			// 	};
+			// 	socketScript.onerror = function() {
+			// 		console.log('load node error');
+			// 		if(typeof nodeAlert !== 'undefined' && nodeAlert !== null){
+			// 			nodeAlert.classList.remove('nodeAlertHide');
+			// 		}
+
+
+
+
+			// 	};
+
+			// 	//socket end
+
+			// }
+
+		</script>
+
+
+	<!-- 	<script type="text/javascript">
+			$.get(`${nodejs_public_ipaddr}:${nodejs_port}/socket.io/socket.io.js`, function(data) {
+			    try {
+			       eval(data); //Run the JavaScript, which is equivalent to adding it
+			    }
+			    catch (err) {
+			    	console.log('node file offline ')
+			       //handle errors
+			    }
+			});
+		</script> -->
+
+		<link rel="stylesheet" href="/v3/script/jquery/jquery-plugins.css">
+
+
+		<script src="/v3/script/unabase.js?<!--#4DTEXT _V3_version-->"></script>
+
+		<!-- old place for block by use script -->
+		<!-- old place for home script -->
+
+
+		<script  src="/v3/script/access.js?<!--#4DTEXT _V3_version-->"></script>
+		<script  src="/v3/script/home.js?<!--#4DTEXT _V3_version-->"></script>
+
+
+		<script src="/v3/script/hashref.js?<!--#4DTEXT _V3_version-->"></script>
+		<script  src="/v3/script/help.js?<!--#4DTEXT _V3_version-->"></script>
+
+		<link rel="stylesheet" href="/v3/design/tooltip.css?<!--#4DTEXT _V3_version-->">
+		<link rel="stylesheet" href="/v3/script/jquery/plugins/tooltipster/css/themes/tooltipster-sideTip-borderless.min.css?<!--#4DTEXT _V3_version-->">
+
+		<script src="/v3/script/camelWord.js?<!--#4DTEXT _V3_version-->"></script>
+		<script  src="/v3/script/helpers.js?<!--#4DTEXT _V3_version-->"></script>
+		<script  src="/v3/script/statusCheck.js?<!--#4DTEXT _V3_version-->"></script>
+		<script async src="/v3/script/fixedVar.js?<!--#4DTEXT _V3_version-->"></script>
+		<script src="/v3/script/checkType.js?<!--#4DTEXT _V3_version-->"></script>
+<!--
+			// simon itemparent -->
+		<script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+		<link rel="stylesheet" href="/v3/design/print_from_browser.css?<!--#4DTEXT _V3_version-->" media="print">
+
+		<!-- <script src="https://use.fontawesome.com/ee1dd25223.js"></script> -->
+
+		<style>
+			/*#launcher{
+				position:absolute!important;
+				left:-10px!important;
+				bottom:-5px!important;
+				height:50px!important;
+			}*/
+
+		</style>
+
+		<!--#4DIF ((_V3_demo) | (_V3_data_isNewUser))-->
+		<script>
+			$(document).ready(function() {
+				$('html > body > header > button.help').click();
+			});
+		</script>
+		<!--#4DENDIF-->
+
+		<script type="text/javascript">
+			// verifica si es mobile lo redirecciona a la version mobile
+
+			
+			// if(mobileCheck() && SourceWeb != "web"){
+			// // 	// window.location.replace(nodeUrl+'/agentControl/false');
+			// // 	//
+			// 	window.location.replace(nodeUrl+reqUrl);
+			// }
+			// else{
+			// 	window.location.replace(nodeUrl+'/agentControl/true');
+			// }
+
+		// -- ini -- agregado el 16-11-17 por simon para ocupar socket
+		// 
+		// 	try{
+		// 		 = io.connect(nodeUrl);
+		// 	}catch(err){
+
+		// 		console.log('node offline');
+		// 		console.log(err)
+		// 	}
+		// -- fin -- agregado el 16-11-17 por simon para ocupar socket
+
+		var checklogin = {
+			alert: true,
+			check : <!--#4DIF checkIsLogin -->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			time: <!--#4DTEXT timeToCheckLogin-->,
+			interval: null,
+		  func: () => {
+		  	console.log("checking sesion");
+		    return new Promise((resolve, reject) => {
+		      $.ajax({
+		        url: "/4DACTION/_v3_checkLogin",
+		        data: {},
+		        async: false,
+		        dataType: "json",
+		        success: function(data) {
+		          resolve(data);
+		        },
+		        error: function(err) {
+		          reject(err);
+		        }
+		      });
+		    });
+		  },
+
+		  set: (func, time, alert, unblock= false) => {
+		    checklogin.interval = setInterval(() => {
+		      func()
+		        .then(data => {
+		        	
+		          if (!data.isLogin) {
+		            unaBase.ui.block();
+		            
+		            if (checklogin.alert) {
+		 				
+	                  window.open(`https://${window.location.host + window.location.pathname}?fromLogout=true`
+	                    ,
+	                    "_blank"
+	                  );
+		            	checklogin.clearInterval();
+		            	checklogin.alert = false;
+		            }
+	            	if(!checklogin.interval){
+	            		checklogin.set(checklogin.func, 30, false, true);
+	            	}
+		          }else{
+		          	if(unblock){
+		          		unaBase.ui.unblock();
+						checklogin.set(checklogin.func, checklogin.time, true);
+
+		            	checklogin.alert = true;
+		          	}
+		          }
+		        })
+		        .catch(err => {
+		          console.warn(err);
+		        });
+		    }, time * 1000);
+		  },
+
+		  clearInterval: () => {
+		    clearInterval(checklogin.interval);
+		    checklogin.interval = null;
+		  }
+		};
+	
+		$(document).ready(function() {
+
+
+
+
+			$('button.settings').button({icons: { primary: 'ui-icon ui-icon-gear'}, text: false }).click(function() {
+				if ($('.sidebar li.active').attr('data-name') == "negocios") {
+					unaBase.loadInto.dialog('/v3/views/negocios/settings.shtml', 'AJUSTES PARA NEGOCIOS', 'large');
+				}
+			});
+
+
+			// var companyName = "<!--#4DTEXT _V3_nombre_empresa-->";
+			// window.intercomSettings = {
+			// 		company: {
+			// 			id: companyRut,
+			// 			name: companyName,
+			// 			website: base_url,
+			// 		},
+			// 		website_url: base_url,
+			// 		version: version_Actual,
+			// 		company_name: companyName,
+			// 		app_id: "dtk9r8ip",
+			// 		name: `${currentUser.name} / ${companyName} /`, // Full name
+			// 		email: currentUser.email, // Email address
+			// 		created_at: new Date() // Signup date as a Unix timestamp,
+			// 	};
+			// (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/dtk9r8ip';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+
+
+			// $('.vernovedades').click(function(){
+			// 	window.open("https://sites.google.com/una.cl/novedades/novedades-v3-214?authuser=0");
+			// });
+
+
+
+		
+
+		
+
+
+
+			try{
+				
+				if(checklogin.check){
+					checklogin.set(checklogin.func, checklogin.time, true);
+				}
+
+			}catch(err){
+				console.warn(err);
+			}
+
+			let isHome = document.querySelectorAll('.sidebar li.active').length;
+
+			if(!isHome && !is_demo && !uVar.notAskChangePass){
+					$.ajax({
+					url: '/4DACTION/_V3_random_access',
+					data: {
+					},
+					async:false,
+					dataType: 'json',
+					success: function(data) {
+						
+						if(data.rand || data.pass_too_old){
+							// unaBase.loadInto.dialog('/v3/views/user-profile/passwordChange.shtml?pass_too_old=true', 'Mi Perfil', 'small');
+							unaBase.loadInto.viewport('/v3/views/user-profile/passwordChange.shtml?pass_too_old=true');
+						}
+					}
+				});
+			}
+
+
+			unaBase.ui.unblock();
+
+			$('html > body > header > button.info').click(function(){
+				let modulo = $('.sidebar li.active').attr('data-name');
+				switch(modulo) {
+					case "cotizaciones":
+						window.open("https://intercom.help/unabase/cotizacion-y-negocio");
+						break;
+					case "negocios":
+						window.open("https://intercom.help/unabase/cotizacion-y-negocio");
+						break;
+					case "gastos":
+						window.open("https://intercom.help/unabase/gastos-ordenes-de-compra-y-rendiciones");
+						break;
+					case "rendiciones":
+						window.open("https://intercom.help/unabase/gastos-ordenes-de-compra-y-rendiciones");
+						break;
+					case "dtv":
+						window.open("https://intercom.help/unabase/documentos-de-venta-facturas-de-venta");
+						break;
+					case "dtc":
+						window.open("https://intercom.help/unabase/documento-de-compra-facturas-de-compra");
+						break;
+					case "usuarios":
+						window.open("https://intercom.help/unabase/cuenta-de-usuario-y-permisos");
+						break;
+					case "presupuestos":
+						window.open("https://intercom.help/unabase/presupuesto-de-gastos");
+						break;
+					default:
+					window.open("https://intercom.help/unabase");
+				}
+			});
+
+			$('.goto-tareas > a').click(function(){
+				window.open('http://'+nodejs_public_ipaddr + ':' + nodejs_port + '/tasks/list/pending');
+			});
+
+			/*$('.goto-banco > a').click(function(){
+				window.open('http://'+nodejs_public_ipaddr + ':' + nodejs_port + '/bankcards/list');
+			});*/
+
+			$('.goto-project > a').click(function(){
+				window.open('http://'+nodejs_public_ipaddr + ':' + nodejs_port + '/projects/list');
+			});
+
+			// registra log de ingreso a modulos y acciones - by gin 04-08-16
+			$('.tosavelogs').click(function(){
+				var modulo = $(this).data("logsmodulo");
+				var descripcion = $(this).data("logsdes");
+				unaBase.log.save(descripcion, modulo, 0);
+			});
+
+			// ini --- offline
+			Offline.options = {
+
+			  // Should we check the connection status immediatly on page load.
+			  checkOnLoad: false,
+
+			  // Should we monitor AJAX requests to help decide if we have a connection.
+			  interceptRequests: true,
+
+			  // Should we automatically retest periodically when the connection is down (set to false to disable).
+			  reconnect: {
+				// How many seconds should we wait before rechecking.
+				initialDelay: 3,
+
+				// How long should we wait between retries.
+				delay: (1)
+			  },
+
+			  // Should we store and attempt to remake requests which fail while the connection is down.
+				requests: false,
+
+			  // Should we show a snake game while the connection is down to keep the user entertained?
+			  // It's not included in the normal build, you should bring in js/snake.js in addition to
+			  // offline.min.js.
+				game: false,
+
+				checks: {
+				  xhr: {
+					url: function() {
+					  return "/favicon.png?_=" + ((new Date()).getTime());
+					},
+					timeout: 1000,
+					type: 'HEAD'
+				  },
+				  image: {
+					url: function() {
+					  return "/favicon.png?_=" + ((new Date()).getTime());
+					}
+				  },
+				  active: 'xhr'
+				}
+			}
+			/*function on(evt) {
+				// alert("connected successfully");
+				 unaBase.ui.unblock();
+			}
+			function off(evt) {
+				// alert("connection failed");
+				 unaBase.ui.block();
+			}*/
+			Offline.on("up", unaBase.ui.unblock);
+			Offline.on("down", unaBase.ui.block);
+
+			/*var run = function(){
+				// if (Offline.state === 'up')
+				Offline.check();
+			}*/
+			setInterval(Offline.check, 5000);
+
+			// end --- offline
+
+		});
+		</script>
+
+	</head>
+
+	<body class="menu home" data-ipaddr="<!--#4DHTML <>ipAddr-->" data-username="<!--#4DHTML vLogin-->">
+
+		<div
+				class="loader"
+				style="
+					background: none repeat scroll 0 0 black;
+					/* bottom: 40px; */
+					color: white;
+					/*left: calc(50% - 50px);
+					top: calc(50% - 100px);*/
+					/*width: 100px;
+					height: 100px;*/
+					width: 100%;
+					height: 100%;
+					opacity: 0.4;
+					position: absolute;
+					text-align: center;
+					z-index:99999 !important;
+					display: block;
+				">
+				<img
+					style="
+						margin-top: calc(25% - 100px);
+					"
+					src="data:image/gif;base64,
+					R0lGODlhRgBGAPfPAAAAABUVFYCAgCsrK0BAQGpqalVVVaqqqr+/v5WVlerq6tXV1f///w
+					EBAQMDAwYGBgICAgcHBwUFBQsLCwQEBBISEgwMDAgICAkJCSkpKQ4ODhcXFyoqKhERESEh
+					IT09PRAQEA8PD0lJSTk5OScnJxMTEz4+PiAgIAoKCh8fH1tbWxkZGRsbGyMjIxwcHCIiIg
+					0NDWZmZjY2NmFhYTc3NxYWFlFRUU1NTXBwcCUlJVNTUxQUFDExMTg4OE9PTzAwMCYmJiws
+					LCQkJDo6OhgYGEdHRz8/P7e3t5KSkqampoaGhlpaWkVFRUFBQUxMTFJSUi0tLRoaGrq6un
+					19fZGRkVhYWNLS0jIyMjU1NR0dHW5uboKCgkJCQpOTkx4eHigoKGBgYJSUlHl5eWhoaOTk
+					5Hx8fNra2l1dXVBQUJ6enqSkpEZGRsHBwXJycmRkZEpKSm1tbdDQ0HR0dOfn53t7e1ZWVs
+					nJycvLyzMzMy8vL3p6emtra3h4eC4uLoeHh0REREtLS0NDQ46OjlxcXFRUVG9vb6urq8bG
+					xqenp4+Pj4qKimNjY66urpqammdnZ2lpabm5ua+vr6CgoF9fX4yMjOzs7M/Pz3d3d7u7u4
+					ODg9TU1PPz88zMzDw8PN7e3nNzc39/f+Xl5fj4+P7+/qWlpbCwsPf39zQ0NGJiYt3d3ePj
+					45+fn3V1dZiYmIiIiL29vXZ2dqKiomVlZX5+frGxsfv7+9nZ2YSEhN/f36ioqL6+vvn5+V
+					5eXqGhoVlZWUhISGxsbIGBgZubm7i4uMfHx6mpqba2tnFxcZaWlp2dnZycnFdXV4WFhYuL
+					izs7O////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+					AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVF
+					NDQVBFMi4wAwEAAAAh+QQFCgDPACwAAAAARgBGAAAI/wABCBxIsKDBgwgTKlzIsKHDhxAj
+					SpxIsaLFixgzatzIsaPHjxoRiBwJEuRIkiUpEqmD8KRIhHu8pESIQUWSAzIOukRwkMmCOG
+					0mzBzYoEmjA0jDSDC40+ADSAuisnnSYGgTpFgP2GDq0mCMqGAXbJ1JAUnWA7E6FGxKMMCd
+					sAuOPBgKAM/ZA3vWdiXoB+4CAnQF0rkrhCBbgX38Ngos0EWus8yqCjzcABFcKy0YC5xx18
+					TAwzf86gHZYASFgxbSnG11YfJeFAjgHgpx8MESyRRHJBAA5eCau1VcnxSoxW9wg2vsKFhS
+					8YKfBNCBESkIgdJZUgEANGVhCW4pBwWBFP9TQF6TBYpooKvvYgAFwSB322jvmshvD4IglM
+					whz3/KxABIqCegIiZAMJAcd3GwExZ+ITGQAzPYwt+EoXggESACZpgAHSQItMFNWIHigkFC
+					rBJWHFkI9AEbE7aoACwT/bCFhgLGsAMASyRFg0JMSBEVDgCcIImLE97hREUSFCEIjdBR4U
+					MISNiw1EIPxHBEDXSQQSR5uOAQAUYh8MIkdAKA95AEym2pQBcbcHQCK0wWIREOWx5xxUcN
+					yKBEhltMCVEEnLRohQG4fRTBDVSo9wNFTvCnihhC0VWCGwkAWVEkCiQjk2YA5LCCRSQM0Z
+					EApJZq6qkCYMTAqqy26ioDDqH/Kmupqr5q66qxziprrbe+mquup/Laa6u/AkvrRcP62pCx
+					wSKbLLEcRVGBRRTMxSkMRRTgg0UgBKCBmUNJQIMjBZSb2UQRBKBuABMU6lEDQExS7rxngP
+					tQAyWsq24JF7ir0QY6zCtwAXhIhIK++nbgZ0YTBDLwwCoYeG8FCCP8LUYOXBHDw/OOMcIF
+					ImRgL0IQBJCDAxZUjDAK/j70wiAczysCbVAYYMAbIyakARADDNCmAyGovG4JX0okQ8zlVp
+					GzBTrYbDMBGhh0gQc998yBtQ9QLDS7EoUwBseLQCExAM447XQABKSt9gRVV70pAA1gsIPQ
+					Izs0wsCPfNDaQDWY/23zCACorTYAWbTd83kDQZAywohL9MAM894wLUENrOG3DkIJnjYAD3
+					BguBDuUtCtujuMLVEGBahgIYl+GxCEQJoDBkANhg8weUERULw3RQ2IXJsPfjtxWuCaCwQB
+					CYZ/UTfc/YLEQ+spDBT7QCDU/qlmGhDiNxe4TS9QAy/UXnRgJrR+O/GCE4RB7ScwFkXrOR
+					Hk/UAs1A4DXRCI4LcNGBQ0v0ASyIDhcmA6kHigdV8wyP8EEoDaqWUmDfDADZz2hrotEAAQ
+					4FnPSNCBln1EAn1oGgsOckEAaGAAHNjA8mZigQEgpISzsxanFgLDGTqkhjbMoQ53yMMe+v
+					CHQAxiYAICAgAh+QQFCgDPACwHAAcAOAA4AAAI/wCfCRxIsKBBggcSKjzIsKHDhwUVLoRI
+					sWIAQAwlJmQIhkXFihfQIEnw46DGAwdNIMAUA8VHhyP8JJi5xaTGg0kQ6GQk4uXBETODJi
+					hi8KRBFTqTIvjl06AAoQkEhYh4k2CJI0oRqJHQtCAUqAl4UZVYUExWBCO6GgQGNgXCqgIz
+					nFWk1iCRLlBZvSU7EFnWV27rFjQAVsZAowKZnIXTlQdDFIqgKokgEDEGQ1lpwWD4pCEPAV
+					pIpAR7o3LVRWd9HCRwZEFngxHkCJh9JoBBOlCplHhmlIiUrGkMtmi0oDibCQaZzF4+SwQG
+					giTAuuF9M9jZKwRD6LFSvHubghWmLP8ffwkLwRhgc5z8cTYTwSqHusuP44Vgk/H4BRR4IX
+					AHFaE4rGDQCYkoJUUUAvVQinwMLrBHQRwUkt94VVTwjA80ldSQCYjoJMszWSDRoHyQMHEQ
+					BR/oMeFsU/yhgQBEUaSCGiXgEMeIxd0RwwMOwWDDirNp0VRrOC6ghG0UueDGih80FQOOiP
+					TRVB6f4IcDBU09IAWDCJSm1gNclLEcB2ox0Z0lWrgk2DMd1CEAGIKtskAiHq1J0Ak1CCaE
+					eRUV4OefgAZagJ0KFGrooYgqIOiifxKa6KOFMsqoo5AmKumilFZ66KWCZqpppJwC6umnHw
+					WggWAcmGAnQROMYAABgun/wsABgQlGQRA6GKCrC2o9wcCvpmyBnFopOKHrsW90FYEnvzZL
+					hgpNVcDFsdQakEFTYjSrLQOH8AkRBjJUW60IDbzkgBnbajuKJAI69IUN4h6rAxQR0JACBB
+					A1gEIFFvghSrrNbsIHZQax8Ea8xzpjwTMvEEBAD0gyFEEJAQSw8AuRANxsKjYUNADCuq6R
+					5zMYGOGwwz8MSxAFIFTssgMCcWGFxr8KQJAFuYrrgxDlChTEySeDMMDQRD/gsstTCeRAAZ
+					UAvEsLBfVRLSE88DhQB0A7PMAzRBP9jAZHV2y1QB1QUcu2rhgkwQ3HmnBqQVhkbcIFXHe9
+					tQNhB2BhQRlAudLsHJsZ5IEBIiBYcNYEeCCQ3Vs/M0Hezxl0A7ozNOQBvmp3kvUQMNfdtU
+					ANUHz0DpgX9EDlTeWA+AYDMT7QBXkvvKrjJgONXet2E9RB3liumgfiby+e+0AS5A3Cqjsg
+					fi1BrhMEdtgEC0ZD1h9EL/znBOEddgU9q7UC4rXijj1BKORNt2ArDHFyD6WL73VBobu8w/
+					lrUtCCyREzP3xBEVRsQft2woDiDtI8g0ygc7ODSAETqJYF1iUgACH5BAUKAM8ALAcABwA4
+					ADgAAAj/AJ8JHEiwoEGCCRIqPMiwocOHBRUuhEixYoUmDCUmZFiHSMWKEZhMEZDhoMYEB2
+					kcSKICw0eHPOQImFmIgsGTBiWEOcCzEcaXBnnMHCrgw02NBm3wXHqAAFCDWogK0AMjIlKC
+					HWIxPYDE5lOCJKQKsGFVYkFgWw/g+WrwjFgWCK8KFJKWDluDAWZJdRPX7EBmW3O5uGtQhN
+					g8A3EKNJF2xtcMDg5iuCT10wOBii+02prGwkEJIhpmKKDixEEsYrlgvlol7ZqDI9QgCG3w
+					wYwCuG9UMFhAahkQz3DWILWVEoSCKRQhWM4IhcERuKM/+nCB4AuxdYIjbZM2CEEYcF4t/x
+					8fo2CIMdHTL/I+sIrYEyc5pJVD0Aet8fgxwR0oI73/AlUM9kwFIw0FRg0GuQAKU0lsINAV
+					aeAnIQJgFNTCIP+lJ0IIz/wxEw4cOETDTgcs8UwUmUyIXxImHOQAHjFkiNsYPUygxQdeOS
+					SBDUiAIIsUKi53hAoPTRCIjLgR+RIFsgWJAB8lVLSBDjKuBZQKQSJTElAkTOLfGZE9hYiE
+					hjBxlwQ0OBJdC2yZMJ4Ui7hE2DMa/FKAD4QlgkAwHs1JEAu73XXCDx8ZYOihiCZqgJ8LNO
+					roo5AuoOikhzIa6aWNUkqppZhGqumknHb66KeKhipqpqQiauqpH4EwAWEkjP/gJ0EXDEAA
+					oXdFooAyWfjpgAcmECBsAGw5ocCxqvBB2AZDCOtsD8c9xcmx1FpByFMaXOHstgSk8BQO1I
+					argDE8gJQBt9zSAJQEdogrbhcONgRBCh+g66wRLzyQA7EQRSCGGRuUQYa71OJSCEMB9GCv
+					s0G4tMEAAwChgUNPeMIAA348c0IvBFN7ByAFebCwsFh0INADHEAMsQfVFcSBLhdfLMoLAn
+					3ARsfHwkIQBkbY28l+AnmhssoTBGD00SbEHHMkBKFiC8GheGAht0bkIAFBFgwNca9HH/3M
+					AUpfrNpAICgxh7hTGERBs8Lm8WpBQmjNwWVdG/1MCqaEbUWYAwG/cQC1mnhm0AoE0LDDQR
+					VoPQCCz9TN7xZhM1DAQUW0ayJDKzDkwBdakxCt4wJNQEbYlZh80OVAraA4cAKBLpAKkVMx
+					q0ARKE7zQK4LdEjYtWzp5wmKy9l63QRhMUrYkMwKg+JAD991QZJEfoOfOWidwdUE5S7QCp
+					uEbcZld3WgOL/ZE18QH5E7RlgHJKgMxEHa055KzHOoP6cDG6Q8MV7mF2QDA7twRVVm94wH
+					MI5/zzuIANhEQIjEr4FAeeBXAgIAIfkEBQoAzwAsBwAHADgAOAAACP8AnwkcSLCgQYICEi
+					o8yLChw4cFFS6ESLFiCBkMJSZkCChAxYoPRowp8OKgRgEHfyRAgubCR4cZZhSYOciBwZMH
+					tyTY6WfEy4MZZgotgOemRoNFdipN4PMnQQcqhhaIMSHiUYIhBC1NgNJpwRNSCwSyKrHgpK
+					0JoHg1eCPsBoRXBZ5AC2ytwQqPpOqAW3Ygq61diNg1+CEsiYE4BcpAa8CrBwgHLyySOkmC
+					wMQRlGxVhOIghSYNPRgQEeVgkLA0Ll+9gdbEQTxIDoA2KOGGgdsmNBisItURjGc4S1DZSs
+					egCzoHkjfCYLDP7eeEeDwg6CLsL+BH3aA9PNDCjFzJw6v/KGhBx/PzPlo0GCgiLIuTOdDG
+					GAhhTZrw+JMIHjjgvH8Da9QgUAgjCeVDBQatgMNSVOwgUBCU4CfhAXUU5MIb/503hAXP9D
+					DTGS049INOCfjwzAZyTIhfGKkBZUOGt+kAxQUq4GETREUIEMISSaiYXCw2WNYQBjLAeJsI
+					kH3kQGw+HrBHBxVVEAiMGThlg4/MCOFUCk7494ZXEoQhYSuurUVBEObd5sJaNIRHShUuDf
+					bMBCMYQMBgoBzQhoByEhSAbna5wMFHBBRq6KGI3iknAow26uijCCQqqaF9Qmppo5NOWuml
+					lmYq6aacPuppoqCGiumoh5ZqKgIfTRDnWkKc/9InQQ9kMYAHg62ygCClyQlBDRwMICygTj
+					GxwLGWwNHZWiCQIOyzQHj1gBTHVovADU5h8MKz3A7g0U8xVCvuAkmoRZEELHTbbQ5OHTHu
+					uEp821AAGaj7LAcbOFABCutBhIMdNRwTx7vV3iHLdAZpAIS9z3oxnQUBBFBCBA45wYkCCp
+					TxTBZdEFwtJH8UVAPDwgrB4TMORKwyCBQYREIkGGNMxgkC9VCKx8fuQWuw6n6B4EAhqKzy
+					AwwUbfQIMcfcC0G+HEJwHF4UtIG6K9wo0ANCR6yb0UY/o0zSGH+AlR5WjNuGQQ44K+wJFB
+					dUQdYB2MR10RurAjYbBrUgTLVsVK5lUAcD5PCbQRjA7ffcDAjEB9gKoHJQE+4+0RCUB0Gw
+					Q9Yl9Iv4QFaAbQsIDEnuFMRZv7q5QIQwrsSsAlEAN+UCnS6QMWDPEe2sIMAtZOxzE8QD4w
+					fMGgHcxPLOdUFdMF6EnA28nbXVxndN0Aa4gG2HnBfAvSxBsg9UCONLYH95xJkb1P1Ad8Ss
+					Sfh9QkB62wWdLxAgCoQyxcmsO+C3+b0fBAuurKOI/AL4kwE6JSAAIfkEBQoAzwAsBwAHAD
+					gAOAAACP8AnwkcSLCgQYIFEio8yLChw4cFFS6ESLGihQEMJSZk2KRCxYoS+ugwwOKgxgIH
+					OQiYwiTCR4cebhiY+cakRoMUCgnYKYfHy4MeZgo1kMHgSYMfdioV4PMnQQgihhqwgSHiTY
+					Iw9CwVoMWpwShSDciwKrGgja0CSHg1aCKsx4FHB7pAe2atQQ2EpAZCeFWgm62zAtg1yCNs
+					Crh986AV4XUFwwc+pDqhIDDug09bL1U9OKLhCgI0dhxsETZI5atc0GI5CEVAgs44hxCYnW
+					dCwQZrpOqwfbRDma0oCxIBlqC4nwsGW8xebiSHBII1wnY+WgftC4IoDHQpzh1NQQxGlov/
+					71Ry4JCwAU6eQFuFoAlF3OMjETzQg/j7BLB0EGhhpFACGhhUAxhLTfEWCXTEp2ACgBQUQA
+					/4iRdEVVDQ5IJDHOCw0x/P7BDDgvFt8cNBEKTwQYSzGfFCBCIUBREFH2ihgQ9UgFicIEU8
+					FEEGKM5GQwM/uWZjAryEUJEGV6B42E9F2MjKCU4RIZt4PUDg1RYKKjHWWg54YMJy9Dn1A3
+					dU3ODSYM9gMAABI9qFQwJulIBmQSDYZtcKOXw0wJ589uknRmgeIOighBZ6wJ+I8jmnoYwO
+					mmiiizbK6KOIRippoZT+aemljmba56acHvDRA5TZdUIecxLkgAYBgDBYIggI/0DEnA1MEM
+					CtAZzplAkI9CoFKpt5dUEJuN5aApBOIdLrsoYw4ZQEHRRbLApOqbDstQgk8EVFq0orbQUO
+					/KQGttjyIWdDDaDgrbQWWGCGGLo29EAMR5QQgxTkLnvEEgxFQOy6t4YQrh8MMODJEw4xIc
+					UCCxzzTBS35LtsEh8UZCvAAVTwgEAviFJwwbpwYJAQqzDMcBxZCHRFGhL3CoaqAO8Q7DOR
+					fPyxCQrkrPMpJpvcBUFo0JIvJuUNZIG3Flg5EBc2Fyyqzjo/I0jPDPeAFRyvYBuDQRDsgC
+					sIpQ7kgBVNm3IY1Dk/bAnVpRiUQjPLMkKtQRdkHC9cTTOwhUBoK7AgEBxUL+DLQUOMyxhD
+					FyBbUAeVNE2GnX0LhAICVB9ipEESHP4TFXmrMFDkAt0QuB6pCpRBLU0fQhDoAiVBtRUtlA
+					5J06Os9jnaBEERuDCp3pC3JAWxLpASgTeB5gNmNL2JY6vjTlAAd1B9BJoz5M2HQcILJEvg
+					CA82wxwfp3L3M9k/8wAkJrPRPZowuLILAzYcVP4zfywQRxt2lt6CAAzN/8weXihdRfwnwI
+					8Q8CUBAQAh+QQFCgDPACwHAAcAOAA4AAAI/wCfCRxIsKBBggYSKjzIsKHDhwUVLoRIsSIG
+					DwwlJmQoI0TFihRaGCEQ4KBGAwdbFBgz4sFHhyuGEJjZA4LBkwYdDCrAc0aGlwdXzBxKIM
+					VNjQbx8Fxa4AtQgzSIEvgQISJSghNiMC2gwsHTgjukEviJ8OrAQFsLnPhqMI9YDWUlEtyQ
+					9gZbgxNGEr0Sd6JAHVsfVbhrMIdYIgNxCiSR9sPXDgwldJI6xOszxRImbV10gSGPhh0G5I
+					BxkIVYjJev0kgb5CAJLQI+5yQxoPaJqgWxSDXRGacGR1urGAxwRoBxObjn1l4+YIVlgR3E
+					Dkgt91daFwQxiJhlvDuTgg84MP9f/mXwwCBiQZxkkVYEQSyXusufYl5gjfHjhVgQiEHvzB
+					8TGFSBD0yN4dEzLxQg34ICNFGQBkDgx5wXLr1AU0kNtXAGTz08U0EVDMpXCAcMBZCBhLVx
+					sMEDNKRg00MO4KHCBH9MEaJxenxAgUMSsIBibTk8BduNAthAGkUovIAihi99cKMb2AEFAm
+					3MAfEVBTgs+Eked0GwgXi1wfUVB92VwYVLhD3zQBYDoMYWGALUAVmaWHV2Vw1rVRTAnnz2
+					6SeTdyUg6KCEFprAn4jySaehjA6aaKKLNsroo4hGKmmhlP5p6aWOZtrnppwm8JEJJN7lQq
+					l0CpTCAQzoQhgoB7T/AShbE2xhCgO4PsEWDQf0Ssoydn6lAhm4FutJch9JEEavzLbiGFBY
+					HFLstAyI8ZQNzGZ7wC1CVLSCJKNQO60ZErxEARLaarvHnAxFwMcm4hYrih8b2IFDRSqoAc
+					ISSaTLbCxolGuQDanEW2wkLzxThgIKcOKEQyYgggACMTyzASv+MhuGDAUJYDCuVnAh0Alk
+					MMxwJCQYdEIiE08sRRQCBUFJxr3WQVALu8RbSQHP9WKyySMsIPTQebTc8i0DQVBEGv4mgR
+					hBrlBbCxXsPvPBzwwr88zQQz8jgNET8zWQBTPkoq0KBsEwR7GQkEUQG1irksXWXC/wDBFS
+					gJ2GQS6UwsFsIxgcNAMDZthlECpYK8CHQHXb/QwqYCOAxkGnoOsgQzOgWRAItmBtxUCN82
+					cI2LQcWRAFlwOlROKEgF73QExEDkeqAgExB9bGEBT6QAmA/YpRqR6QuGyMvz7QF5E3k2oR
+					iXdR0O4D8RH5EHTagTUuGzxv/EAlHAG2GgKztUTihRgE/UBLRO4eYUtoYvIdB50/UBItM7
+					J+mhZMEYoCgMS/PUEfQAAmYoAC2gnEA7BgiPwGAgYWGJAiC3zgSyL4lIAAACH5BAUKAM8A
+					LAcABwA4ADgAAAj/AJ8JHEiwoEGCBBIqPMiwocOHBRUuhEix4oMaDCUmZDjAQsWKDjZwGK
+					DhoEYCB10Y0NFHwkeHHUgMmAnEpMaDbwzovOHh5cEOM4MOCGDwpMEMOpMaOOHTYA6hAzK4
+					RHiTIAYbSg2IgNC0IAyoA1hErDpQRlYDUboaPAEWA1WJBCucNaHWYASwL95OFBgoK6GSdQ
+					uuAAtioFGBKc7y6HqhwUEHX6CS4PrsMAUnWX08eJyh4YUAFSIcrAB2g8DDQc62OHhCRYHO
+					BiHsCEAbBAWDQqBy2Gx0go6saxzHvVGg+IzNBS3QXh7AAmWBFsBmqXxzxFmMAy98eFS8+4
+					iCDpgz/9/hdqAXsBNOBjg7hGCQRd3jjwlBcIJ48RWQPxgZ1MMFgxoQoJQOHj3jQhXxJViA
+					DAVFUMJ9zIXgwDMb0AQYQy7kZAAUz4QggoLxDbKaQQ2gACFzFjiQA1EUZSDCBT2MAWJxMe
+					AxYUMOaHAibRX4BIFrMxYQyAQVSdDBiSg0hceMOpjm0wUPMleCcC85cEaCk5BQVwP2LSda
+					Vy105wgNUwXmQAgBFFaXDwX8cmFgAz1wW10ViFURA3jmqeeeDMD5jACABirooALwaWiefh
+					KqaKCHHproooo2auijkA4qKZ+UVsropXpmqqkAH42gZV0r5OAnQVkoo0AkgeGQgBslnP/K
+					hyoK1OqEWj8koCsVTnzZFSFW1CosJ2ptoeuxSjDoEw/GCOusAjg0VcSx1CYgRwoVbdDFs8
+					/a4ZMDAlRbLS/0OVQILtwKS0YZNRwRA3IOSWADEiH4QIW4xwpSBEOA3JGusL0wdcwCC0jB
+					hEM0hHHAAUs8s4Mj+B67xQ8FwfJvrWx8IFAWcRBM8CpCGOQCKAsvnISTJNARsa6AEORBKO
+					naggpBXXjs8SkI5KwzByWXzApBJiiCLxIsDjTFs3MooaZAPdhMsCDP6KzzM230vHAQBKFg
+					QBfVomGQBZoIe0BNBZXitCVpSZ3zMwGQYjUlzwlEBBzH+vGfQUsoYMe+Bvmz4vQCcAikNg
+					ICLWP1AXwXBEW43zHU8EEhHOI0AklGrbZAF7RidRoFGtS4T3r8fcNAgw/0weEznCpQC1Y4
+					nQRBpQ90i9W5uKC6MH9zSPrlAwlxeBmnNvG3EgXFPtAeh5/i5xFO31G04LwP1EEsViMxp1
+					pP/C2LQcYPhMbhTcD5BBseQwLv7lIbJIHCCzcSvp8TtNHxHwd1X9YBSahQnupe7MGQ/QOp
+					AxFUVxEAEtAnBmxKQAAAIfkEBQoAzwAsBwAHADgAOAAACP8AnwkcSLCgQYIDEio8yLChw4
+					cFFS6ESLGigwkMJSZk6AFDxYoQLAQIEOGgxgEHAxAw0oLCR4cXdowMUKKBwZMGIfQgwHPI
+					ipcHL8ycieKmRoMpeCol8BMowQYVho50EPEowQgflhKg4dRgBKkBNFSVWDCDVgI7uhoEAV
+					YCQqsCNZzNo9YgBbAd3pIdeEWrEYx1C4qUemEgToFEzuboOuPBQQgyh9YUeNjBEK2d3Ob0
+					0HAGAzNODmIAC/iwh7MsDkYRYYCzQRhzGMgelsFgVKlUcWIwoRWLQQ0mDAi/oZmgK9nIa1
+					HJO/AB2BDPcA44y1zgAx6EhGvvU7DFLuTgKz3/oiowBNgHJ0GcDTKwQQsf2uPrsEBQAPj7
+					DKxwEehAKgiXBU3ww1JGePRMDWvEp6ABKBH0RCr4gcfIC88MVkJJDQWwEwEUWjDEgvG94c
+					JBEYixSYSyiaKEBRWgYNNDEKRAQwRQ6ACicDbU5tAKkoyC4mfkVdQAazcaIIOBEMlADIpi
+					OJXBjYFU4NQgZNznCYZAvaGgEynUNUEmpiD3hFouaKdDEAAGdoIhDOgSGAEGjABYYAQZwU
+					FgGgTwkQJ89unnnwrQ+UwBhBZq6KEFAKpon4Ii6mihiy7a6KOORqropJQeaimgmGYK6aZ+
+					duppAR+dIkRgNZwgKEFRCLLAKoGB/yFAHSAIigIcliygKxNqcSDAr2Vw4ZhaNyCg67FSDP
+					sSBTj86uwn3AEFRRLHVrtADE594Oy2AriRGkUBKGGttUc4pQW33NoAg0MPyHLHuMfGcUwJ
+					aqhQURECaPDHFOg6q8cHaRL0ByTwHttFFs/EgAACiJjg0A9bJJCAD89UUEW/zhai40B7FK
+					xrKT0IFIUUCy+ciKoFrYCDxBJTkdYzLxSA8a9NEORFHPAe4gtBt5Rcch4HBC10Diyz7AhB
+					MlzS7xRSEtSGtVboAR1fPi8swDNCC/2MG0VLTAJBGIgwC7e8BsjGscK0YFAaVUtBBNZZH/
+					BMCVR0TYdBAZzhrBxYOri4wBE1G4RG1QigIlDccj/jRNcJOGwQCefy0NCYB8FAS9WGGIi4
+					QBEo0bUiRR0kuVNwEF423FkPJAPjBqwqUAqvVJ0AQZsPJEfXXby9ajOEf0F73ASlwDgcqw
+					5BOB8F1T4QL4xDQacEalR9RAnJA09QCIJ0fXVgIhC+hEHKD1QE4yPQKQIjJSdxUPgDRSyx
+					H+XbGgMmCHywvvUF/ZAAEmgU5vozLAADQ9g3EEDo6X8QISACX6JApwQEACH5BAUKAM8ALA
+					cABwA4ADgAAAj/AJ8JHEiwoEGCARIqPMiwocOHBRUuhEixYgsBDCUmZFjjQcWKMFztYmDj
+					oMYABzUM4LDBwUeHM+YwmJkqgsGTB4EM2Emiw8uDM2YKZSDmpsabO5MO8PmT4AMzQxlsWh
+					HxKEEJGZQOyNHUoJOoDCRVlVjQhdYBMLoaHBZ1FBaEVgWiOHtCrcEMtaISg0t24IuzNu0W
+					pAJ20ECcAkGcpdp0CcMOlaKSmSAQMQQSWr+4PMj44BIFdtYcfAQ2U2WrG85WOLiDBoHOBC
+					1oUkC7GJCCDqxENZXiGc4HHLQKMTghD4HjQygYnEK7+RwlIAhyAWvI99EsZy1czWHkuPcW
+					BT2E/2pO3tYMgozAGjk54awXgiw6eZ9vBANBWOTzK2DzQeALUUPpwoFBF3igFAcePdMBFv
+					M1SIAHBTlxh37kSVKXEjN58oRDGug0wAbPYBCEg/P1gNJBOOBCIW1k0LGBGWIE9lAAOTzw
+					QnckEvBBChA4tEEXK9JmhwQ/uZYjARnI+NAVR6yIQ1Mp5HiFBk0ZYEV+nHQFQQ8NDkGEYG
+					Ko0pwTagXgnQkebCaYF8koEIlgPxAwgH2CFTQECYJNEF1FC/Tp55+ALlDnMwYUauihiBoQ
+					6KJ+Dproo4YyyqijkD4q6aKUVoropYFmqmmknP7p6acGfJRHXXZVEMWgBBEhAAKJCP/mQw
+					FFpFUnBqhIgcCuJqjVQgHAOkIDkWoxYciuyCLSlQNnAOvsJLf99EUCyFaLgApN4eHstgXo
+					ACJFJfBhrbVqKPeSCtxyGwhlDi1xxLjIShEDCEjYQKxDFHygxQQjjJGuszFcoSZBHyQBL7
+					K3rLrEAQeEQYNDHOAggAB/PBOCCP86O8gLBYFx8K5pXCHQBkkwzDAoLhhUAxgTTzzFas+4
+					UEXGwMoAHybw0oIGQayYbDIHCQQt9Aktt1wFQVAs8u8YIRQUg7WvwGGrQEH4zHAbzwgt9D
+					N1FD0xxwNd8MEj3I5gEAqMINtMbwRBQInVpKCkddDPgFCG1wUYVMENzs67kGBBIiCgxhAH
+					FWH1AcsINHcCAnHhtQA2G+QBuhk0JMK9saVhdSsXKD63QA984vUldOJWeVMzHN6f51oP1M
+					fjIrAqkAu5WH0LQYsT5IbXs5w4aBmHDzdQ7gOx8PgZrJ5y+B4FET+QDY/jKRgFSFgdC1PD
+					f04QDHp4rUWdTRy+c/PaE/w4D+A3YnIYmLO+dUEUFNKyHOgPioEKJUdOfut3CTAFE0oaFB
+					HqwBDnFaQJMJMdRAyowK4wUC0BAQAh+QQFCgDPACwHAAcAOAA4AAAI/wCfCRxIsKBBggwS
+					KjzIsKHDhwUVLoRIsaIHWAwlJmQ4wUHFihamhFIA6KBGBgcjBAhgAcJHh0s0KZh5x6RGgw
+					1KrAyw48LLg0tmClWAw+BJgyh27vT5s6CdoQpwbYh4k6ADpSsrNGhacA1UBV2oSiyoAWuA
+					CFwNFvvKA2FVgRLMgkhrEMgcqEfcjh3YwSwFugaVfDUw8KjAC2YtcH3CEIQtqFYKV82JdY
+					fLgx0aPllwhMDBGV/FCDQ8wSyGgzByDMhscAKbBbAbtTDIBqqqLM+OXsVawWCEEwOCk/BY
+					sA3s41b0hCD44Wuy3DdDmH1gdUXw6wOmEvQS57j3Q1UISv/6OuTkA7PLB1b4gv06B+oD93
+					ifv6BUD4EnyAyNRMIgBRBYEWeBEO21V0NBTEBCn3dI4EbHTJw44VAEOrH0zANeFIgdEBoc
+					9EAMdywIWxw41GBHURA1gEIFDmzAgYbBZRDAQwEoISJsef2kGowDsCBBRX0gImIMTQUA4w
+					soNHUDAvNJAd9PQLRHwlxpoaCFJccxkZYG7m1wGWAsJLLAKoB5MEAWTwI2EBZCAHbBBB8h
+					IOecdNaJgJrPEKDnnnz2SYCdgM6Jp5+E7hlooIMWSuihgCaqaJ+M2unoo4ZGSueklHpWEQ
+					cuAFYWngQF0MYBoABGgAEjwKnmBcuQcsCrNKT/5YIBtOoQxF9pfdDKq7yG8WNTb9AqrBMp
+					NCXELbwme4ANTWUg7LMGcNEbRR3soayySBBXEQQiQAutDKc1JAEasVzLaxJLhCBAERQ5gI
+					cKF0Chg7fC2vAFQzKEYS6vrEzlQwIJbPGDQy2cUUABIzxjgTP0CvsGCwXVse+rlAQh0A5U
+					AAwwDisYVIEPBx88Rno1rNEwrQMQREQS5qZRxJeOaKxxDgLUbHMUIYcswkANCOEDvTooRp
+					AKyuYyg9ACkSAzwG48Y7PNzxSR88GdDvQAD4RA24dBGDTCaxlVE0TH0lSU4PTTAjwDgyNT
+					h0eWCcLe8GtBTRyAxCkHmbB0AhKesP20QDRMXQAUB0XRrQcNNYFrQSgosrQSaPkN9TMSTD
+					L1IkwVBAHiTRmwtwwDoZ22QEAI/gGoAhHRxdJyECQ6QTpM/ci0eMKxd7Gho03QBoLfACoU
+					e/NS0OsEBSI454AJsLQg6eX+N0ETxDC1CtpyNcLe7A6ve0FXCJ6BmiP4ofEWBxFv1SAhz/
+					A9nheggUQCAxtkPkEvFDDGCGniGUBJ5W9vkAzNQ91D5idArhAwLQEBACH5BAUKAM8ALAcA
+					BwA4ADgAAAj/AJ8JHEiwoEGCChIqPMiwocOHBRUuhEixopc9DCUmZCigRcWKE9rEWfDnoE
+					YFB58w2OUKxkeHT9gsmAnpgcGTBiOkYsBzzoyXKWcKXRDjpkaDYngqZQAGqMEjQxfcCRDx
+					KMEVm5YyMGPTKUECURcoqSqxYC+tDJx4NdgoLBSEVgXKGKV12FqDLaxERQS37EBiWmtluG
+					tQT9gbA3EKHISWilcREg6GOBQVAQqBiieQ0Vqpw8EGFxqKQKBmxMEqYbVgtpoJ7aODESoE
+					CG0QBSMEuBWlMFgqqqUoz3CeMKXVioOCFEAEWL4DgsEYuKO/guNyYI+wiYIfNYSWC0EIFp
+					aL/w9goSALTNHT0/JBEElYLCeNoGVEEMOO8eOPDwSTvj+CNFcIlMVIQq0ihEEc6LKUKC8I
+					9IBs+I03QUEmJOFfepkAh8NMUjABkyc8jeVACBGOV0IEDKlwxIW4SSFLCUfE0JVDEYhhhg
+					XhlSgeCg04VAIfLOKmBlAOQKijBvpBlAEyLKrgFAo6dhAZUEwY0h9fTjVQAn4l0OYVBotI
+					EZ0Ja0UgYY+EPUNEMAhkd5dyISSZpkA/nEAYBTNCdMCefPbp5wFzDiDooIQWOsCfiPIZqK
+					GMCppooos2auijiEYqKaGU/mnppY5m2uemnH6UwwqETQDCnASV4EYCOBD2AwEDeP95VwRO
+					UJHArT+sFQABvJrggZxAyaDErcRu4RUEPfCq7BAbOJWCHMRGm0ARziprLQFXaFBRCLxIK6
+					0AQDVAw7XXZoCiQ0UI4i2xVPiggRYfUEBRBiJE8IIR5Cr7QQrOGfTDFusS68gOz/whgAA4
+					cOCQC28YYMBbGASRr7I9UEUQIAHfSgcJAlUwxcEHg1GDQRoQ4LDDOpT3TAdYTMyrBwQFgM
+					S6ipA5UBUgg3xCATz3HMDJJztDEAud5GsEBgWhIW0XBlw20As5H1zHMz33/MwIQDs88kAS
+					5ICvtR4VdIEfxMJBhEEFRF3GqVXz/MwEOmS9BpoDTZDHsvIaNEICAryxZZAMUQvgHdVtCx
+					RE1gYcaNAO45LKkGkHYXBJ1J901XYBAlHgRNY+5HnVY4H3MdDlA6WAOA+oChTALFG7QRDp
+					A3GRNSHaonpG4Cy8XvhAFSBuc5okBG5DQbAPJAPiwKWpRdR6VDf67gNhYEPWIvS7Fg+Bf4
+					A29AN9gTjMhPEgB8iF5K171Qc17PAN4KcZARMfD7Y9+gaxYIAOfUyZegVNMFR8QQNQWeog
+					8r8BeqWAawkIACH5BAUKAM8ALAcABwA4ADgAAAj/AJ8JHEiwoEGCCxIqPMiwocOHBRUuhE
+					ixIgswDCUmZAjLQ8WKKGJgQvDhoMYFB50oCDXFwkeHIhghmJnEpMaDdxTo1LTk5UERM4Mi
+					UGHwpEEcOpMq8OWzoAQ1QhEcKRHxJsENuJQqsNPU4IioCPhUlVgwjFYFa7oaVAT2C0KrAq
+					+cLabWYIpXUZG9JTvwiNY5QOoahAOWyUCjAg2cVdK1CYWDMGhFNYRBIOJnVrTaAnHwwYyG
+					TQ4gwXPQB9hFlq2KOfvZoBMzDFoXxNDogG06LgymiSqFyDOjXlRpZWMwwzAGyOfAMKjCtv
+					NcM1wOvAI22O+byc6WHNiBSi3k4F0V/ySSxLn5NGsgDMwE9sfJIWclDXTwqBL4+7taEKxj
+					vv8BSkEIFIUUQiVygkEkRKIUGQc+w4UV90XIgAAF0RCGf+bJscEzssyEiAkOOcGJTnQ88w
+					IjEt6XyhMHSWBDLBjalsQSIKhBFEU42LGBEqKkiNwmYkTgUAd7xGgbEo99JAFsPo4iyQoV
+					CcFMjDY0JYaPxMjQlAmt9BeGBE1F4EmEZAxS1wVVkOIcDWo9AZ4pmUwgmEA1tHEAKILpwo
+					AhDc45EAe51cWBER8lYOihiCaagJ8BNOroo5AGoOikhzIa6aWNUkqppZhGqumknHb66KeK
+					hipqpqQiauqpH51Qg2AXyP/p50Ag1CEARnV5MEAWD/j5ABdlCCAsB2ppMMCxHNSgnlp9fC
+					Lsszgk6RMQx1ZLAmc+seDGs9wKsN1LAVQr7gAvVEYRDDZ0260WTeUw7rgsgNkQBR/ooe6z
+					U/wxgQp4OAARBCnQ8MAGHLxbbQYBMJRBIfc+W0UFz4xQQAFn6NdQAD0QQMALzzzghcHVAq
+					FBQU00LGwBHD8TwhgTT+wDxAVN8IPGGhthrgVCgHzsqwNVMMW9l2g5kAgttxyFAUgnDQLN
+					NAfY8xcGc9ArQUx0O4sI5grkQtETF/FM0kk/MwDTGndAkAMrvLthQRHI8ewZCRdUBdeOLA
+					c20s9cYALZWBjAFMEJ1vprEA8CaEHCQVBwXQCbX98tkAdkE8ACZO6azRAPDF2wCNeTyHu3
+					AQI5MATZnchrkOU+faB4YIk5LtAGkecwq0AVPMK1DgR9TtAVZBshq583KL5262ATpEHkec
+					zqgeKBFKQ7QRlEvsOcDqjAdQy/Ex82QRF8QDbjdWWg+BUGPU9QCpFDKVgGM7Q8iOC5u04Q
+					BBlrPIT6cz4wAsspOy8/QQEggBFaIK1ZhUBo5fsfQTyQtdk9xHwOVAsE6xIQADs=
+				"
+				alt="Cargando...">
+				<div style="
+					text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+					font-size: 14px;
+				">
+					<strong>Por favor espere...</strong>
+				</div>
+		</div>
+
+		<div class="toggle menu"></div>
+		<header class="header">
+			<button class="nodeServer">NodeServer</button>
+			<button class="help">Ayuda</button>
+			<button class="info">Tutoriales</button>
+		<!-- 	<div class="nodeAlert nodeAlertHide"><span>Es posible que la descarga de archivos presente algún inconveniente, favor comunicarse con soporte</span></div> -->
+			<button class="current">Actual</button>
+			<button class="settings">Ajustes</button>
+			<button class="notifications">Notificaciones</button>
+			<button class="access">Permisos</button>
+			<p class="u-btn-close-session">
+				<a href="/4DACTION/W_CERRAR_SESION/<!--#4DVAR vSesion-->">Salir</a>
+			</p>
+			<p>º
+				<span>Usuarios conectados</span>
+				<span></span>
+			</p>
+		</header>
+		<nav>
+			<h1 class="unblock-menu" data-logo="/4DACTION/logo_empresa_web"><span>Unabase - Smart Budget</span></h1>
+
+			<!--#4DIF vTratamiento="SRTA."-->
+			<img style="display:none" src="/imagenes/user_black_female.png" alt="<!--#4DVAR vNomUsr-->">
+			<!--#4DENDIF-->
+			<!--#4DIF vTratamiento="SRTA"-->
+			<img style="display:none" src="/imagenes/user_black_female.png" alt="<!--#4DVAR vNomUsr-->">
+			<!--#4DENDIF-->
+			<!--#4DIF vTratamiento="SRA"-->
+			<img style="display:none" src="/imagenes/user_black_female.png" alt="<!--#4DVAR vNomUsr-->">
+			<!--#4DENDIF-->
+			<!--#4DIF vTratamiento="SRA."-->
+			<img style="display:none" src="/imagenes/user_black_female.png" alt="<!--#4DVAR vNomUsr-->">
+			<!--#4DENDIF-->
+			<!--#4DIF vTratamiento="SR."-->
+			<img style="display:none" src="/imagenes/user_business.png" alt="<!--#4DVAR vNomUsr-->">
+			<!--#4DENDIF-->
+			<!--#4DIF vTratamiento="SR"-->
+			<img style="display:none" src="/imagenes/user_black_female.png" alt="<!--#4DVAR vNomUsr-->">
+			<!--#4DENDIF-->
+			<!--#4DIF vTratamiento=""-->
+			<img style="display:none" src="/imagenes/user_silhouette.png" alt="<!--#4DVAR vNomUsr-->">
+			<!--#4DENDIF-->
+
+			<h2 style="margin-left:25px;text-decoration:underline;cursor:pointer;" class="u-user-profile" data-sid="<!--#4DVAR vSesion-->" data-username="<!--#4DVAR vLogin-->" data-email="<!--#4DVAR vEmail-->" data-tratamiento="<!--#4DVAR vTratamiento-->" data-organizacion="<!--#4DVAR vOrganizacion-->"><a class="show user-profile" title="Perfil de usuario"><!--#4DVAR Lowercase(vNomUsr2)--></a>
+			</h2>
+
+			<!--<a class="show user-profile" title="Perfil de usuario"><span>Perfil</span></a>-->
+			<a style="float:right;margin-right:10px;margin-bottom:10px;" class="client-mode" title="Modo cliente: oculta costos al entrar a una cotización"><span>Modo cliente</span></a>
+
+			<!--<ul class="sidebar" style="overflow-y:auto;!important;height:calc(100% - 250px)!important;">-->
+
+			<ul class="sidebar" style="padding-top:10px">
+
+				<!--
+
+				<!- -#4DIF vLogin="gin"- ->
+				<li data-name="novedades" class="standalone"><a target="_blank" title="Ver novedades de esta versión haciendo click en el enlace" class="tosavelogs vernovedades" data-logsmodulo="novedades" data-logsdes="Ha ingresado al módulo de novedades" href="#">Novedades</a></li>
+				<!- -#4DENDIF- ->  -->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;438)-->
+				<li style="cursor:pointer;" data-name="inbox"><a class="unblock-menu tosavelogs" data-logsmodulo="inbox" data-logsdes="Ha ingresado al módulo Inbox" href="/v3/views/inbox/list.shtml">Inbox<span style="display: none;"></span></a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;580)-->
+				<!--<li data-name="proyectos" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="proyectos" data-logsdes="Ha ingresado al módulo proyectos" href="/v3/views/proyectos/index.shtml">Proyectos</a></li>-->
+				<li  class="goto-project" data-name="proyectos"><a class="unblock-menu tosavelogs" data-logsmodulo="proyectos" data-logsdes="Ha ingresado al módulo proyectos" href="#">Proyectos</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;654)-->
+				<li data-name="comprobantes"><a class="unblock-menu tosavelogs" data-logsmodulo="comprobantes" data-logsdes="Ha ingresado al módulo comprobantes" href="/v3/views/comprobantes/index.shtml">Comprobantes</a></li>
+				<!--#4DENDIF-->
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;466)-->
+				<li data-name="cotizaciones" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="cotizaciones" data-logsdes="Ha ingresado al módulo cotizaciones" href="/v3/views/cotizaciones/index.shtml"><!--#4DTEXT _V3_capitalizeString(etiqueta_cotizaciones)--></a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;1)-->
+				<li  data-name="negocios"><a class="unblock-menu tosavelogs" data-logsmodulo="negocios" data-logsdes="Ha ingresado al módulo negocios" href="/v3/views/negocios/index.shtml"><!--#4DTEXT _V3_capitalizeString(etiqueta_negocios)--></a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF vLogin="dsfdsfd"-->
+				<!--<li data-name="negocios"><a href="/v3/views/negocios/list2.shtml">Negocios new</a></li>-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF ((vLogin="soporte") | (vLogin="zvilca") | (vLogin="gin"))-->
+				<li data-name="preorden"><a class="unblock-menu tosavelogs" data-logsmodulo="preorden" data-logsdes="Ha ingresado al módulo de pre orden" href="/v3/views/preorden/list.shtml">Pre orden</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;4)-->
+				<!--<li data-name="gastos"><a href="/v3/views/compras/list_compras.shtml">Órdenes de compra</a></li>-->
+				<li data-name="gastos" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="gastos" data-logsdes="Ha ingresado al módulo orden de compras" href="/v3/views/compras/index.shtml">Órdenes de compra</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF vLogin="gin"-->
+				<!--<li data-name="gastos" class="standalone"><a href="/v3/views/compras/index_pro.shtml">OC2</a></li>-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;508)-->
+				<li data-name="rendiciones"><a class="unblock-menu tosavelogs" data-logsmodulo="rendiciones" data-logsdes="Ha ingresado al módulo de rendiciones" href="/v3/views/compras/list_rendiciones.shtml"><!--#4DTEXT etiqueta_rendiciones--></a></li>
+				<!-- <li data-name="rendiciones" class="standalone"><a href="/v3/views/compras/index_rend.shtml">Rendiciones</a></li>-->
+				<!--#4DENDIF-->
+
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;640)-->
+				<!-- <li data-name="validate" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="validate" data-logsdes="Ha ingresado al módulo validar gastos" href="#">Validar Gastos</a></li> -->
+				<!--#4DENDIF-->
+
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;467)-->
+				<li data-name="dtc"><a class="unblock-menu tosavelogs" data-logsmodulo="dtc" data-logsdes="Ha ingresado al módulo docs. de compra" href="/v3/views/dtc/list.shtml">Docs. de compra</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;526)-->
+				<li style="display:none" data-name="modulo_pagos"><a class="unblock-menu tosavelogs" data-logsmodulo="modulo_pago" data-logsdes="Ha ingresado al módulo de pago" href="/v3/views/modulo_pagos/list.shtml">Módulo de pagos</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;511)-->
+				<li data-name="dtv"><a class="unblock-menu tosavelogs" data-logsmodulo="dtv" data-logsdes="Ha ingresado al módulo de Docs. de venta" href="/v3/views/dtv/list.shtml">Docs. de venta</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;579)-->
+				<li data-name="factoring"><a class="unblock-menu tosavelogs" data-logsmodulo="factoring" data-logsdes="Ha ingresado al módulo de factoring" href="/v3/views/compras/list_factoring.shtml">Factoring</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;513)-->
+				<li data-name="ingresos"><a class="unblock-menu tosavelogs" data-logsmodulo="ingresos" data-logsdes="Ha ingresado al módulo de ingresos" href="/v3/views/cobros/list.shtml">Ingresos</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;512)-->
+				<li data-name="egresos"><a class="unblock-menu tosavelogs" data-logsmodulo="egresos" data-logsdes="Ha ingresado al módulo de egresos" href="/v3/views/pagos/list.shtml">Egresos</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;626)-->
+					<!--<li  class="goto-banco" data-name="banco"><a class="unblock-menu tosavelogs" data-logsmodulo="banco" data-logsdes="Ha ingresado al módulo de banco" href="#">Banco</a></li>-->
+
+					<li data-name="banco"><a class="unblock-menu tosavelogs" data-logsmodulo="banco" data-logsdes="Ha ingresado al módulo de banco" href="/v3/views/banco/list.shtml">Banco</a></li>
+
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;558)-->
+				<!--<li data-name="presupuestos" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="presupuestos" data-logsdes="Ha ingresado al módulo de presupuestos" href="/v3/views/presupuestos/index.shtml">Presup. de Gastos</a></li>-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;558)-->
+				<li data-name="presupuestos"><a class="unblock-menu tosavelogs" data-logsmodulo="presupuestos" data-logsdes="Ha ingresado al módulo de presupuestos" href="/v3/views/presupuestos/list.shtml">Presup. de Gastos</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;468)-->
+				<li data-name="contactos"><a class="unblock-menu tosavelogs" data-logsmodulo="contactos" data-logsdes="Ha ingresado al módulo de contactos" href="/v3/views/contactos/index.shtml">Contactos</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;483)-->
+				<!-- <li data-name="catalogo" class="standalone"><a href="/v3/views/catalogo/index.shtml">Catálogo</a></li> -->
+				<li data-name="catalogo"><a class="unblock-menu tosavelogs" data-logsmodulo="catalogo" data-logsdes="Ha ingresado al módulo de catálogo" href="/v3/views/catalogo/index.shtml">Catálogo</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;15)-->
+					<!--#4DIF g_uso_tareas_easy-->
+						<li  class="goto-tareas" data-name="tareas"><a class="unblock-menu tosavelogs" data-logsmodulo="tareas" data-logsdes="Ha ingresado al módulo de tareas" href="#">Tareas</a></li>
+					<!--#4DELSE-->
+						<li class="iframe" data-name="ot"><a class="unblock-menu tosavelogs" data-logsmodulo="ot" data-logsdes="Ha ingresado al módulo de orden de trabajo" href="/lista_ot.shtml?r=<!--#4DVAR Random-->">Tareas</a></li>
+					<!--#4DENDIF-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF vLogin="gin"-->
+				<!--<li data-name="ot"><a href="/v3/views/ots/v3/list.shtml">OTS2</a></li>-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;477)-->
+				<!--<li data-name="timesheet" class="iframe"><a href="/planner_ot.shtml?r=<!- -#4DVAR Random- ->">Timesheet</a></li>-->
+				<li  class="iframe" data-name="timesheet"><a class="unblock-menu tosavelogs" data-logsmodulo="timesheet" data-logsdes="Ha ingresado al módulo de timesheet" href="/v3/views/timesheet/content.shtml?r=<!--#4DTEXT Random-->">Timesheet</a></li>
+				<!--<li data-name="timesheet"><a href="/v3/views/timesheet/content.shtml">Timesheet</a></li>-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;25)-->
+				<!--<li data-name="calendario" class="iframe"><a href="/v3/views/ots/calendar.shtml">Calendario</a></li>-->
+				<li data-name="calendario"><a class="unblock-menu tosavelogs" data-logsmodulo="calendario" data-logsdes="Ha ingresado al módulo de calendario" href="/v3/views/calendar/list.shtml">Calendario</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF vLogin="bdbvdbvdbvfvbfbvfnvbfbvf"-->
+				<li  data-name="timesheet2"><a class="unblock-menu tosavelogs" data-logsmodulo="timesheet" data-logsdes="Ha ingresado al módulo de timesheet" href="/v3/views/timesheet/list.shtml">Timesheet2</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;6)-->
+				<!--<li data-name="pagos" class="iframe"><a href="/4DACTION/W_LISTA_PAGOS/<!- -#4DVAR vSesion- ->">Pagos</a></li>-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;502)-->
+				<li  data-name="box"><a class="unblock-menu tosavelogs" data-logsmodulo="box" data-logsdes="Ha ingresado al módulo de box" href="/v3/views/box/index.shtml">Box</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;469)-->
+				<!--<li data-name="accesos"><a href="/v3/views/accesos/list.shtml">Accesos</a></li>-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;470)-->
+				<li  data-name="usuarios"><a class="unblock-menu tosavelogs" data-logsmodulo="usuarios" data-logsdes="Ha ingresado al módulo de usuarios" href="/v3/views/usuarios/listado.shtml">Usuarios</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;472)-->
+				<li  data-name="reportes" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="reportes" data-logsdes="Ha ingresado al módulo de reportes" href="/v3/views/reportes/index.shtml">Reportes</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;625)-->
+				<li  data-name="generador-reportes"><a class="unblock-menu tosavelogs" data-logsmodulo="generador-reportes" data-logsdes="Ha ingresado al módulo generador de reportes" href="#" onclick="unaBase.loadInto.dialog('/v3/views/generador-reportes/index.shtml', undefined, 'large'); return false;">Generar Reportes</a></li>
+				<!--#4DENDIF-->
+
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;473)-->
+				<li  data-name="logs"><a class="unblock-menu tosavelogs" data-logsmodulo="logs" data-logsdes="Ha ingresado al módulo de logs" href="/v3/views/logs/index.shtml">Historial</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;474)-->
+				<li  data-name="fxr"><a class="unblock-menu tosavelogs" data-logsmodulo="fxr" data-logsdes="Ha ingresado al módulo de rendiciones v2" href="/v3/views/fxr/list.shtml">Rendiciones V2</a></li>
+				<!--#4DENDIF-->
+
+				<!--
+				<!- -#4DIF vLogin="gin"- ->
+				<li data-name="google" class="standalone"><a href="/v3/views/google/index.shtml">Google</a></li>
+				<!- -#4DENDIF- -> -->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;37)-->
+				<li data-name="proyectos-v2" class="iframe "><a class="unblock-menu tosavelogs" data-logsmodulo="proyectos-v2" data-logsdes="Ha ingresado al módulo de proyectos v2" href="/proyectos.shtml?r=<!--#4DVAR Random-->">Proyectos V2</a></li>
+				<!--#4DENDIF-->
+
+				<!--#4DIF vLogin="gin"-->
+				<!--<li data-name="calgoogle"><a class="unblock-menu tosavelogs" data-logsmodulo="calgoogle" data-logsdes="Ha ingresado al módulo de calendario" href="/v3/views/calendar/google/quickstart.html">Calendar</a></li>-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF _V3_verifica_permisos_web (vLogin;471)-->
+				<li data-name="ajustes" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="ajustes" data-logsdes="Ha ingresado al módulo de ajustes" href="/v3/views/ajustes/index.shtml">Ajustes</a></li>
+				<!--#4DENDIF-->
+
+				<!--<li data-name="ayuda"><a class="unblock-menu tosavelogs unabase-help" data-logsmodulo="ayuda" data-logsdes="Ha ingresado al módulo de ayuda" href="#">Ayuda</a></li>-->
+
+
+
+				<!--<li data-name="contratos" class="iframe"> <a href="#">Contratos</a></li>-->
+
+				<!--#4DIF aCheckPermiso{5}=true-->
+				<!--<li data-name="rendiciones" class="iframe"> <a href="/4DACTION/W_LISTA_SOL/<!- - # 4DVAR vSesion- ->/ln/0">Rendiciones</a></li>-->
+				<!--#4DENDIF-->
+
+				<!--#4DIF aCheckPermiso{2}=true-->
+				<!--
+				<li class="iframe"><a href="/4DACTION/W_LISTA_NEGOCIOS_DUP/< ! - - # 4 D V A R   v S e s i o n  - - >">Cotizaciones</a></li>
+				-->
+				<!--#4DENDIF-->
+
+			</ul>
+		</nav>
+		<input type="checkbox" name="toUnblock" style="display: none;">
+
+		<section>
+			<h1><span>Inicio</span></h1>
+			<header class="full-height " style="zoom: 0.85;">
+				<fieldset class="toolbox" id="search">
+					<legend>Búsqueda</legend>
+					<label>
+						<input type="checkbox" name="searchCheckbox" title="Busqueda Manual">
+						<input autocomplete="off" type="search" name="q" placeholder="Buscar...">
+					</label>
+					<label>
+						<input type="checkbox" name="searchCheckbox" title="Busqueda Manual">
+						<input autocomplete="off" type="search" name="q2" placeholder="Buscar...">
+					</label>
+					<!--
+					<button><span>Búsqueda avanzada</span></button>
+					<fieldset>
+						<legend>Búsqueda avanzada</legend>
+						<button><span>Buscar</span></button>
+						<button type="reset"><span>Restablecer</span></button>
+					</fieldset>
+					-->
+				</fieldset>
+				<br>
+				<nav class="toolbox" id="menu">
+					<ul></ul>
+				</nav>
+			</header>
+			<section id="viewport"></section>
+			<section id="iframe">
+				<iframe allowtransparency="true" scrolling="auto"></iframe>
+			</section>
+		</section>
+		<footer
+			itemscope
+			itemtype="http://schema.org/Organization">
+			<section style="display: inline-block; line-height: 10px">
+				<!--&copy; 2013 <span itemprop="name">UNA Sistemas Ltda.</span>
+				Todos los derechos reservados.
+				<br>
+				<address
+					itemprop="address"
+					itemscope
+					itemtype="http://data-vocabulary.org/Address">
+					<span itemprop="street-address">Monseñor Eyzaguirre 660</span>,
+					<span itemprop="locality">Ñuñoa</span>,
+					<span itemprop="region">Santiago</span> -
+					<span itemprop="country">Chile</span>
+				</address>
+				<p itemprop="telephone">
+					<a target="_blank" href="tel:+56222398622">(56 - 2) 2239 8622</a>
+				</p>
+				<br>
+				<p style="margin-top:5px"><a class="version" target="_blank" href="/v3/views/versiones/list.shtml"></a></p>-->
+				<p style="margin-top:5px"><a class="version" title="Ver novedades de esta versión haciendo click en el enlace" target="_blank" href="https://sites.google.com/una.cl/novedades/novedades-v3-214?authuser=0"></a></p>
+			</section>
+			<nav>
+				<ul>
+					<li class="skype" style="display:none"><a title="Háblanos a: soporte.unasistemas" target="_blank" href="callto:soporte.unasistemas"><span class="none">Skype</span></a></li>
+
+			<!-- 		<li class="wasap"><a title="Agréganos y escríbenos a whatsapp" target="_blank" href="http://web.whatsapp.com"><span  class="none">Whatsapp</span></a></li>
+					<li><a title="Agréganos y escríbenos a whatsapp" target="_blank" href="http://web.whatsapp.com" style="width:200px"><span style="font-weight:bold;margin-left:-10px">+56 9 5207 0908</span></a></li> -->
+
+					<li class="fono"><a title="Háblanos al +56 2 2504 0978" target="_blank" href="#"><span  class="none">Fono</span></a></li>
+					<li><a title="Háblanos al +56 2 2504 0978" target="_blank" href="https://web.whatsapp.com" style="width:200px"><span class="changes-fono" style="font-weight:bold;margin-left:-10px">+56 2 2504 0978</span></a></li>
+
+					<li class="email"><a title="Envíanos un correo a: soporte@unabase.com" target="_blank" href="mailto:soporte@unabase.com"><span class="none">Email</span></a></li>
+					<li><a title="Envíanos un correo a: soporte@unabase.com" target="_blank" href="mailto:soporte@unabase.com" style="width:200px"><span style="font-weight:bold;margin-left:-10px">soporte@unabase.com</span></a></li>
+					
+					<!--<li>
+						<select style="margin-left:100px;width:200px;border:1px solid lightgray;font-weight:bold;">
+							<option selected value="http://52.2.104.107:8500">TRIBECA GROUP</option>
+							<option value="http://tribecamedia.unabase.com">TRIBECA MEDIA</option>
+						</select>
+					</li>-->
+
+				</ul>
+			</nav>
+			<p class="chatItem users">
+				<span>Usuarios conectados</span>
+				<span></span>
+			</p>
+			<button class="chatItem chatBtn" type="button"<!--#4DIF _V3_verifica_permisos_web(vLogin;583) | Not(chatOnline) --> style="display: none !important;"<!--#4DENDIF-->>Chat Online</button>
+			<article class="chatItem chat">
+				<header>
+					<h1>Chat</h1>
+				</header>
+				<section></section>
+				<footer>
+					<input type="text" placeholder="Escriba su mensaje..." name="msg" autocomplete="off">
+					<button type="button"><span>Enviar</span></button>
+				</footer>
+			</article>
+		</footer>
+		<!--#4DIF _V3_demo-->
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-58262854-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+		<!--#4DENDIF-->
+
+		<iframe src="" style="display:none;" name="printFrame"></iframe>
+		<input style="display:none;" name="printBtn" type="button" onclick="frames['printFrame'].print()" value="">
+	</body>
+
+		<script  src="https://statics.unabase.cl/js/plugins/plugins.js"></script>
+	<script type="text/javascript">
+		$('.unblock-menu').click(function(){
+
+			window.onbeforeunload = function(){
+				return '¿Está seguro que desea salir?';
+			}
+			var cotizacionUnblock = {
+				'id': $('#main-container .sheet').data('id'),
+				'folio': $('#main-container .sheet').data('index'),
+				'user': $('html > body.menu.home > aside > div > div > h1').data('username'),
+				'block': false,
+				'module': $('.sidebar li.active').attr('data-name'),
+				'from': "sale de la cot al clickear menu"
+			 };
+
+
+			if(typeof cotizacionUnblock.id != 'undefined' && typeof block_by_use !== 'undefined'){
+				block_by_use(cotizacionUnblock);
+			}
+		});
+
+		$(document).ready(function(){
+
+			//elimina elementos de chat online y contador de usuarios online
+			// if(!uVar.enableChatOnline){
+			// 	// let chatItems = document.querySelectorAll('.chatItem.chatBtn');
+			// 	// for(item of chatItems){
+			// 	// 	item.parentNode.removeChild(item);
+			// 	// }
+			// 	setTimeout(()=> {
+			// 		document.querySelector('.chatItem.chatBtn').style.display = 'none';
+
+			// 	},6000);
+
+			// }
+
+			/*$.ajax({
+				url:'/v3/views/versiones/json/version.shtml',
+				async:false,
+				dataType:'json',
+				success:function(data){
+					$('.version').text("Versión ("+ data.info.current_version +")");
+				}
+			});*/
+			let menuValidate = document.querySelector('li[data-name="validate"] a');
+
+			if(menuValidate != null){
+				menuValidate.addEventListener('click', function(){
+					window.open(`http://${nodejs_public_ipaddr}:${nodejs_port}/expenses/tovalidate` , '_blank');
+				})
+			}
+
+			if (version_Actual != "") {
+				$('.version').text("Versión ("+ version_Actual +")");
+			}
+
+			// /*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var e=this.createElement("script");n&&(this.domain=n),e.id="js-iframe-async",e.src="https://assets.zendesk.com/embeddable_framework/main.js",this.t=+new Date,this.zendeskHost="unabase.zendesk.com",this.zEQueue=a,this.body.appendChild(e)},o.write('<body onload="document._l();">'),o.close()}();
+			// /*]]>*/
+
+			// $('.src-component-Launcher-label').text("Chat soporte");
+
+
+			unaBase.node.check(false).then(res => {
+				unaBase.node.state('on');
+			}).catch(err => {
+
+				unaBase.node.state('off');
+	         	unaBase.node.checkNotify().then(res => {
+					console.warn('res from checknotify');
+					console.warn(res);
+					if(res.notify){
+						unaBase.node.notify();
+					}
+				}).catch(err => {
+
+				});
+			});
+			setInterval(() => {
+				unaBase.node.check(false).then(res => {
+					unaBase.node.state('on');
+				}).catch(err => {
+					unaBase.node.state('off');
+
+					unaBase.node.checkNotify().then(res => {
+						console.warn('res from checknotify');
+						console.warn(res);
+						if(res.notify){
+							unaBase.node.notify();
+						}
+					}).catch(err => {
+
+					});
+				});
+
+			}, 300000);
+
+		});
+
+		$.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) {
+		    //document.getElementById("pais").value = data.address.country;
+		    //alert(data.address.country);
+		    if (data.address.country== "Peru") {
+		    	$('.changes-fono').text('+51 959 619 835');
+		    }
+		});
+	</script>
+
+
+</html>

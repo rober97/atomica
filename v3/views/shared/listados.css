@@ -1,0 +1,526 @@
+/* ==========================================================================
+   listados.css
+   Estilos generales reutilizables para listados (OC, Gastos, Egresos, etc.)
+   Incluye: layout sticky, tabla responsive, paginador y utilidades.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. UTILIDADES DE TEXTO Y CELDAS
+   ========================================================================== */
+
+.rojoPastel {
+	color: red;
+}
+
+.folio * {
+	display: inline-block;
+}
+
+.boldtext {
+	font-weight: bold;
+}
+
+.rightNum {
+	text-align: right;
+}
+
+.redTd {
+	color: red;
+}
+
+
+/* ==========================================================================
+   2. CONTENEDOR PRINCIPAL DE LA TABLA (scroll + sticky thead/tfoot)
+   ========================================================================== */
+
+.padre {
+	width: 100%;
+	height: calc(100% - 50px);
+	overflow-x: auto;
+	overflow-y: auto;
+	position: relative;
+	-webkit-overflow-scrolling: touch; /* momentum scroll en iOS, no afecta desktop */
+}
+
+.padre table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.padre thead,
+.padre tfoot {
+	position: sticky;
+	z-index: 1;
+	background-color: #fff;
+}
+
+.padre thead {
+	top: 0;
+}
+
+
+/* ==========================================================================
+   2.1 SCROLL TÁCTIL — wrappers internos (tablets/móviles)
+   --------------------------------------------------------------------------
+   Compatibilidad para listados que usan wrappers anidados estilo
+   .list-layout / .table-wrap / .table-responsive (DTC, etc.).
+   Asegura que el scroll vertical funcione con el dedo y que el indicador
+   de "hay más contenido" se vea bien en iOS/Android.
+   ========================================================================== */
+
+.list-layout {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+}
+
+.table-wrap {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	overscroll-behavior: contain; /* evita el bounce del body cuando se llega al borde */
+	touch-action: pan-x pan-y;     /* habilita explícitamente pan en ambos ejes */
+}
+
+/* Si el listado anida .table-responsive dentro de .table-wrap, evitamos
+   que se bloquee el eje vertical (algunos listados lo tenían en hidden). */
+.table-wrap .table-responsive {
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: visible; /* el scroll vertical lo maneja .table-wrap */
+	-webkit-overflow-scrolling: touch;
+	touch-action: pan-x pan-y;
+}
+
+.padre tfoot {
+	bottom: 0;
+}
+
+
+/* ==========================================================================
+   3. CELDAS ESPECIALES (folio, forma de pago, etc.)
+   ========================================================================== */
+
+td[width="10%"].center {
+	font-size: 11px;
+	line-height: 1.3;
+	padding: 4px 2px;
+}
+
+.fpago-column {
+	min-width: 180px !important;
+	max-width: 250px !important;
+	font-size: 10px !important;
+	line-height: 1.2 !important;
+	white-space: normal !important;
+	word-wrap: break-word !important;
+}
+
+th[width="10%"] {
+	min-width: 180px !important;
+}
+
+
+/* ==========================================================================
+   4. SELECCIÓN MÚLTIPLE Y CHECKBOX
+   ========================================================================== */
+
+.chk {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin: 0;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.container-options {
+	height: 30px;
+	margin: 5px 0 0 0;
+	padding: 3px;
+	border-color: red;
+}
+
+.container-options > div {
+	display: inline-block;
+}
+
+#selectdtc {
+	height: 24px;
+	width: 70px;
+	background-color: #e6e6e6;
+}
+
+
+/* ==========================================================================
+   5. PAGINADOR
+   ========================================================================== */
+
+.pagination-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	margin: 10px 0;
+	flex-wrap: wrap;
+	padding: 0 10px;
+}
+
+.pagination-wrapper .page-size {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 12px;
+	color: #344054;
+}
+
+.pagination-wrapper .page-size label {
+	user-select: none;
+	white-space: nowrap;
+}
+
+.pagination-wrapper .page-size select {
+	height: 28px;
+	padding: 0 8px;
+	border: 1px solid #d0d5dd;
+	border-radius: 8px;
+	background: #ffffff;
+	color: #344054;
+	font-size: 12px;
+	cursor: pointer;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+	transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.pagination-wrapper .page-size select:hover {
+	border-color: #cbd5e1;
+}
+
+.pagination-wrapper .page-size select:focus-visible {
+	outline: 2px solid rgba(0, 169, 114, 0.35);
+	outline-offset: 2px;
+}
+
+.pagination {
+	text-align: center;
+	font-size: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	flex-wrap: wrap;
+	margin: 0;
+}
+
+.pagination a,
+.pagination span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6px 10px;
+	min-width: 30px;
+	height: 28px;
+	border-radius: 8px;
+	border: 1px solid #d0d5dd;
+	background: #ffffff;
+	color: #344054;
+	text-decoration: none;
+	user-select: none;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+	transition: background .15s ease, border-color .15s ease, transform .05s ease, box-shadow .15s ease;
+}
+
+.pagination a:hover {
+	background: #f9fafb;
+	border-color: #cbd5e1;
+}
+
+.pagination a:active {
+	transform: translateY(1px);
+	box-shadow: 0 0 0 rgba(16, 24, 40, 0);
+}
+
+.pagination a:focus-visible {
+	outline: 2px solid rgba(0, 169, 114, 0.35);
+	outline-offset: 2px;
+}
+
+.pagination span.current,
+.pagination a.current {
+	background: #00a972;
+	border-color: #00a972;
+	color: #ffffff;
+	font-weight: 700;
+}
+
+.pagination span.disabled {
+	background: #f2f4f7;
+	border-color: #eaecf0;
+	color: #98a2b3;
+	cursor: not-allowed;
+	box-shadow: none;
+}
+
+.pagination span:not(.current):not(.disabled) {
+	background: transparent;
+	border-color: transparent;
+	box-shadow: none;
+	cursor: default;
+	min-width: auto;
+	padding: 0 6px;
+	height: 28px;
+}
+
+
+/* ==========================================================================
+   6. RESPONSIVE — TABLETS Y PANTALLAS MEDIANAS (≤ 1024px)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+
+	.padre {
+		height: calc(100% - 40px);
+	}
+
+	.padre table.results {
+		/* ancho mínimo para que mantenga su estructura y se active el scroll
+		   horizontal en lugar de comprimirse */
+		min-width: 1100px;
+		font-size: 12px;
+	}
+
+	.padre table.results th,
+	.padre table.results td {
+		padding: 6px 4px;
+		font-size: 11px;
+	}
+
+	.fpago-column {
+		min-width: 140px !important;
+		max-width: 200px !important;
+		font-size: 9px !important;
+	}
+
+	th[width="10%"] {
+		min-width: 140px !important;
+	}
+
+	.pagination-wrapper {
+		gap: 12px;
+	}
+
+	.pagination-wrapper .page-size,
+	.pagination-wrapper .page-size select {
+		font-size: 11px;
+	}
+
+	.pagination-wrapper .page-size select {
+		height: 26px;
+	}
+
+	.pagination {
+		font-size: 11px;
+		gap: 4px;
+	}
+
+	.pagination a,
+	.pagination span {
+		padding: 5px 8px;
+		min-width: 26px;
+		height: 26px;
+	}
+}
+
+
+/* ==========================================================================
+   7. RESPONSIVE — TABLETS PEQUEÑAS Y MÓVILES GRANDES (≤ 768px)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
+	.padre {
+		height: calc(100vh - 120px);
+		/* Indicador visual de que la tabla scrollea horizontalmente */
+		background:
+			linear-gradient(to right, #fff 30%, rgba(255,255,255,0)),
+			linear-gradient(to right, rgba(255,255,255,0), #fff 70%) 100% 0,
+			linear-gradient(to right, rgba(0,0,0,.08), rgba(0,0,0,0)),
+			linear-gradient(to left, rgba(0,0,0,.08), rgba(0,0,0,0)) 100% 0;
+		background-repeat: no-repeat;
+		background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+		background-attachment: local, local, scroll, scroll;
+	}
+
+	.padre table.results {
+		min-width: 900px;
+		font-size: 11px;
+	}
+
+	.padre table.results th,
+	.padre table.results td {
+		padding: 5px 3px;
+		font-size: 10px;
+	}
+
+	.fpago-column {
+		min-width: 120px !important;
+		max-width: 160px !important;
+		font-size: 9px !important;
+	}
+
+	.chk {
+		width: 18px;
+		height: 18px;
+	}
+
+	#selectdtc {
+		width: 60px;
+	}
+
+	.pagination-wrapper {
+		gap: 8px;
+		margin: 6px 0;
+	}
+
+	.pagination-wrapper .page-size,
+	.pagination-wrapper .page-size select {
+		font-size: 10px;
+	}
+
+	.pagination-wrapper .page-size select {
+		height: 24px;
+		padding: 0 6px;
+	}
+
+	.pagination {
+		font-size: 10px;
+		gap: 3px;
+		margin: 0;
+	}
+
+	.pagination a,
+	.pagination span {
+		padding: 4px 7px;
+		min-width: 24px;
+		height: 24px;
+		border-radius: 6px;
+	}
+}
+
+
+/* ==========================================================================
+   8. RESPONSIVE — MÓVILES (≤ 480px)
+   ========================================================================== */
+
+@media (max-width: 480px) {
+
+	.padre {
+		height: calc(100vh - 100px);
+	}
+
+	.padre table.results {
+		min-width: 800px;
+		font-size: 10px;
+	}
+
+	.padre table.results th,
+	.padre table.results td {
+		padding: 4px 2px;
+		font-size: 9px;
+	}
+
+	.fpago-column {
+		min-width: 100px !important;
+		max-width: 140px !important;
+		font-size: 8px !important;
+	}
+
+	.pagination-wrapper {
+		gap: 6px;
+	}
+
+	.pagination-wrapper .page-size {
+		font-size: 9px;
+	}
+
+	.pagination-wrapper .page-size select {
+		height: 22px;
+		padding: 0 4px;
+		font-size: 10px;
+	}
+
+	.pagination a,
+	.pagination span {
+		padding: 3px 6px;
+		min-width: 22px;
+		height: 22px;
+	}
+
+	/* checkboxes un poco más grandes para tap accesible */
+	.chk {
+		width: 22px;
+		height: 22px;
+	}
+}
+
+
+/* ==========================================================================
+   9. RESPONSIVE — ORIENTACIÓN HORIZONTAL EN MÓVILES
+   ========================================================================== */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+	.padre {
+		height: calc(100vh - 80px);
+	}
+}
+
+
+/* ==========================================================================
+   10. ACCESIBILIDAD Y PREFERENCIAS DEL USUARIO
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+	.pagination a,
+	.pagination span {
+		transition: none;
+	}
+}
+
+
+/* ==========================================================================
+   11. FIX SCROLL EN TABLETS Y DISPOSITIVOS TOUCH
+   --------------------------------------------------------------------------
+   Solo se aplica en dispositivos táctiles (no afecta desktop).
+   Detecta touch con (hover: none) and (pointer: coarse).
+   ========================================================================== */
+
+@media (hover: none) and (pointer: coarse) {
+
+	/* Contenedor principal: scroll real con momentum en iOS */
+	.padre {
+		-webkit-overflow-scrolling: touch;
+		touch-action: pan-x pan-y;
+	}
+
+	/* Wrapper vertical: solo eje Y */
+	.table-wrap {
+		-webkit-overflow-scrolling: touch;
+		touch-action: pan-y;
+	}
+
+	/* Wrapper horizontal: solo eje X (el Y lo lleva .table-wrap) */
+	.table-responsive {
+		-webkit-overflow-scrolling: touch;
+		touch-action: pan-x;
+	}
+
+	/* Inputs y checkboxes: NO bloquean el gesto de scroll */
+	.padre input[type="checkbox"],
+	.padre .chk {
+		touch-action: manipulation;
+	}
+}

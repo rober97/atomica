@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Catálogo</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="/v3/design/tooltipster-custom.css?<!--#4DTEXT random-->">
+		<script>
+
+			$(document).ready(function() {
+				document.title = nombreEmpresa + ' / Catálogo';
+				$('.credencial tbody').on("click", "tr > td > div.chk > input", function(event){
+					var cantChecked = $('.credencial > tbody > tr > td > div.chk > input:checked').length;
+					var buttonDisable = $('#menu ul li[data-name="disable_from_list"]');
+					var buttonMerge = $('#menu ul li[data-name="merge"]');
+					var buttonTag = $('#menu ul li[data-name="tag"]');
+
+					if (cantChecked == 0 ) {
+						buttonDisable.hide();
+						buttonTag.hide();
+						buttonMerge.hide();
+					}else{
+						if (cantChecked == 1) {
+							buttonDisable.show();
+							buttonTag.show();
+							buttonMerge.hide();
+						}else{
+							if (cantChecked > 1) {
+								buttonDisable.show();
+								buttonTag.show();
+								buttonMerge.show();
+							}
+						}
+					}
+				});
+
+				unaBase.toolbox.init();
+
+				// Inicializamos un buscador
+				var params = {
+					searchOff: true,
+					// Función que genera una URL de listado JSON
+					url: function() { return '/4DACTION/_V3_getProducto?all=true' },
+					entity: 'Producto',
+					// Función que genera cada fila de la tabla, dado el valor de i (índice de posición)
+					// y el valor de rows (array con todos los resultados)
+					// El contenido de rows corresponde al objeto de mismo nombre generado mediante la llamada
+					// a la api JSON. Ver /v3/json/get_cotizacion.shtml para conocer el formato.
+					row: {
+						html: function(i, rows) {
+							var tags = "";
+							if (rows[i].tags.length>0) {
+								$.each(rows[i].tags, function(key, item){
+									tags = tags + "<span>#"+ item.tag_name +"</span>";
+								});
+							}
+							var htmlData = '';
+							//if (typeof rows[i].folio != 'undefined' && rows[i].folio != -1)
+								htmlData = '<tr data-id="' + rows[i].id + '" data-username="' + rows[i].username + '" data-status="' + rows[i].status + '"' + ((rows[i].is_group)? ' data-group' : '') + ((rows[i].parent != null)? ' data-parent="' + rows[i].parent + '"' : '') + '>' +
+									'<td><div style="width: 100%; height: 100%; line-height: 100px;"><img style="display: inline-block; max-width: 150px; max-height: 150px; vertical-align: middle; margin-left: -10px; margin-top: -10px;" src="/4DACTION/_V3_getUpload?index=Servicio|' + rows[i].id + '" alt="' + rows[i].text + '" onerror="$(this).after(\'<div>' + ((rows[i].text.match(/\b(\w)/g) != null)? rows[i].text.match(/\b(\w)/g).join('').substring(0, 2) : rows[i].text.substring(0,1) ) + '</div>\'); $(this).remove();"></td>' +
+									'<td class="text">' + ((rows[i].text.length > 22)? rows[i].text.toLowerCase().substring(0, 22) + '...' : rows[i].text.toLowerCase()) + ' <div class="badge-symlink"></div> <div class="badge-merge" title="Ítem fusionado"></div>' + (((rows[i].instances.negocios + rows[i].instances.gastos) > 0)? ('<div class="instances">Se ha utilizado ' + (rows[i].instances.negocios + rows[i].instances.gastos) + ' ' + (((rows[i].instances.negocios + rows[i].instances.gastos) > 1)? 'veces' : 'vez')) : '') + '</div>' +  '</td>' +
+									'<td class="text">' + rows[i].categoria.text + '</td>' +
+									'<td class="currency">' + rows[i].precio + '</td>' +
+									'<td class="currency">' + rows[i].costo + '</td>' +
+									'<td><div class="chk" style="' + ((rows[i].parent != null)? 'display: none;' : '') + '"><input type="checkbox" name="producto[id]" value="' + rows[i].id + '" /></div></td>' +
+									'<td><div class="container-tags">'+ tags +'</div></td>' +
+									//'<td>' + ((rows[i].index == '')? 'N/A' : rows[i].index)  + '</td>' +
+									//'<td>' + ((rows[i].username != '')? rows[i].username : 'N/A') + '</td>' +
+								'</tr>';
+
+								/*
+								return '<tr data-id="' + rows[i].id + '">' +
+									'<td><div>sin foto</div></td>' +
+									'<td>' + contacto + '</td>' +
+									'<td>' + cadenaDir + '</td>' +
+									'<td><span>Tel:</span><a target="_blank" href="tel:' + fono + '">' + fono + '</a></td>' +
+									'<td><span>Email:</span><a target="_blank" href="mailto:' + email + '">' + email + '</a></td>' +
+									'<td><div class="chk"><input type="checkbox" value="None" name="check" /></div></td>' +
+								'</tr>'
+								*/
+
+							return htmlData;
+						}
+					},
+					detail: {
+						// Función que genera una URL de detalle, dado el id (identificador de item)
+						url: function(id) { return '/v3/views/catalogo/content.shtml?id=' + id },
+						iframe: false,
+						dialog: true,
+						size: 'large'
+					},
+					// Inflexiones
+					inflection: {
+						singular: 'producto',
+						plural: 'productos',
+						none: 'ningún'
+					},
+					// Filtros
+					filters: [
+						{ name: 'tags', type: 'autocomplete', caption: 'Etiquetas', dataSource: 'getTags' },
+						{ name: 'categoria', type: 'autocomplete', caption: 'Categoria', dataSource: 'getCategorias' },
+						{ name: 'estado', type: 'checkbox', caption: 'Estado', options: [
+							{ caption: 'Activo', name: 'estado_activo', value: true },
+							{ caption: 'Inactivo', name: 'estado_inactivo', value: false }
+						] }
+					]
+				};
+
+
+				/*$.ajax({
+					url: '/4DACTION/_V3_getDato',
+					dataType: 'json',
+					async: false,
+					success: function(data) {
+						$.each(data.rows, function(key, item) {
+							if (item.enabled && item.options.length > 0)
+								params.filters.push({
+									name: item.nombre.replace(/ |\(|\)|\/|\?/g,"_"),
+									type: 'autocomplete',
+									caption: item.nombre,
+									dataObject: item.options
+								});
+							//if (item.enabled && item.options.length == 0)
+							//	params.filters.push({
+							//		name: item.nombre.replace(/ |\(|\)|\/|\?/g,"_"),
+							//		type: 'text',
+							//		caption: item.nombre,
+							//		dataObject: item.options
+							//	});
+							//
+						});
+					}
+				});*/
+
+				unaBase.toolbox.search.init(params);
+
+				unaBase.toolbox.menu.init({
+					entity: 'Producto', // especifica entidad sobre la cual se almacenan los datos
+										  // y nombre para referenciar los views
+					/*buttons: [ 'new', 'clone', 'print' ]*/
+					// buttons: [ 'new' ]
+					buttons: ['searchOff', 'new', 'disable_from_list', 'merge', 'tag' , "export_list", "import_list_catalogo"]
+				});
+
+				$('#menu ul li[data-name="disable_from_list"]').hide();
+				$('#menu ul li[data-name="merge"]').hide();
+				$('#menu ul li[data-name="tag"]').hide();
+
+
+			});
+		</script>
+		<style type="text/css">
+		/*.credencial{
+			text-align: center;
+		}*/
+
+
+		.credencial > thead > tr{
+			display:none;
+		}
+		.credencial > tbody{
+			text-align: left;
+		}
+		.credencial tr {
+			/*float: right;*/
+			/*width: calc(100%/3-5px*3*2)!important;*/
+			width: 340px;
+			height: 128px!important;
+			border:1px solid lightgray;
+			display: inline-block;
+			margin: 5px;
+			position: relative;
+			padding: 8px!important;
+			background-color: white!important;
+		}
+
+		.credencial tbody > tr > td{
+			position: absolute;
+			/*border:1px solid blue;*/
+			display: block;
+		}
+
+		.credencial tbody > tr > td:nth-child(1){
+			border:1px ridge lightgray;
+			width:100px;
+			height:100px;
+			margin-top: 5px;
+			vertical-align: middle;
+			border-radius: 60px;
+			overflow: hidden;
+			border: 2px solid lightgrey;
+			background-color: white;
+		}
+		.credencial tbody > tr > td:nth-child(1) div{
+			vertical-align: middle;
+			font-size: 30px;
+			text-align: center;
+		}
+
+		.credencial tbody > tr > td:nth-child(2){
+			color: black;
+			font-size:15px;
+			left:120px;
+			text-align:left;
+			text-transform: capitalize;
+		}
+
+		.credencial tbody > tr > td:nth-child(3){
+			left:120px;
+			top: 30px;
+			font-size:11px;
+			text-align: left!important;
+			word-break: break-all;
+		}
+
+		.credencial tbody > tr > td:nth-child(4):after{
+			content: '  / Venta';
+		}
+
+		.credencial tbody > tr > td:nth-child(4){
+			left:120px;
+			top: 90px;
+			width: 130px;
+			font-size:12px;
+		}
+		.credencial tbody > tr > td:nth-child(4) a{
+			text-transform: lowercase!important;
+			margin-left:3px;
+		}
+
+		.credencial tbody > tr > td:nth-child(5):after{
+			content: ' / Costo';
+		}
+
+		.credencial tbody > tr > td:nth-child(5){
+			left:120px;
+			top: 85px;
+			width: 130px;
+			font-size:12px;
+		}
+		.credencial tbody > tr > td:nth-child(5) a{
+			text-transform: lowercase!important;
+			margin-left:3px;
+		}
+
+		.credencial tbody > tr > td:nth-child(6){
+			position: absolute;
+			top:0;
+			right:0;
+		}
+		.credencial tbody > tr > td:nth-child(6) > div.chk > input{
+			width: 30px;
+			height: 30px;
+		}
+
+		/*.credencial tr, td{
+			background:white!important;
+		}*/
+
+		.credencial tbody > tr > td:last-of-type {
+			text-align: left;
+			font-size: 9px;
+			font-weight: bold;
+			top: 128px;
+		}
+
+		.credencial tbody > tr > td:last-of-type span {
+			margin: 5px 5px 5px 0px;
+			/* font-style: italic; */
+			text-decoration: none;
+		}
+
+		.credencial tbody > tr[data-parent] > td > div.badge-symlink {
+			display: none;
+			position: absolute;
+			left: -145px;
+			top: -10px;
+			width: 32px;
+			height: 32px;
+			background-image: url('/v3/design/icons/symlink.png');
+			zoom: .8;
+		}
+
+		.credencial tbody > tr[data-group] > td > div.badge-merge {
+			position: absolute;
+			left: -145px;
+			top: -10px;
+			width: 20px;
+			height: 25px;
+			background-image: url('/v3/design/icons/merge.png');
+			zoom: .8;
+		}
+
+		.credencial tbody > tr > td > div.instances {
+			position: absolute;
+			display: block;
+			width: 200px;
+			left: 18px;
+			top: 65px;
+			font-size: 10px;
+			color: rgb(103,103,103) !important;
+		}
+
+
+		</style>
+	</head>
+	<body>
+		<!-- Maqueta de la tabla que contendrá los resultados de búsqueda -->
+		<table class="results credencial listindex">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Creado por</th>
+					<th>Categoría</th>
+					<th>Nombre</th>
+					<th>Precio</th>
+					<th>Costo</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+			<tfoot style="display: none !important;"></tfoot>
+		</table>
+	</body>
+
+</html>

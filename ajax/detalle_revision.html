@@ -1,0 +1,154 @@
+<div class="box-general-det-rev">
+
+<input id="input-id-det-revision" type="hidden" value="<!--#4DVAR vIdDetRevision-->"/>
+<div class="header-revision">
+<h2 id="asunto-det-rev"><!--#4DVAR vAsuntoRev--></h2>
+<h3>Creado por <!--#4DVAR nombreRespRev--> el <!--#4DVAR string(vFechaRev;5)--></h3>
+<table class="comment-det-rev" border="0" >
+<tr>
+<td>
+	<span class="photo-comment"><img src="<!--#4DVAR vUrlImagenLogo-->"></span>
+</td>
+<td>
+
+<p class="comentario"><!--#4DVAR comentarioRev--></p>
+
+<p class="files-revision-det">
+	<!--#4dif Size of array(aNombreArchivo)>0-->
+		<h3>Archivos :</h3>
+		<!--#4dloop aIdArchivo-->
+		<div class="items-file-revison"  id="rev<!--#4dvar aIdArchivo{aIdArchivo}-->">
+
+			<!--#4dif aDesFormatoArchivo{aIdArchivo}="IMAGEN"-->
+			<div class="imagenes">
+				<img alt="<!--#4dvar aAncho{aIdArchivo}-->-<!--#4dvar aAlto{aIdArchivo}-->"
+				id="<!--#4dvar aIdArchivo{aIdArchivo}-->" class="img-popup" src="/uploads/<!--#4dvar aNombreArchivo{aIdArchivo}-->" >
+				<span class="des-file">
+					<!--#4dvar aNombreArchivo{aIdArchivo}-->
+					<a class="delete-file" title="file-rev" id="<!--#4dvar aIdArchivo{aIdArchivo}-->" href="#">x</a>
+				</span>
+			</div>
+			<!--#4dendif-->
+
+			<!--#4dif aDesFormatoArchivo{aIdArchivo}="VIDEO"-->
+			<div class="archivo">
+				<img src="/imagenes_formato/<!--#4dvar aFormatoArchivo{aIdArchivo}-->.png">
+				<span class="des-file">
+					<!--#4dvar aNombreArchivo{aIdArchivo}-->
+					<a class="delete-file" title="file-rev" id="<!--#4dvar aIdArchivo{aIdArchivo}-->" href="#">x</a>
+				</span>
+			</div>
+			<!--#4dendif-->
+
+			<!--#4dif aDesFormatoArchivo{aIdArchivo}="AUDIO"-->
+			<div class="audio">
+			    <audio controls="controls">                 
+			        <source src="/uploads/<!--#4dvar aNombreArchivo{aIdArchivo}-->" type="audio/mpeg" />
+			        Your browser does not support the audio element.
+			    </audio>
+			    <span class="des-file">
+			    	<!--#4dvar aNombreArchivo{aIdArchivo}-->
+			    	<a class="delete-file" title="file-rev" id="<!--#4dvar aIdArchivo{aIdArchivo}-->" href="#">x</a>
+			    </span>
+			</div>
+			<!--#4dendif-->
+
+			<!--#4dif aDesFormatoArchivo{aIdArchivo}="DOCUMENTO"-->
+			<div class="archivo">
+				<img src="/imagenes_formato/<!--#4dvar aFormatoArchivo{aIdArchivo}-->.png">
+				<span class="des-file">
+					<!--#4dvar aNombreArchivo{aIdArchivo}-->
+					<a class="delete-file" title="file-rev" id="<!--#4dvar aIdArchivo{aIdArchivo}-->" href="#">x</a>
+				</span>
+			</div>
+			<!--#4dendif-->
+
+			<!--#4dif aDesFormatoArchivo{aIdArchivo}="COMPRIMIDO"-->
+			<div class="archivo">
+				<img src="/imagenes_formato/<!--#4dvar aFormatoArchivo{aIdArchivo}-->.png">
+				<span class="des-file">
+					<!--#4dvar aNombreArchivo{aIdArchivo}-->
+					<a class="delete-file" title="file-rev" id="<!--#4dvar aIdArchivo{aIdArchivo}-->" href="#">x</a>
+				</span>
+			</div>
+			<!--#4dendif-->		 
+		</div>
+		<!--#4dendloop-->
+	
+	<!--#4dendif-->	
+</p>
+
+<p class="participants-det-rev">
+	<h3>Fecha de vencimiento :</h3>
+	<p class="comentario"><!--#4DVAR string(vFechaVcto;5)--> a las <!--#4DVAR string(vHoraVcto;5)--></p>
+</p>
+		
+<p class="participants-det-rev">
+	<h3>Participantes :</h3>
+	 <!--#4dloop aLoginPartRev-->
+	    <!--#4dif aTipoPartRev{aLoginPartRev}="RESPONSABLE"-->
+	    <div class="items-asignados-resp"><!--#4dvar aNombrePartRev{aLoginPartRev}-->
+	      <input type="hidden" name="userasignado" value="res/<!--#4dvar aLoginPartRev{aLoginPartRev}-->"/>
+	    </div>
+	    <!--#4dendif-->
+
+	    <!--#4dif aTipoPartRev{aLoginPartRev}="INTEGRANTE"-->
+	    <div class="items-asignados-int"><!--#4dvar aNombrePartRev{aLoginPartRev}-->
+	      <input type="hidden" name="userasignado" value="int/<!--#4dvar aLoginPartRev{aLoginPartRev}-->"/>
+	    </div>
+	    <!--#4dendif-->
+
+	    <!--#4dif aTipoPartRev{aLoginPartRev}="INVITADO"-->
+	    <div class="items-asignados-inv"><!--#4dvar aNombrePartRev{aLoginPartRev}-->
+	      <input type="hidden" name="userasignado" value="inv/<!--#4dvar aNombrePartRev{aLoginPartRev}-->/<!--#4dvar aLoginPartRev{aLoginPartRev}-->"/>
+	    </div>
+	    <!--#4dendif-->
+
+    <!--#4dendloop--> 
+</p>
+
+<p class="comment-det-rev">
+	<h3>Comentarios :</h3>
+
+	<div id="list-coment-rev" class="list-coment-rev">
+		<!--#4dloop aIdComRev-->
+		  <div class="items-comentario" id="<!--#4DVAR aIdComRev{aIdComRev}-->">   
+		    <span class="photo"><img src="<!--#4DVAR aPhotoRespComRev{aIdComRev}-->"></span>
+		    <span>
+		    
+		    	<span class="name">
+                <!--#4DVAR aNomRespComRev{aIdComRev}--> / 
+                <span class="especial-span"><!--#4DVAR aEmailRespComRev{aIdComRev}--></span>
+                <!--#4dif aTypeRespComRev{aIdComRev}="guest"-->
+                    <span class="guest-tag">( Invitado )</span>
+                <!--#4dendif-->
+            </span>
+
+		    	<!--<span class="name">#4DVAR aNomRespComRev{aIdComRev}</span>-->	    
+	    		<span class="comment"><!--#4DVAR aDesComRev{aIdComRev}--></span>
+		    	<span class="date">
+		    		Comentado el <!--#4DVAR aDateComRev{aIdComRev}--> a las <!--#4DVAR aTimeComRev{aIdComRev}--></span>
+		    </span>		   	    
+		  </div>    
+		<!--#4dendloop-->
+	</div>
+
+	<table border="0" >
+		<tr>
+			<td><span class="photo-comment"><img src="<!--#4DVAR vFotoLogueado-->"></span></td>
+			<td>
+			<textarea id="text-coment" class="input-coment-det-rev" placeholder="Agregar un comentario"></textarea>
+			<div class="btn-comentarxxx">
+				<button id="btn-comment-revision" type="button" class="buttonBkn2">Comentar</button>
+			</div>
+			</td>
+		</tr>
+	</table>
+
+</p>
+
+</td>
+</tr>
+</table>
+</div>
+</div>

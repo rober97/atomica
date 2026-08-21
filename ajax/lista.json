@@ -1,0 +1,14 @@
+﻿[
+    {"title": "Servicios", "isFolder": true, "key": "folder1",
+        "children": [
+            {"title": "Consultoríaxxxxxxxx"},
+			{"title": "Formaciónxxxxxxx"}
+			]
+        },
+	{"title": "Productos", "isFolder": true, "key": "folder2",
+	    "children": [
+		    {"title": "Impresorasxxxxxxx"},
+		    {"title": "Ordenadoresxxxxxx"}
+		    ]
+		}
+]

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/out/style.css"/>
+    <title>REPORTES-UNABASE</title>
+        <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+-->
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/out/report.js"></script>
+
+    <style>
+      /*  p{text-align:left;display:block!important; margin: 30px 0 0 40px;}
+        label{font-weight:bold;font-size:12px} */
+        table thead tr td{
+            font-size: 10px!important;
+        }
+        table tfoot {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .bg-reporte{
+            background-color:lightgray!important;
+            font-weight:bold!important;
+        }
+
+        .box-ejecutivo{
+            margin:5px;
+            padding: 5px;
+        }
+            .box-ejecutivo h3{
+                margin: 5px 25px;
+                padding: 0px;
+                text-align:left;
+            }
+            .box-ejecutivo td{
+               text-transform: uppercase;
+               padding:2px;
+            }
+
+        .left{
+            text-align:left;
+        }
+        .right{
+            text-align:right;
+        }
+        .center{
+            text-align:center;
+        }
+
+        .line{
+            border-bottom: 2px solid gray!important;
+        }
+
+        .reg{
+            text-align: left;
+            margin: 5px 5px 5px 25px;
+            padding: 0px;
+            font-size:12px;
+        }
+
+        .negrita{
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="contenedor" align="center">
+ <div class="cuadro2">
+   <div style="float:left;width:60%;left:10px;vertical-align:top;">
+        <h4><!--#4DVAR v_Tit_Informe--></h4>
+        <p><!--#4DVAR String(aReporteDesc)--></p>
+    </div>
+    <p><img src="<!--#4DVAR vUrlImagenLogo-->" width="<!--#4DVAR vAnchoPicture-->" height="<!--#4DVAR vAltoPicture-->" border="0"/></p>
+  <div class="row">
+
+    <table class="totaleshead">
+        <tr>
+            <td colspan="2" style="padding:2px;">TOTAL : <span><!--#4DVAR _V3_formatCurrency(V_FacTotal)--></span></td>
+        </tr>
+        <tr>
+            <td  colspan="2" style="padding:2px;">ABONO : <span style="border-bottom:2px solid black;"><!--#4DVAR _V3_formatCurrency(V_FacAbono)--></span></td>
+        </tr>
+        <tr>
+            <td  colspan="2" style="padding:2px;font-weight:bold;">SALDO : <span style="font-weight:bold;"><!--#4DVAR _V3_formatCurrency(V_FacSaldo)--></span></td>
+        </tr>
+    </table>
+
+    <div style="text-align:left;margin:6px 10px 0px 40px;">
+    <button id="btn-export-excel"
+        onclick="exportarInfFacExcel()"
+        style="background-color:#08A86C;color:white;border:none;padding:7px 16px;border-radius:4px;cursor:pointer;font-size:12px;font-weight:bold;">
+        &#x21E9;&nbsp;Descargar Excel
+    </button>
+    </div>
+    <div class="totalreg" style="margin-top:4px;font-weight:bold;">
+        Total Facturas: <!--#4DVAR v_TotReg-->
+    </div>
+    <script>
+        var _nodeUrl = (function() {
+            var nu = "<!--#4DHTML nodeUrl-->";
+            if (nu && nu.indexOf('<!--') === -1 && nu.length > 3) return nu;
+            var ip   = "<!--#4DHTML _V3_nodejs_public_ipaddr-->";
+            var port = "<!--#4DHTML _V3_nodejs_port-->";
+            //if (ip && ip.indexOf('<!--') === -1) return 'http://' + ip + ':' + port;
+            return '';
+        })();
+        function exportarInfFacExcel() {
+            if (!_nodeUrl) {
+                alert('Error: No se pudo determinar la URL del servidor Node.js.\nVerifica que nodeUrl o _V3_nodejs_public_ipaddr estén definidos en 4D.');
+                return;
+            }
+            var btn = document.getElementById('btn-export-excel');
+            btn.disabled = true;
+            btn.innerHTML = 'Generando...';
+            fetch(window.location.origin + '/4DACTION/INFO_FAC_X_COBRAR?download=true')
+                .then(function(r) {
+                    if (!r.ok) throw new Error('Error 4D: ' + r.status);
+                    return r.json();
+                })
+                .then(function(jsonData) {
+                    return fetch(_nodeUrl + '/export-inf-fac-x-cobrar', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(jsonData)
+                    });
+                })
+                .then(function(r) {
+                    if (!r.ok) throw new Error('Error Excel: ' + r.status);
+                    return r.blob();
+                })
+                .then(function(blob) {
+                    var a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'Facturas_por_cobrar.xlsx';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(a.href);
+                })
+                .catch(function(e) { alert('Error al descargar: ' + e.message); })
+                .finally(function() {
+                    btn.disabled = false;
+                    btn.innerHTML = '&#x21E9;&nbsp;Descargar Excel';
+                });
+        }
+        (function() {
+            var tot = document.getElementById('btn-export-excel').getAttribute('data-totreg') || '';
+            var el  = document.getElementById('totalreg-display');
+            if (el) el.textContent = 'Total Facturas: ' + tot;
+        })();
+    </script>
+    <table class="table table-responsive table-bordered">
+        <thead>
+              <tr >
+                <td class="center-c negrita">NC</td>
+                <td class="center-c negrita">NÚMERO</td>
+                <td class="center-c negrita" width="7%">F. PAGO</td>
+                <td class="center-c negrita" width="7%">F. EMISIÓN</td>
+                <td class="center-c negrita" width="7%">F. VCTO.</td>
+                <td class="center-c negrita">ATRASO</td>
+                <td class="center-c negrita">CLIENTE</td>
+                <td class="center-c negrita">REFRENCIA</td>
+                <td class="center-c negrita" width="8%">TOTAL</td>
+                <td class="center-c negrita" width="8%">ABONO</td>
+                <td class="center-c negrita" width="8%">SALDO</td>
+              </tr>
+        </thead>
+        <!--#4DLOOP aFolioFacx_-->     
+            <tbody>
+                <tr>
+                    <td class="orden-alfa"><!--#4DVAR aNCFacx_{aFolioFacx_}--></td>
+                    <td class="orden-alfa"><!--#4DVAR aFolioFacx_{aFolioFacx_}--></td>
+                    <td class="items"><!--#4DVAR aFormaPago{aFolioFacx_}--></td>
+                    <td class="items"><!--#4DVAR aFechaFacx_{aFolioFacx_}--></td>
+                    <td class="items"><!--#4DVAR aVenceFacx_{aFolioFacx_}--></td>
+                    <td class="items <!--#4DIF Num(aAtrasoFacx_{aFolioFacx_})>0-->redtext<!--#4DELSE-->greentext<!--#4DENDIF-->"><!--#4DIF Position("-";aAtrasoFacx_{aFolioFacx_})=1--><!--#4DVAR Substring(aAtrasoFacx_{aFolioFacx_};2)--><!--#4DELSE--><!--#4DVAR aAtrasoFacx_{aFolioFacx_}--><!--#4DENDIF--></td>
+                    <td class="items">
+                        <div style="font-size:10px;font-weight:bold"><!--#4DVAR aClienteFacx_{aFolioFacx_}--></div>
+                        <!--#4DIF aContacto{aFolioFacx_}#""-->
+                        <div style="font-size:10px;"><!--#4DVAR aContacto{aFolioFacx_}--> <!--#4DVAR aContactoMail{aFolioFacx_}--> <!--#4DVAR aContactoFono{aFolioFacx_}--></div>
+                        <!--#4DENDIF-->
+                    </td>
+                    <td class="items"><!--#4DVAR aRefNVFacx_{aFolioFacx_}--></td>
+                    <td class="nro-items-subtotal"><!--#4DVAR  _V3_formatCurrency(aTotFacx_{aFolioFacx_})--></td>
+                    <td class="nro-items-subtotal"><!--#4DVAR  _V3_formatCurrency(aAbonoFacx_{aFolioFacx_})--></td>
+                    <td class="nro-items-subtotal bg-reporte"><!--#4DVAR  _V3_formatCurrency(aSaldoFacx_{aFolioFacx_})--></td>
+                </tr>       
+            </tbody>      
+        <!--#4DENDLOOP--> 
+
+    </table>
+</div>
+
+<div class="contenedor-footer">
+    <span class="datos-empresa-izq">
+    <!--#4DVAR nom_empresa--> / <!--#4DVAR dir_empresa--> / <a target="_blank" href="<!--#4DVAR sitio_empresa-->"><!--#4DVAR sitio_empresa--></a></span><em></em>
+    <span class="datos-empresa-der">Reporte enviado por <a href="http://www.unabase.com" target="_blank" >unabase.com</a></span>
+</div>
+</div>
+</div>
+</body>
+</html>

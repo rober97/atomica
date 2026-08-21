@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NC_ND_DTC>
+<record><field name="ID_NCND">521</field><field name="ID_DOCREF">518</field><field name="MOTIVO"></field><field name="tipo_ncnd">NC</field><field name="monto_ncnd">150000</field></record>
+<record><field name="ID_NCND">2007</field><field name="ID_DOCREF">2006</field><field name="MOTIVO"></field><field name="tipo_ncnd">NC</field><field name="monto_ncnd">58807</field></record>
+<record><field name="ID_NCND">2009</field><field name="ID_DOCREF">2008</field><field name="MOTIVO"></field><field name="tipo_ncnd">NC</field><field name="monto_ncnd">124353</field></record>
+<record><field name="ID_NCND">2011</field><field name="ID_DOCREF">2010</field><field name="MOTIVO"></field><field name="tipo_ncnd">NC</field><field name="monto_ncnd">58807</field></record>
+<record><field name="ID_NCND">2016</field><field name="ID_DOCREF">2015</field><field name="MOTIVO"></field><field name="tipo_ncnd">NC</field><field name="monto_ncnd">58807</field></record>
+<record><field name="ID_NCND">2019</field><field name="ID_DOCREF">2017</field><field name="MOTIVO"></field><field name="tipo_ncnd">NC</field><field name="monto_ncnd">124353</field></record>
+</NC_ND_DTC>

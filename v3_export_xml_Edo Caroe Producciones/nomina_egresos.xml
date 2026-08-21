@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nomina_egresos>
+<record><field name="id">1</field><field name="filename">NP19012026</field><field name="fecha">19-01-2026</field><field name="hora">15:25:25</field><field name="username">ysepulveda</field><field name="type">santanderExcel</field></record>
+<record><field name="id">2</field><field name="filename">Prueba nro 1 - NOMINA</field><field name="fecha">12-02-2026</field><field name="hora">16:01:33</field><field name="username">iovalle</field><field name="type">santanderExcel</field></record>
+<record><field name="id">3</field><field name="filename">NP17022026</field><field name="fecha">17-02-2026</field><field name="hora">15:59:15</field><field name="username">ysepulveda</field><field name="type">santanderExcel</field></record>
+</nomina_egresos>

@@ -1,0 +1,35 @@
+<!--#4dloop aLoginAsig-->
+
+    <!--#4dif aTipoAsig{aLoginAsig}="INTEGRANTE"-->
+
+        <!--#4dif aActivoAsig{aLoginAsig}-->
+        <div class="items-asignados-int">
+        <!--#4delse-->
+        <div class="items-asignados-int part-enabled" title="Usuario no se encuentra habilitado en el sistema">         
+        <!--#4dendif-->
+      
+            <!--#4dif (aVistoPorAsig{aLoginAsig})-->
+            <span class="check-ot" title="El participante ha visto la OT">✓</span>
+            <!--#4dendif--> 
+            <!--#4dvar lowercase(aNombreAsig{aLoginAsig})-->     
+            <!--#4dif aDefectoAsig{aLoginAsig}="no"-->                      
+                <a id="<!--#4dvar aLoginAsig{aLoginAsig}-->" class="delete-part-ot">x</a>
+            <!--#4dendif--> 
+        </div>
+
+    <!--#4dendif-->
+
+    <!--#4dif aTipoAsig{aLoginAsig}="INVITADO"-->
+
+        <div class="items-asignados-inv">
+            <!--#4dif (aVistoPorAsig{aLoginAsig})-->
+            <span class="check-ot" title="El participante ha visto la OT">✓</span>
+            <!--#4dendif--> 
+            <!--#4dvar lowercase(aNombreAsig{aLoginAsig})-->
+           <a id="<!--#4dvar aLoginAsig{aLoginAsig}-->" class="delete-part-ot">x</a>
+
+        </div>
+
+    <!--#4dendif-->    
+
+<!--#4dendloop-->

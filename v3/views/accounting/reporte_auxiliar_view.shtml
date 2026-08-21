@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Auxiliar</title>
+    <link rel="stylesheet" href="/v3/views/accounting/reporte_auxiliar_view.css">
+</head>
+<body>
+    <div class="report-container">
+        <!-- Header -->
+        <div class="report-header">
+            <div id="reportHeaderInfo"></div>
+            <div class="report-title">
+                <h2>Reporte auxiliar</h2>
+                <div id="reportDateRange"></div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="report-controls">
+            <button id="btnDownloadPDF" class="btn-download">
+                <i class="fas fa-download"></i> Descargar Excel
+            </button>
+        </div>
+
+        <!-- Loading -->
+        <div id="loadingReport" class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Cargando reporte...</p>
+        </div>
+
+        <!-- Empty state -->
+        <div id="reportEmpty" class="report-empty" style="display: none;">
+            <p>No hay datos para mostrar en el rango de fechas seleccionado.</p>
+        </div>
+
+        <!-- Error state -->
+        <div id="reportError" class="report-error" style="display: none;">
+            <p id="errorMessage"></p>
+        </div>
+
+        <!-- Report content -->
+        <div id="reportContent" style="display: none;">
+            <div id="reportTableWrapper" style="display: block; width: 100%; overflow-x: auto;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        var reportParams = {};
+        var reportData = null;
+        var fechaReporte = null;
+
+        // Formatear número
+        function formatNumber(value, decimals) {
+            if (value === null || value === undefined || value === '') return '0';
+            var num = parseFloat(String(value).replace(',', '.'));
+            if (isNaN(num)) return '0';
+            if (decimals === 0) {
+                return num.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            }
+            return num.toLocaleString('es-CL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Formatear fecha
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            // Formato esperado: DD-MM-YYYY
+            return dateStr;
+        }
+
+        // Limpiar RUT (quitar puntos, guiones, comas)
+        function limpiarRUT(rut) {
+            if (!rut) return '';
+            return String(rut).replace(/[.\-,]/g, '');
+        }
+
+        // Convertir fecha a ISO para ordenar
+        function fechaIso(f) {
+            if (!f) return '';
+            const parts = f.split('-');
+            if (parts.length !== 3) return f;
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        }
+
+        // Agrupar y ordenar por RUT y fecha
+        function agruparYOrdenar(arr) {
+            const grupos = {};
+            arr.forEach((it) => {
+                const rutLimpio = limpiarRUT(it.rut);
+                if (!grupos[rutLimpio]) {
+                    grupos[rutLimpio] = [];
+                }
+                grupos[rutLimpio].push({
+                    ...it,
+                    rutLimpio: rutLimpio,
+                    fechaRegistroISO: fechaIso(it.fechaRegistro)
+                });
+            });
+
+            // Ordenar cada grupo por fecha
+            Object.keys(grupos).forEach(rut => {
+                grupos[rut].sort((a, b) => {
+                    return new Date(a.fechaRegistroISO) - new Date(b.fechaRegistroISO);
+                });
+            });
+
+            // Retornar array plano ordenado
+            return Object.values(grupos).flat();
+        }
+
+        // Calcular saldo de una línea
+        function calcSaldoLinea(det) {
+            const debe = parseFloat(String(det.debe).replace(',', '.')) || 0;
+            const haber = parseFloat(String(det.haber).replace(',', '.')) || 0;
+
+            if (det.tipo_cuenta === 'PASIVO') {
+                return haber - debe;
+            }
+            return debe - haber;
+        }
+
+        // Renderizar encabezado del reporte
+        function renderReportHeader(data) {
+            var headerHtml = '';
+            if (data.nombre_empresa) headerHtml += '<div><strong>Empresa:</strong> ' + data.nombre_empresa + '</div>';
+            if (data.giro) headerHtml += '<div><strong>Giro:</strong> ' + data.giro + '</div>';
+            if (data.direccion) headerHtml += '<div><strong>Dirección:</strong> ' + data.direccion + '</div>';
+            if (data.comuna) headerHtml += '<div><strong>Comuna:</strong> ' + data.comuna + '</div>';
+            if (data.ciudad) headerHtml += '<div><strong>Ciudad:</strong> ' + data.ciudad + '</div>';
+            if (data.rut) headerHtml += '<div><strong>RUT:</strong> ' + data.rut + '</div>';
+            if (data.fecha) headerHtml += '<div><strong>Fecha:</strong> ' + data.fecha + '</div>';
+            
+            document.getElementById('reportHeaderInfo').innerHTML = headerHtml;
+            document.getElementById('reportDateRange').textContent = data.date_from + ' - ' + data.date_to;
+        }
+
+        // Renderizar tabla del reporte (agrupado por RUT como en Excel)
+        function renderReportTable(data) {
+            console.log('🔍 renderReportTable llamado con:', data);
+            if (!data.details || data.details.length === 0) {
+                console.warn('⚠️ No hay details o está vacío');
+                document.getElementById('reportEmpty').style.display = 'block';
+                return;
+            }
+
+            const decimals = data.decimals === '0' ? 0 : 2;
+            console.log('🔢 Decimales:', decimals);
+            
+            // Limpiar y agrupar datos
+            const dataClean = data.details.map(det => ({
+                ...det,
+                rut: limpiarRUT(det.rut)
+            }));
+            
+            console.log('🧹 Datos limpiados:', dataClean.length, 'registros');
+            let resultado = agruparYOrdenar(dataClean);
+            console.log('📦 Resultado agrupado:', resultado.length, 'registros');
+
+            // Construir HTML
+            let html = '';
+            let anterior = '';
+            let saldoBloque = 0;
+            let saldoTotalDebe = 0;
+            let saldoTotalHaber = 0;
+            let firstRow = true;
+
+            resultado.forEach((detail, index) => {
+                // Nuevo bloque por RUT
+                if (detail.rut !== anterior) {
+                    // Cerrar bloque anterior
+                    if (!firstRow) {
+                        html += '<tr class="totales-row">';
+                        html += '<td colspan="5" style="text-align: center; font-weight: bold;">Totales</td>';
+                        html += '<td style="text-align: right; font-weight: bold;">' + formatNumber(saldoTotalDebe, decimals) + '</td>';
+                        html += '<td style="text-align: right; font-weight: bold;">' + formatNumber(saldoTotalHaber, decimals) + '</td>';
+                        html += '<td colspan="3"></td>';
+                        html += '</tr>';
+
+                        html += '<tr class="saldo-row">';
+                        html += '<td colspan="5" style="text-align: center; font-weight: bold;">Saldo</td>';
+                        html += '<td colspan="2"></td>';
+                        html += '<td style="text-align: right; font-weight: bold;">' + formatNumber(saldoBloque, decimals) + '</td>';
+                        html += '<td colspan="2"></td>';
+                        html += '</tr>';
+
+                        html += '<tr><td colspan="10" style="height: 20px;"></td></tr>';
+                    }
+
+                    // Inicializar nuevo bloque
+                    saldoBloque = parseFloat(String(detail.saldo_anterior || '0').replace(',', '.')) || 0;
+                    saldoTotalDebe = 0;
+                    saldoTotalHaber = 0;
+
+                    // Encabezado del bloque
+                    html += '<tr class="block-header">';
+                    html += '<td colspan="2" style="font-weight: bold;">RUT</td>';
+                    html += '<td colspan="8" style="font-weight: bold;">' + detail.rut + '</td>';
+                    html += '</tr>';
+
+                    html += '<tr class="block-header">';
+                    html += '<td colspan="2" style="font-weight: bold;">PROVEEDOR</td>';
+                    html += '<td colspan="8" style="font-weight: bold;">' + (detail.nombre_contacto && detail.nombre_contacto !== '' ? detail.nombre_contacto : detail.razon) + '</td>';
+                    html += '</tr>';
+
+                    html += '<tr class="block-header">';
+                    html += '<td colspan="2" style="font-weight: bold;">CUENTA</td>';
+                    html += '<td colspan="8" style="font-weight: bold;">' + detail.codigoCuenta + '/' + detail.cuentaContable + '</td>';
+                    html += '</tr>';
+
+                    // Encabezado de columnas
+                    html += '<tr class="table-header">';
+                    html += '<th>FECHA</th>';
+                    html += '<th>TIPO REG</th>';
+                    html += '<th>TIPO DOC</th>';
+                    html += '<th>NUM REG</th>';
+                    html += '<th>NUM DOC</th>';
+                    html += '<th>DEBE</th>';
+                    html += '<th>HABER</th>';
+                    html += '<th>SALDO</th>';
+                    html += '<th>GLOSA</th>';
+                    html += '<th>NUM ASIENTO</th>';
+                    html += '</tr>';
+
+                    // Saldo anterior
+                    html += '<tr class="saldo-anterior-row">';
+                    html += '<td colspan="5" style="text-align: center; font-weight: bold;">Saldo Anterior</td>';
+                    html += '<td colspan="2"></td>';
+                    html += '<td style="text-align: right; font-weight: bold;">' + formatNumber(saldoBloque, decimals) + '</td>';
+                    html += '<td colspan="2"></td>';
+                    html += '</tr>';
+
+                    anterior = detail.rut;
+                    firstRow = false;
+                }
+
+                // Calcular saldo acumulado
+                saldoBloque += calcSaldoLinea(detail);
+                const debeNum = parseFloat(String(detail.debe).replace(',', '.')) || 0;
+                const haberNum = parseFloat(String(detail.haber).replace(',', '.')) || 0;
+                saldoTotalDebe += debeNum;
+                saldoTotalHaber += haberNum;
+
+                // Fila de detalle
+                html += '<tr>';
+                html += '<td>' + formatDate(detail.fechaRegistro) + '</td>';
+                html += '<td>' + (detail.tipoReg || '') + '</td>';
+                html += '<td>' + (detail.tipoDoc || '') + '</td>';
+                html += '<td style="text-align: right;">' + (detail.numReg || '0') + '</td>';
+                html += '<td style="text-align: right;">' + (detail.numDoc || '0') + '</td>';
+                html += '<td style="text-align: right;">' + formatNumber(detail.debe, decimals) + '</td>';
+                html += '<td style="text-align: right;">' + formatNumber(detail.haber, decimals) + '</td>';
+                html += '<td style="text-align: right;">' + formatNumber(saldoBloque, decimals) + '</td>';
+                html += '<td>' + (detail.glosa || '') + '</td>';
+                html += '<td style="text-align: right;">' + (detail.id_comp3 || '0') + '</td>';
+                html += '</tr>';
+            });
+
+            // Cerrar último bloque
+            if (!firstRow) {
+                html += '<tr class="totales-row">';
+                html += '<td colspan="5" style="text-align: center; font-weight: bold;">Totales</td>';
+                html += '<td style="text-align: right; font-weight: bold;">' + formatNumber(saldoTotalDebe, decimals) + '</td>';
+                html += '<td style="text-align: right; font-weight: bold;">' + formatNumber(saldoTotalHaber, decimals) + '</td>';
+                html += '<td colspan="3"></td>';
+                html += '</tr>';
+
+                html += '<tr class="saldo-row">';
+                html += '<td colspan="5" style="text-align: center; font-weight: bold;">Saldo</td>';
+                html += '<td colspan="2"></td>';
+                html += '<td style="text-align: right; font-weight: bold;">' + formatNumber(saldoBloque, decimals) + '</td>';
+                html += '<td colspan="2"></td>';
+                html += '</tr>';
+            }
+
+            // Saldo final general
+            html += '<tr><td colspan="10" style="height: 20px;"></td></tr>';
+            html += '<tr class="saldo-final-row">';
+            html += '<td colspan="7" style="text-align: right; font-weight: bold;">Saldo final</td>';
+            html += '<td style="text-align: right; font-weight: bold;" id="saldoFinal">' + formatNumber(saldoBloque, decimals) + '</td>';
+            html += '<td colspan="2"></td>';
+            html += '</tr>';
+
+            const tableHtml = '<table class="report-table">' + html + '</table>';
+            console.log('📋 HTML generado, longitud:', tableHtml.length);
+            const wrapper = document.getElementById('reportTableWrapper');
+            if (wrapper) {
+                wrapper.innerHTML = tableHtml;
+                console.log('✅ Tabla insertada en el DOM');
+            } else {
+                console.error('❌ No se encontró el elemento reportTableWrapper');
+            }
+        }
+
+        // Cargar datos del reporte
+        function loadReportData() {
+            document.getElementById('loadingReport').style.display = 'block';
+            document.getElementById('reportTableWrapper').style.display = 'none';
+            document.getElementById('reportEmpty').style.display = 'none';
+            document.getElementById('reportError').style.display = 'none';
+            document.getElementById('reportContent').style.display = 'none';
+
+            var url = '/4DACTION/_light_accounting_rep_aux?' + 
+                'account=' + encodeURIComponent(reportParams.account) +
+                '&datefrom=' + encodeURIComponent(reportParams.dateFrom) +
+                '&dateto=' + encodeURIComponent(reportParams.dateTo) +
+                (reportParams.id_contacto ? '&id_contacto=' + encodeURIComponent(reportParams.id_contacto) : '');
+
+            console.log('📊 Cargando reporte desde:', url);
+            console.log('📋 Parámetros:', reportParams);
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                timeout: 30000,
+                success: function(data) {
+                    console.log('✅ Datos recibidos:', data);
+                    document.getElementById('loadingReport').style.display = 'none';
+                    
+                    if (!data || !data.details) {
+                        console.error('❌ No hay datos o details está vacío');
+                        document.getElementById('reportError').style.display = 'block';
+                        document.getElementById('errorMessage').textContent = 'No se recibieron datos del servidor.';
+                        return;
+                    }
+
+                    if (data.details.length === 0) {
+                        console.warn('⚠️ El array details está vacío');
+                        document.getElementById('reportEmpty').style.display = 'block';
+                        return;
+                    }
+
+                    reportData = data;
+                    console.log('📝 Renderizando encabezado...');
+                    renderReportHeader(data);
+                    console.log('📊 Renderizando tabla con', data.details.length, 'registros...');
+                    renderReportTable(data);
+                    console.log('✅ Mostrando contenido del reporte');
+                    document.getElementById('reportContent').style.display = 'block';
+                    document.getElementById('reportTableWrapper').style.display = 'block';
+                },
+                error: function(xhr, status, error) {
+                    document.getElementById('loadingReport').style.display = 'none';
+                    document.getElementById('reportError').style.display = 'block';
+                    var errorMsg = 'Error al cargar el reporte. ';
+                    if (status === 'timeout') {
+                        errorMsg += 'La solicitud tardó demasiado.';
+                    } else if (xhr.responseText) {
+                        try {
+                            var errorData = JSON.parse(xhr.responseText);
+                            if (errorData.errorMsg) {
+                                errorMsg += errorData.errorMsg;
+                            }
+                        } catch (e) {
+                            errorMsg += error;
+                        }
+                    } else {
+                        errorMsg += error;
+                    }
+                    document.getElementById('errorMessage').textContent = errorMsg;
+                }
+            });
+        }
+
+        // Descargar Excel
+        function downloadPDF() {
+            if (!reportParams.account || !reportParams.dateFrom || !reportParams.dateTo) {
+                toastr.error('Faltan parámetros para descargar el reporte.');
+                return;
+            }
+
+            if (!fechaReporte) {
+                fechaReporte = reportParams.dateFrom + ' - ' + reportParams.dateTo;
+            }
+
+            var url = (typeof nodeUrl !== 'undefined' ? nodeUrl : '') + 
+                '/export-auxiliar-report/?download=true&date=' + encodeURIComponent(fechaReporte) +
+                '&sid=' + (typeof unaBase !== 'undefined' && unaBase.sid ? unaBase.sid.encoded() : '') +
+                '&hostname=' + encodeURIComponent(window.location.origin) +
+                '&account=' + encodeURIComponent(reportParams.account) +
+                '&dateto=' + encodeURIComponent(reportParams.dateTo) +
+                '&datefrom=' + encodeURIComponent(reportParams.dateFrom) +
+                (reportParams.id_contacto ? '&id_contacto=' + encodeURIComponent(reportParams.id_contacto) : '');
+
+            window.open(url, '_blank');
+        }
+
+        // Inicializar reporte
+        function initReport() {
+            // Obtener parámetros de la variable global o de la URL
+            if (window._reporteAuxiliarParams) {
+                reportParams.account = window._reporteAuxiliarParams.account;
+                reportParams.dateFrom = window._reporteAuxiliarParams.dateFrom;
+                reportParams.dateTo = window._reporteAuxiliarParams.dateTo;
+                reportParams.id_contacto = window._reporteAuxiliarParams.id_contacto || null;
+                fechaReporte = window._reporteAuxiliarParams.fecha_reporte || null;
+                delete window._reporteAuxiliarParams;
+            } else {
+                var urlParams = new URLSearchParams(window.location.search);
+                reportParams.account = urlParams.get('account');
+                reportParams.dateFrom = urlParams.get('datefrom');
+                reportParams.dateTo = urlParams.get('dateto');
+                reportParams.id_contacto = urlParams.get('id_contacto') || null;
+                fechaReporte = urlParams.get('date') || null;
+            }
+
+            if (!reportParams.account || !reportParams.dateFrom || !reportParams.dateTo) {
+                document.getElementById('loadingReport').style.display = 'none';
+                document.getElementById('reportError').style.display = 'block';
+                document.getElementById('errorMessage').textContent = 'Faltan parámetros requeridos para generar el reporte.';
+                return;
+            }
+
+            // Configurar botón de descarga
+            var btnDownload = document.getElementById('btnDownloadPDF');
+            if (btnDownload) {
+                btnDownload.addEventListener('click', downloadPDF);
+            }
+
+            // Cargar datos
+            loadReportData();
+        }
+
+        // Inicializar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initReport);
+        } else {
+            initReport();
+        }
+
+        if (typeof $ !== 'undefined') {
+            $(document).ready(function() {
+                if (!reportParams.account) {
+                    initReport();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

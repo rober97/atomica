@@ -1,0 +1,12 @@
+{
+	"errorMsg": <!--#4DIF Not(Undefined(errorMsg))-->"<!--#4DHTML errorMsg-->"<!--#4DELSE-->null<!--#4DENDIF-->,
+	"success": <!--#4DIF Not(Undefined(success))--><!--#4DIF success-->true<!--#4DELSE-->false<!--#4DENDIF--><!--#4DELSE-->null<!--#4DENDIF-->,
+	"id": <!--#4DIF Not(Undefined(id))--><!--#4DIF Type(id)=Is Text-->"<!--#4DVAR id-->"<!--#4DELSE--><!--#4DVAR id--><!--#4DENDIF--><!--#4DELSE-->null<!--#4DENDIF-->
+	<!--#4DIF Not(Undefined(aEmails))-->
+	,"emails": [
+<!--#4DLOOP aEmails-->
+		"<!--#4DHTML aEmails{aEmails}-->"<!--#4DIF NOT(aEmails{aEmails} = aEmails{Size of array(aEmails)})-->,<!--#4DENDIF-->
+<!--#4DENDLOOP-->
+	]
+<!--#4DENDIF-->
+}

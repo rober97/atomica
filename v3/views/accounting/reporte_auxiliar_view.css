@@ -1,0 +1,204 @@
+.report-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #fff;
+    min-height: 100vh;
+}
+
+#reportContent {
+    display: block !important;
+    width: 100%;
+}
+
+#reportTableWrapper {
+    display: block !important;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.report-header {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #31AE92;
+    padding-bottom: 15px;
+}
+
+#reportHeaderInfo {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#reportHeaderInfo div {
+    margin-bottom: 5px;
+}
+
+.report-title {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.report-title h2 {
+    margin: 0;
+    color: #31AE92;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#reportDateRange {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666;
+}
+
+.report-controls {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.btn-download {
+    background: #31AE92;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-download:hover {
+    background: #2a9a7f;
+}
+
+.loading-spinner {
+    text-align: center;
+    padding: 40px;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #31AE92;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.report-empty,
+.report-error {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.report-error {
+    color: #d32f2f;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.report-table th,
+.report-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.report-table th {
+    background-color: #34CC02;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.report-table .table-header th {
+    background-color: #34CC02;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.report-table .block-header {
+    background-color: #f5f5f5;
+}
+
+.report-table .block-header td {
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #ccc;
+}
+
+.report-table .saldo-anterior-row {
+    background-color: #fff9e6;
+}
+
+.report-table .saldo-anterior-row td {
+    font-weight: bold;
+    background-color: #fff9e6;
+}
+
+.report-table .totales-row {
+    background-color: #e8f5e9;
+}
+
+.report-table .totales-row td {
+    font-weight: bold;
+    background-color: #e8f5e9;
+}
+
+.report-table .saldo-row {
+    background-color: #e3f2fd;
+}
+
+.report-table .saldo-row td {
+    font-weight: bold;
+    background-color: #e3f2fd;
+}
+
+.report-table .saldo-final-row {
+    background-color: #fff3e0;
+    border-top: 3px solid #31AE92;
+}
+
+.report-table .saldo-final-row td {
+    font-weight: bold;
+    background-color: #fff3e0;
+}
+
+.report-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.report-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilos para números negativos */
+.negative-balance {
+    color: #d32f2f;
+}
+
+/* Responsive */
+@media print {
+    .report-controls {
+        display: none;
+    }
+    
+    .report-container {
+        padding: 0;
+    }
+}

@@ -1,0 +1,692 @@
+/* =====================================================================
+   Unabase Presence System — AURA 2025 v4
+   Sistema de presencia en tiempo real con diseño moderno y glassmorphism
+   ===================================================================== */
+
+/* =====================================================================
+   CUSTOM PROPERTIES (CSS Variables)
+   ===================================================================== */
+   :root {
+    /* === Bubble System === */
+    --pr-size: 26px;
+    --pr-gap: 9px;
+    --pr-overlap: 7px;
+    --pr-ring-width: 2px;
+    --pr-radius: 50%;
+    
+    /* === Typography === */
+    --pr-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 
+                      "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --pr-font-weight-normal: 600;
+    --pr-font-weight-bold: 700;
+    --pr-font-weight-extra: 800;
+    --pr-font-size: 12px;
+    --pr-line-height: 1;
+    
+    /* === Animation === */
+    --pr-ease: cubic-bezier(0.22, 0.8, 0.2, 1);
+    --pr-duration-fast: 0.12s;
+    --pr-duration-normal: 0.22s;
+    --pr-duration-slow: 0.35s;
+    
+    /* === Chip/Counter === */
+    --pr-chip-bg: color-mix(in srgb, #e9f2ff 70%, transparent);
+    --pr-chip-border: color-mix(in srgb, #cfe2ff 70%, transparent);
+    --pr-chip-color: #1248b8;
+    
+    /* === Tooltip === */
+    --pr-tooltip-bg: rgba(12, 14, 20, 0.94);
+    --pr-tooltip-color: #eaf1ff;
+    --pr-tooltip-gap: 18px;
+    --pr-tooltip-border: color-mix(in srgb, #fff 12%, transparent);
+    
+    /* === Toast === */
+    --pt-gap: 18px;
+    --pt-duration: 4.5s;
+    --pt-bg: rgba(12, 14, 20, 0.92);
+    --pt-color: #eaf1ff;
+    --pt-border: color-mix(in srgb, #fff 12%, transparent);
+    
+    /* === Badge === */
+    --pr-badge-bg: rgba(12, 14, 20, 0.9);
+    --pr-badge-color: #eaf1ff;
+    --pr-badge-border: color-mix(in srgb, #fff 14%, transparent);
+    
+    /* === Colors (Aura) === */
+    --pr-aura: #7c3aed;
+    --pr-white: #ffffff;
+    
+    /* === Shadows === */
+    --pr-shadow-sm: 0 0.6px 1.2px rgba(0, 0, 0, 0.06), 
+                    0 4px 14px rgba(0, 0, 0, 0.08);
+    --pr-shadow-md: 0 20px 50px rgba(0, 0, 0, 0.35);
+    --pr-shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.35);
+    
+    /* === Z-index === */
+    --pr-z-tooltip: 9999;
+    --pr-z-toast: 9998;
+  }
+  
+  /* Dark Mode Support */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --pr-chip-bg: color-mix(in srgb, #0b2440 60%, transparent);
+      --pr-chip-border: color-mix(in srgb, #1d3b6a 60%, transparent);
+      --pr-chip-color: #cfe2ff;
+      --pr-tooltip-bg: rgba(8, 10, 14, 0.965);
+      --pr-tooltip-color: #e6ecf7;
+    }
+  }
+  
+  /* =====================================================================
+     WRAPPER & COUNTER
+     ===================================================================== */
+  .presence-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: clamp(8px, 2vw, 16px);
+  }
+  
+  .presence-count {
+    font-family: var(--pr-font-family);
+    font-size: var(--pr-font-size);
+    font-weight: var(--pr-font-weight-bold);
+    line-height: var(--pr-line-height);
+    padding: 4px 10px;
+    border-radius: var(--pr-radius);
+    background: linear-gradient(
+      180deg, 
+      var(--pr-chip-bg), 
+      color-mix(in srgb, var(--pr-chip-bg) 55%, transparent)
+    );
+    border: 1px solid var(--pr-chip-border);
+    color: var(--pr-chip-color);
+    letter-spacing: 0.2px;
+    backdrop-filter: saturate(140%) blur(6px);
+    box-shadow: var(--pr-shadow-sm);
+    user-select: none;
+  }
+  
+  /* =====================================================================
+     BUBBLES CONTAINER
+     ===================================================================== */
+  .presence-bubbles {
+    display: flex;
+    align-items: center;
+    gap: var(--pr-gap);
+  }
+  
+  /* Stacked Layout */
+  .presence-bubbles.stack > .presence-bubble {
+    margin-left: calc(var(--pr-overlap) * -1);
+  }
+  
+  .presence-bubbles.stack > .presence-bubble:first-child {
+    margin-left: 0;
+  }
+  
+  /* =====================================================================
+     BUBBLE (Avatar Circle)
+     ===================================================================== */
+  .presence-bubble {
+    /* Layout */
+    width: var(--pr-size);
+    height: var(--pr-size);
+    border-radius: var(--pr-radius);
+    display: grid;
+    place-items: center;
+    position: relative;
+    isolation: isolate;
+    
+    /* Typography */
+    color: var(--pr-white);
+    font-family: var(--pr-font-family);
+    font-size: var(--pr-font-size);
+    font-weight: var(--pr-font-weight-normal);
+    line-height: var(--pr-line-height);
+    user-select: none;
+    
+    /* Visual */
+    outline: var(--pr-ring-width) solid color-mix(in srgb, var(--pr-white) 88%, transparent);
+    background:
+      radial-gradient(
+        120% 120% at 70% 30%, 
+        rgba(255, 255, 255, 0.22), 
+        transparent 50%
+      ),
+      var(--bubble-base, #6d28d9);
+    
+    /* Animation States */
+    transform: translateZ(0) scale(0.93);
+    opacity: 0;
+    transition: 
+      transform var(--pr-duration-normal) var(--pr-ease), 
+      opacity var(--pr-duration-fast) var(--pr-ease), 
+      filter 0.2s var(--pr-ease);
+    
+    /* Aura Effect */
+    filter:
+      drop-shadow(0 0 10px color-mix(in srgb, var(--pr-aura) 32%, transparent))
+      drop-shadow(0 8px 22px color-mix(in srgb, var(--pr-aura) 28%, transparent));
+    
+    /* Accessibility */
+    cursor: pointer;
+    will-change: transform, filter;
+  }
+  
+  /* Bubble States */
+  .presence-bubble.show {
+    opacity: 1;
+    transform: translateZ(0) scale(1);
+  }
+  
+  .presence-bubble.leave {
+    opacity: 0;
+    transform: translateZ(0) scale(0.93);
+  }
+  
+  .presence-bubble:hover,
+  .presence-bubble:focus-visible {
+    transform: translateZ(0) scale(1.075);
+    filter:
+      drop-shadow(0 0 12px color-mix(in srgb, var(--pr-aura) 44%, transparent))
+      drop-shadow(0 12px 28px color-mix(in srgb, var(--pr-aura) 36%, transparent));
+    outline-color: color-mix(in srgb, var(--pr-white) 95%, transparent);
+  }
+  
+  .presence-bubble:focus-visible {
+    outline-width: 3px;
+    outline-offset: 2px;
+  }
+  
+  /* =====================================================================
+     BUBBLE EFFECTS (::before & ::after)
+     ===================================================================== */
+  
+  /* Halo Effect */
+  .presence-bubble::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    border-radius: var(--pr-radius);
+    background:
+      radial-gradient(
+        60% 60% at 45% 35%, 
+        color-mix(in srgb, var(--pr-aura) 55%, transparent), 
+        transparent 60%
+      ),
+      radial-gradient(
+        80% 80% at 70% 75%, 
+        color-mix(in srgb, var(--pr-aura) 32%, transparent), 
+        transparent 70%
+      );
+    mix-blend-mode: screen;
+    opacity: 0.55;
+    z-index: -1;
+    pointer-events: none;
+    animation: pr-pulse 3s var(--pr-ease) infinite;
+  }
+  
+  /* Shimmer Effect */
+  .presence-bubble::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: var(--pr-radius);
+    background: conic-gradient(
+      from 220deg, 
+      transparent 0 72%, 
+      color-mix(in srgb, var(--pr-white) 60%, transparent) 82%, 
+      transparent 96% 100%
+    );
+    filter: blur(6px) brightness(1.06);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    animation: pr-orbit 6s linear infinite;
+    transition: opacity 0.3s var(--pr-ease);
+  }
+  
+  .presence-bubble:hover::after,
+  .presence-bubble:focus-visible::after {
+    opacity: 0.45;
+  }
+  
+  /* =====================================================================
+     BUBBLE ANIMATIONS
+     ===================================================================== */
+  @keyframes pr-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.54;
+    }
+    50% {
+      transform: scale(1.08);
+      opacity: 0.75;
+    }
+  }
+  
+  @keyframes pr-orbit {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes pr-mod-change {
+    0% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+    }
+    35% {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 16px color-mix(in srgb, var(--pr-aura) 60%, transparent));
+    }
+    100% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+    }
+  }
+  
+  .presence-bubble.changed {
+    animation: pr-mod-change 900ms var(--pr-ease);
+  }
+  
+  /* =====================================================================
+     TOOLTIP
+     ===================================================================== */
+  .presence-tooltip {
+    /* Positioning */
+    position: fixed;
+    z-index: var(--pr-z-tooltip);
+    pointer-events: none;
+    
+    /* Layout */
+    max-width: min(70vw, 420px);
+    padding: 12px 14px;
+    
+    /* Typography */
+    font-family: var(--pr-font-family);
+    font-size: var(--pr-font-size);
+    font-weight: var(--pr-font-weight-normal);
+    line-height: 1.35;
+    white-space: normal;
+    word-break: break-word;
+    hyphens: auto;
+    
+    /* Visual */
+    background: var(--pr-tooltip-bg);
+    color: var(--pr-tooltip-color);
+    border-radius: 12px;
+    border: 1px solid var(--pr-tooltip-border);
+    box-shadow:
+      var(--pr-shadow-lg),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px) saturate(140%);
+    
+    /* Animation */
+    opacity: 0;
+    transition: opacity var(--pr-duration-fast) var(--pr-ease);
+  }
+  
+  .presence-tooltip.show {
+    opacity: 1;
+  }
+  
+  /* Tooltip Positioning */
+  .presence-tooltip--above {
+    transform: translate(-50%, calc(-1 * var(--pr-tooltip-gap) - env(safe-area-inset-bottom, 0px)));
+  }
+  
+  .presence-tooltip--below {
+    transform: translate(-50%, calc(var(--pr-tooltip-gap) + env(safe-area-inset-bottom, 0px)));
+  }
+  
+  /* Tooltip Content */
+  .presence-tooltip .row {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .presence-tooltip .key {
+    opacity: 0.7;
+    min-width: 84px;
+  }
+  
+  .presence-tooltip b {
+    font-weight: var(--pr-font-weight-extra);
+    letter-spacing: 0.2px;
+  }
+  
+  .presence-tooltip small {
+    opacity: 0.88;
+    font-weight: var(--pr-font-weight-normal);
+  }
+  
+  /* Tooltip Arrow */
+  .presence-tooltip::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    background: inherit;
+    border-left: inherit;
+    border-top: inherit;
+    filter: blur(0.2px);
+    pointer-events: none;
+  }
+  
+  .presence-tooltip--above::after {
+    bottom: calc(-5px - env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    margin-left: -5px;
+  }
+  
+  .presence-tooltip--below::after {
+    top: calc(-5px - env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    margin-left: -5px;
+  }
+  
+  /* =====================================================================
+     TOAST NOTIFICATIONS
+     ===================================================================== */
+  .presence-toasts {
+    /* Positioning */
+    position: fixed;
+    right: 24px;
+    bottom: 88px;
+    z-index: var(--pr-z-toast);
+    
+    /* Layout */
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--pt-gap);
+    pointer-events: none;
+  }
+  
+  .presence-toast {
+    /* Layout */
+    max-width: min(70vw, 420px);
+    padding: 12px 14px;
+    
+    /* Typography */
+    font-family: var(--pr-font-family);
+    font-size: 13px;
+    font-weight: var(--pr-font-weight-normal);
+    line-height: 1.35;
+    letter-spacing: 0.2px;
+    
+    /* Visual */
+    background: var(--pt-bg);
+    color: var(--pt-color);
+    border-radius: 14px;
+    border: 1px solid var(--pt-border);
+    box-shadow:
+      var(--pr-shadow-md),
+      0 0 0 1px color-mix(in srgb, var(--pt-aura) 10%, transparent),
+      0 10px 32px color-mix(in srgb, var(--pt-aura) 20%, transparent);
+    backdrop-filter: blur(12px) saturate(140%);
+    
+    /* Animation */
+    transform: translateY(16px) scale(0.97);
+    opacity: 0;
+    animation: 
+      pt-enter var(--pr-duration-slow) var(--pr-ease) forwards,
+      pt-life var(--pt-duration) linear forwards;
+    
+    /* Interaction */
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  /* Toast Content Styling */
+  .presence-toast .who {
+    font-weight: var(--pr-font-weight-extra);
+  }
+  
+  .presence-toast .mod {
+    font-weight: var(--pr-font-weight-extra);
+  }
+  
+  .presence-toast .idx {
+    opacity: 0.9;
+    font-weight: var(--pr-font-weight-bold);
+  }
+  
+  .presence-toast .meta {
+    display: block;
+    opacity: 0.75;
+    font-weight: var(--pr-font-weight-normal);
+    margin-top: 4px;
+    font-size: 12px;
+  }
+  
+  /* Toast Aura Effect */
+  .presence-toast::before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    border-radius: 18px;
+    z-index: -1;
+    background:
+      radial-gradient(
+        60% 60% at 40% 30%, 
+        color-mix(in srgb, var(--pt-aura) 40%, transparent), 
+        transparent 60%
+      ),
+      radial-gradient(
+        80% 80% at 80% 70%, 
+        color-mix(in srgb, var(--pt-aura) 24%, transparent), 
+        transparent 70%
+      );
+    filter: blur(14px);
+    opacity: 0.75;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  
+  /* Toast Closing State */
+  .presence-toast--closing {
+    animation: pt-exit var(--pr-duration-normal) var(--pr-ease) forwards !important;
+  }
+  
+  /* =====================================================================
+     TOAST ANIMATIONS
+     ===================================================================== */
+  @keyframes pt-enter {
+    to {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes pt-life {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-14px);
+    }
+  }
+  
+  @keyframes pt-exit {
+    to {
+      transform: translateY(-12px) scale(0.98);
+      opacity: 0;
+    }
+  }
+  
+  /* =====================================================================
+     BADGE (Module Indicator)
+     ===================================================================== */
+  .presence-badge {
+    /* Positioning */
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    z-index: 1;
+    
+    /* Layout */
+    padding: 2px 6px;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
+    /* Typography */
+    font-family: var(--pr-font-family);
+    font-size: 10px;
+    font-weight: var(--pr-font-weight-bold);
+    line-height: 1;
+    
+    /* Visual */
+    background: var(--pr-badge-bg);
+    color: var(--pr-badge-color);
+    border-radius: 999px;
+    border: 1px solid var(--pr-badge-border);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px) saturate(140%);
+    
+    /* Interaction */
+    pointer-events: none;
+    user-select: none;
+  }
+  
+  /* =====================================================================
+     RESPONSIVE DESIGN
+     ===================================================================== */
+  
+  /* Mobile Optimization */
+  @media (max-width: 520px) {
+    :root {
+      --pr-size: 22px;
+      --pr-gap: 6px;
+      --pr-overlap: 4px;
+    }
+    
+    .presence-count {
+      display: none;
+    }
+    
+    .presence-toasts {
+      right: 12px;
+      left: 12px;
+      bottom: 78px;
+    }
+    
+    .presence-toast {
+      max-width: 100%;
+    }
+  }
+  
+  /* Tablet Optimization */
+  @media (max-width: 768px) {
+    .presence-wrap {
+      margin-left: clamp(4px, 1.5vw, 12px);
+    }
+  }
+  
+  /* =====================================================================
+     ACCESSIBILITY
+     ===================================================================== */
+  
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .presence-bubble,
+    .presence-bubble::before,
+    .presence-bubble::after,
+    .presence-tooltip,
+    .presence-toast {
+      animation: none !important;
+      transition: none !important;
+    }
+    
+    .presence-bubble {
+      transform: none;
+      opacity: 1;
+    }
+    
+    .presence-toast {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    .presence-bubble {
+      outline-width: 3px;
+    }
+    
+    .presence-tooltip,
+    .presence-toast {
+      border-width: 2px;
+    }
+  }
+  
+  /* Focus Visible Support */
+  .presence-bubble:focus {
+    outline: none;
+  }
+  
+  .presence-bubble:focus-visible {
+    outline: 3px solid var(--pr-chip-color);
+    outline-offset: 2px;
+  }
+  
+  /* =====================================================================
+     PRINT STYLES
+     ===================================================================== */
+  @media print {
+    .presence-wrap,
+    .presence-tooltip,
+    .presence-toasts {
+      display: none !important;
+    }
+  }
+  
+  /* =====================================================================
+     UTILITY CLASSES
+     ===================================================================== */
+  
+  /* Visibility */
+  .presence-hidden {
+    display: none !important;
+  }
+  
+  .presence-visible {
+    display: flex !important;
+  }
+  
+  /* Animation Control */
+  .presence-no-animation * {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* =====================================================================
+     BROWSER-SPECIFIC FIXES
+     ===================================================================== */
+  
+  /* Safari Backdrop Filter Fix */
+  @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    .presence-count,
+    .presence-tooltip,
+    .presence-toast,
+    .presence-badge {
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+    }
+  }
+  
+  /* Firefox Smooth Scrolling */
+  @-moz-document url-prefix() {
+    .presence-bubbles {
+      scroll-behavior: smooth;
+    }
+  }

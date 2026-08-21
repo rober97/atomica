@@ -1,0 +1,12 @@
+ <!--#4dif Size of array(aLoginArea)>0--> 
+<select id="select-inv" name="" onChange="" multiple="multiple" >  
+    <!--#4dloop aLoginArea-->
+    	<!--#4dif aResponsableArea{aLoginArea}=true-->    
+        	<option value="res/<!--#4dvar aLoginArea{aLoginArea}-->"><!--#4dvar aNombresArea{aLoginArea}--></option>
+        <!--#4delse-->
+         	<option value="int/<!--#4dvar aLoginArea{aLoginArea}-->"><!--#4dvar aNombresArea{aLoginArea}--></option>
+        <!--#4dendif-->	
+    <!--#4dendloop-->
+</select>
+ <!--#4delse--> 
+<!--#4dendif--> 

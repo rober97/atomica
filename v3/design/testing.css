@@ -1,0 +1,66 @@
+/* Ocultar al usuario final */
+
+
+
+#wizard {
+	display: none;
+}
+
+/*
+html > body > aside > div > div > ul > li[data-name="proyectos"] {
+	display: none;
+}
+
+html > body > aside > div > div > ul > li[data-name="negocios"] {
+	display: none;
+}
+
+html > body > aside > div > div > ul > li[data-name="ordenes-compra"] {
+	display: none;
+}
+
+html > body > aside > div > div > ul > li[data-name="rendiciones"] {
+	display: none;
+}
+
+html > body > aside > div > div > ul > li[data-name="pagos"] {
+	display: none;
+}
+
+html > body > aside > div > div > ul > li[data-name="contratos"] {
+	display: none;
+}
+
+html > body > aside > div > div > ul > li[data-name="reportes"] {
+	display: none;
+}
+
+html > body > aside > div > div > ul > li[data-name="logs"] {
+	display: none;
+}
+
+html > body > aside > div > div > ul > li[data-name="bandeja"] {
+	display: none;
+}
+*/
+
+html > body.login > section > form > fieldset > label:nth-of-type(3) {
+	display: none;
+}
+
+html > body.login > section > form > p {
+	display: none;
+}
+
+/* #dropdown_menu > li:last-of-type {
+	display: none;
+} */
+
+nav#menu > ul > li[data-name="print"] * {
+	display: none; 
+}
+
+/* html > body.menu > nav > a {
+	visibility: hidden;
+} */
+

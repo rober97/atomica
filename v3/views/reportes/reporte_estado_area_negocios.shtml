@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--#4DSCRIPT/_V3_proxy-->
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Reporte Areas Negocio</title>
+	<script type="text/javascript" src="/v3/views/reportes/script/content.js"></script>
+	<script src="/v3/script/sorttable.js"></script>
+
+	<link rel="stylesheet" href="/v3/views/reportes/reportes.css?fdsds=32883289482938943289">
+
+
+
+	<script>
+		(function () {
+			'use strict';
+
+			var MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Acumulado'];
+			var PENCIL = '<svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm2.92 2.33H5v-.92l9.06-9.06.92.92L5.92 19.58zM20.71 7.04a1.003 1.003 0 0 0 0-1.42L18.37 3.29a1.003 1.003 0 0 0-1.42 0l-1.13 1.13 3.75 3.75 1.14-1.13z"/></svg>';
+
+			/* ── STATE ── */
+			var data = null;
+			var cc = null;
+
+			/* ── DOM refs (se asignan en init) ── */
+			var gridEl, backdropEl, modalTitleEl, modalSubEl, modalBodyEl;
+
+			/* ── INIT ── */
+			function init() {
+				gridEl = document.getElementById('er-grid');
+				backdropEl = document.getElementById('er-modal-backdrop');
+				modalTitleEl = document.getElementById('er-modal-title');
+				modalSubEl = document.getElementById('er-modal-sub');
+				modalBodyEl = document.getElementById('er-modal-body');
+
+				bindUI();
+
+				unaBase.toolbox.init();
+
+				unaBase.toolbox.search.init({
+					callback: function () {
+						fetch();
+						return false;
+					},
+					inflection: { singular: 'categoria', plural: 'categorias', none: 'ninguna' },
+					filters: [
+						{ name: 'date_from', type: 'year', caption: 'Año', currentYear: true },
+						{ name: 'area_negocio_reporte', type: 'autocomplete', caption: 'Área de negocio', dataSource: 'getAreaNegocio' },
+						{ name: 'estado_compras', type: 'autocomplete', caption: 'Estado de las compras', dataObject: [{ text: 'Abiertas para compras' }, { text: 'Cerradas para compras' }] },
+						{ name: 'tipo_moneda', type: 'autocomplete', caption: 'Tipo moneda', dataObject: [{ text: 'PEN' }, { text: 'USD' }] },
+						{ name: 'factura', type: 'checkbox', caption: 'Solo facturas', options: [{ caption: 'Desde facturado', name: 'solo_facturas', value: false }] }
+					],
+					hideSearchBox: true
+				});
+
+				unaBase.toolbox.menu.init({
+					entity: 'estado_resultados',
+					buttons: ['exit', 'export_list']
+				});
+
+				/* hide tipo_moneda filter */
+				var tm = document.querySelector('#search input[name="tipo_moneda"]');
+				if (tm) { var lbl = tm.closest('label.autocomplete'); if (lbl) lbl.style.display = 'none'; }
+			}
+
+			/* ── BIND UI ── */
+			function bindUI() {
+				/* modal close */
+				document.addEventListener('click', function (e) {
+					if (e.target === backdropEl || e.target.closest('#er-modal-close')) closeModal();
+				});
+				document.addEventListener('keydown', function (e) {
+					if (e.key === 'Escape') closeModal();
+				});
+
+				/* row hover via data-rid */
+				document.addEventListener('mouseover', function (e) {
+					var el = e.target.closest('[data-rid]');
+					if (!el) return;
+					document.querySelectorAll('[data-rid="' + el.dataset.rid + '"]').forEach(function (c) { c.classList.add('hov'); });
+				});
+				document.addEventListener('mouseout', function (e) {
+					var el = e.target.closest('[data-rid]');
+					if (!el) return;
+					document.querySelectorAll('[data-rid="' + el.dataset.rid + '"]').forEach(function (c) { c.classList.remove('hov'); });
+				});
+			}
+
+			/* ── FETCH reporte ── */
+			function fetch() {
+				var params = $.param(unaBase.toolbox.search.advancedFilter || {}) + '&' + $('#search').serializeAnything(true);
+				unaBase.ui.block();
+				$('#search').find('*').prop('disabled', true);
+
+				$.ajax({
+					url: '/4DACTION/_V3_getReporteAreasNegocios',
+					data: params,
+					dataType: 'json',
+					success: function (res) {
+						data = res || {};
+						cc = resolveCurrency(res);
+						renderGrid();
+						unaBase.ui.unblock();
+						$('#search').find('*').prop('disabled', false);
+					},
+					error: function () {
+						gridEl.innerHTML = '<div class="er-empty">No fue posible cargar el reporte.</div>';
+						unaBase.ui.unblock();
+						$('#search').find('*').prop('disabled', false);
+					}
+				});
+			}
+
+			/* ── CURRENCY ── */
+			function resolveCurrency(res) {
+				var c = res && res.currency;
+				return {
+					code: c ? (c.code || currency.code) : currency.code,
+					symbol: c ? (c.symbol || currency.symbol) : currency.symbol,
+					decimals: c ? (c.decimal != null ? c.decimal : currency.decimals) : currency.decimals,
+					dec_sep: c ? (c.decimal_sep || currency.decimals_sep) : currency.decimals_sep,
+					thou_sep: c ? (c.thousand_sep || currency.thousands_sep) : currency.thousands_sep
+				};
+			}
+
+			/* ── RENDER GRID ── */
+			function renderGrid() {
+				var d = data;
+				var html = '';
+
+				/* VENTAS */
+				var vRows = '';
+				((d.ventas && d.ventas.areas_negocio) || []).forEach(function (item, i) {
+					if (!hasVal(item.months)) return;
+					vRows += buildRow(item.name, item.months, 'v', 'v' + i, true, 'Venta por área de negocio');
+				});
+				if (vRows) {
+					html += '<div class="er-section">Venta por área de negocio</div>' + vRows;
+					html += buildSumRow('Suma ventas', (d.ventas && d.ventas.suma ? d.ventas.suma.months : []), 'sm');
+				}
+
+				gridEl.innerHTML = html || '<div class="er-empty">No hay información para los filtros seleccionados.</div>';
+			}
+
+			function uniqueValues(rows, keys) {
+				var set = {};
+				rows.forEach(function (r) {
+					var v = f(r, keys);
+					if (v) set[v] = true;
+				});
+				return Object.keys(set).sort();
+			}
+
+			function buildOptions(arr) {
+				return arr.map(function (v) {
+					return '<option value="' + esc(v) + '">' + esc(v) + '</option>';
+				}).join('');
+			}
+
+			function buildDetailRows(rows) {
+				return rows.map(function (item) {
+					var idNv = f(item, ['id_nv', 'ID_NV', 'id', 'ID', '_id']);
+					var folio = f(item, ['id_negocio']) || '-';
+					var href = window.location.origin + '/4DACTION/wbienvenidos#negocios/content.shtml?id=' + encodeURIComponent(idNv);
+
+					return '<tr>'
+						+ '<td><a class="er-folio" href="' + esc(href) + '" target="_blank">' + esc(folio) + '</a></td>'
+						+ '<td>' + esc(f(item, ['param1']) || '-') + '</td>'
+						+ '<td>' + esc(f(item, ['param2']) || '-') + '</td>'
+						+ '<td>' + esc(f(item, ['param4']) || '-') + '</td>'
+						+ '<td>' + esc(f(item, ['param3']) || '-') + '</td>'
+						+ '<td>' + esc(f(item, ['param6']) || '-') + '</td>'
+						+ '<td class="r">' + esc(fmt(n(item.total_facturado) || n(item.total_facturado))) + '</td>'
+						+ '<td class="r">' + esc(fmt(pickAmt(item))) + '</td>'
+						+ '<td class="r">' + esc(fmt(item.total_gasto_real)) + '</td>'
+						+ '</tr>';
+				}).join('');
+			}
+
+			function applyDetailFilters() {
+				var fv = document.getElementById('er-f-venue').value;
+				var fc = document.getElementById('er-f-codigo').value;
+				var fu = document.getElementById('er-f-unidad').value;
+
+				var filtered = (modalBodyEl._allRows || []).filter(function (r) {
+					if (fv && f(r, ['param4']) !== fv) return false;
+					if (fc && f(r, ['param1']) !== fc) return false;
+					if (fu && f(r, ['param3']) !== fu) return false;
+					return true;
+				});
+
+				var tbody = document.getElementById('er-dtbl-body');
+				if (tbody) {
+					tbody.innerHTML = filtered.length
+						? buildDetailRows(filtered)
+						: '<tr><td colspan="9" style="text-align:center;padding:20px;color:#888">Sin resultados para los filtros aplicados</td></tr>';
+				}
+
+				/* actualiza KPIs de conteo y suma */
+				updateKpisAfterFilter(filtered);
+			}
+
+			function updateKpisAfterFilter(filtered) {
+				var total = sumAmt(filtered);
+				var kpiGrid = modalBodyEl.querySelector('.er-kpi-grid');
+				if (!kpiGrid) return;
+
+				var kpis = kpiGrid.querySelectorAll('.er-kpi-val');
+				/* asume el orden: Mes, Área, Monto reporte, Negocios encontrados, Suma detalle */
+				if (kpis[3]) kpis[3].textContent = filtered.length;
+				if (kpis[4]) kpis[4].textContent = total !== null ? fmt(total) : '—';
+			}
+
+			/* ── ROW BUILDERS ── */
+			function buildRow(name, months, cls, rid, allowDetail, section) {
+				var safe = esc(name || 'Sin nombre');
+				var h = '<div class="er-name ' + cls + '" data-rid="' + rid + '" title="' + safe + '">' + safe + '</div>';
+
+				/* consolidar todas las nv_ids de todos los meses en un solo string */
+				var allIds = [];
+				if (allowDetail) {
+					(months || []).forEach(function (m) {
+						String((m && m.nv_ids) || '').split(';').forEach(function (id) {
+							id = id.trim();
+							if (id && allIds.indexOf(id) === -1) allIds.push(id);
+						});
+					});
+				}
+				var allIdsStr = allIds.join(';');
+
+				(months || []).forEach(function (m, i) {
+					h += buildAmtCell(m, i + 1, cls, rid, allowDetail, name, section, allIdsStr);
+					h += buildPctCell(m, cls, rid);
+				});
+				return h;
+			}
+
+			function buildSumRow(label, months, cls) {
+				var rid = 'sr-' + cls + '-' + label.replace(/\W+/g, '-');
+				var h = '<div class="er-name ' + cls + '" data-rid="' + rid + '">' + esc(label) + '</div>';
+				(months || []).forEach(function (m, i) {
+					h += buildAmtCell(m, i + 1, cls, rid, false, label, '', '');
+					h += buildPctCell(m, cls, rid);
+				});
+				return h;
+			}
+
+			function buildAmtCell(m, idx, cls, rid, allowDetail, rowName, section, allIdsStr) {
+				var raw = n(m && m.value);
+				var disp = money(raw);
+				var vc = (cls !== 'c' && cls !== 'g') ? (raw < 0 ? ' neg' : (raw > 0 ? ' pos' : '')) : '';
+				var nvIds = (m && m.nv_ids) ? String(m.nv_ids) : '';
+				var canOpen = !!(allowDetail && nvIds.trim());
+
+				var btn = '<button type="button" class="er-dbtn"'
+					+ (canOpen ? ' onclick="openDetail(this);event.stopPropagation()"' : ' disabled')
+					+ ' data-mn="' + idx + '"'
+					+ ' data-mname="' + esc(MONTHS[idx - 1] || '') + '"'
+					+ ' data-rname="' + esc(rowName || '') + '"'
+					+ ' data-sname="' + esc(section || '') + '"'
+					+ ' data-nv-ids="' + esc(nvIds) + '"'
+					+ ' data-all-nv-ids="' + esc(allIdsStr || '') + '"'
+					+ ' data-monto="' + esc(String(raw)) + '"'
+					+ '>' + PENCIL + '</button>';
+
+				return '<div class="er-amt ' + cls + vc + ' m' + idx + '" data-rid="' + rid + '" data-raw="' + raw + '">'
+					+ '<span class="sym">' + disp.sym + '</span>'
+					+ '<span class="val">' + disp.amt + '</span>'
+					+ btn
+					+ '</div>';
+			}
+
+			function buildPctCell(m, cls, rid) {
+				var raw = n(m && m.percent);
+				var val = (raw * 100).toFixed(2).replace('.', ',');
+				var vc = raw < 0 ? ' neg' : '';
+				return '<div class="er-pct ' + cls + vc + '" data-rid="' + rid + '">'
+					+ '<span class="pv">' + val + '</span>'
+					+ '<span class="ps">%</span>'
+					+ '</div>';
+			}
+
+			/* ── DETAIL MODAL (Negocios) ── */
+			function openDetail(btn) {
+				var mname = btn.dataset.mname || '';
+				var rname = btn.dataset.rname || '';
+				var sname = btn.dataset.sname || '';
+				var amount = n(btn.dataset.monto);
+				var ids = (btn.dataset.nvIds || '').trim();
+
+				modalTitleEl.textContent = 'Detalle de negocios';
+				modalSubEl.innerHTML = '<strong>Sección:</strong> ' + esc(sname)
+					+ ' &nbsp;&nbsp; <strong>Área:</strong> ' + esc(rname)
+					+ ' &nbsp;&nbsp; <strong>Mes:</strong> ' + esc(mname);
+				modalBodyEl.innerHTML = '<div class="er-loading">Cargando detalle de negocios...</div>';
+				backdropEl.classList.add('open');
+
+				$.ajax({
+					url: '/4DACTION/_force_getNegociosById',
+					method: 'GET',
+					dataType: 'json',
+					data: { nv_ids: ids, ids: ids },
+					success: function (r) { renderDetail(r, { mname: mname, rname: rname, sname: sname, amount: amount }); },
+					error: function () { modalBodyEl.innerHTML = '<div class="er-error">No fue posible obtener el detalle.</div>'; }
+				});
+			}
+
+			function closeModal() { backdropEl.classList.remove('open'); }
+
+			function renderDetail(response, meta) {
+				var rows = normalizeRows(response);
+				var total = sumAmt(rows);
+				var kpis = buildKpis(meta, total, rows.length);
+
+				if (!rows.length) {
+					modalBodyEl.innerHTML = kpis + '<div class="er-empty-state">No se encontraron negocios para mostrar.</div>';
+					return;
+				}
+
+				/* guardamos las filas originales para filtrar sobre ellas */
+				modalBodyEl._allRows = rows;
+				modalBodyEl._meta = meta;
+
+				/* opciones únicas para los selects */
+				var venues = uniqueValues(rows, ['param4']);
+				var codigos = uniqueValues(rows, ['param1']);
+				var unidades = uniqueValues(rows, ['param3']);
+
+				var filtersHtml = ''
+					+ '<div class="er-detail-filters">'
+					+ '<div class="er-df-item">'
+					+ '<label>Codigo Show</label>'
+					+ '<select id="er-f-venue"><option value="">Todos</option>' + buildOptions(venues) + '</select>'
+					+ '</div>'
+					+ '<div class="er-df-item">'
+					+ '<label>Nombre Show</label>'
+					+ '<select id="er-f-codigo"><option value="">Todos</option>' + buildOptions(codigos) + '</select>'
+					+ '</div>'
+					+ '<div class="er-df-item">'
+					+ '<label>Unidad</label>'
+					+ '<select id="er-f-unidad"><option value="">Todas</option>' + buildOptions(unidades) + '</select>'
+					+ '</div>'
+					+ '<div class="er-df-item">'
+					+ '<button type="button" id="er-f-clear" class="er-btn-clear">Limpiar</button>'
+					+ '</div>'
+					+ '</div>';
+
+				modalBodyEl.innerHTML = kpis + filtersHtml
+					+ '<div class="er-dtbl-wrap"><table class="er-dtbl">'
+					+ '<thead><tr><th>Folio</th><th>Nombre Show</th><th>Venue</th><th>Codigo Show</th><th>Unidad</th><th>Fecha</th><th class="r">Ingresos</th><th class="r">Total Presupuesto</th><th class="r">Gasto Real Total</th></tr></thead>'
+					+ '<tbody id="er-dtbl-body">' + buildDetailRows(rows) + '</tbody></table></div>';
+
+				/* listeners */
+				document.getElementById('er-f-venue').addEventListener('change', applyDetailFilters);
+				document.getElementById('er-f-codigo').addEventListener('change', applyDetailFilters);
+				document.getElementById('er-f-unidad').addEventListener('change', applyDetailFilters);
+				document.getElementById('er-f-clear').addEventListener('click', function () {
+					document.getElementById('er-f-venue').value = '';
+					document.getElementById('er-f-codigo').value = '';
+					document.getElementById('er-f-unidad').value = '';
+					applyDetailFilters();
+				});
+			}
+
+			function buildKpis(meta, total, count) {
+				var tb = total !== null
+					? '<div class="er-kpi"><div class="er-kpi-lbl">Suma detalle</div><div class="er-kpi-val">' + esc(fmt(total)) + '</div></div>'
+					: '<div class="er-kpi"><div class="er-kpi-lbl">Suma detalle</div><div class="er-kpi-val">—</div></div>';
+				return '<div class="er-kpi-grid">'
+					+ '<div class="er-kpi"><div class="er-kpi-lbl">Mes</div><div class="er-kpi-val">' + esc(meta.mname) + '</div></div>'
+					+ '<div class="er-kpi"><div class="er-kpi-lbl">Área de negocio</div><div class="er-kpi-val">' + esc(meta.rname) + '</div></div>'
+					+ '<div class="er-kpi"><div class="er-kpi-lbl">Monto del reporte</div><div class="er-kpi-val">' + esc(fmt(meta.amount)) + '</div></div>'
+					+ '<div class="er-kpi"><div class="er-kpi-lbl">Negocios encontrados</div><div class="er-kpi-val">' + count + '</div></div>'
+					+ tb + '</div>';
+			}
+
+			/* ── HELPERS ── */
+			function normalizeRows(r) {
+				if (Array.isArray(r)) return r;
+				if (r && Array.isArray(r.rows)) return r.rows;
+				if (r && Array.isArray(r.data)) return r.data;
+				if (r && r.data && Array.isArray(r.data.rows)) return r.data.rows;
+				if (r && Array.isArray(r.items)) return r.items;
+				if (r && Array.isArray(r.result)) return r.result;
+				return [];
+			}
+
+			function sumAmt(rows) {
+				var t = 0;
+				var found = false;
+
+				rows.forEach(function (r) {
+					var a = pickAmt(r);
+					if (a !== null) {
+						found = true;
+						t += a;
+					}
+				});
+
+				return found ? t : null;
+			}
+
+			function pickAmt(item) {
+				var keys = ['Total_Neto', 'total_neto'];
+				var total = 0;
+				var found = false;
+
+				for (var i = 0; i < keys.length; i++) {
+					if (item[keys[i]] != null && item[keys[i]] !== '') {
+						total += n(item[keys[i]]);
+						found = true;
+					}
+				}
+
+				return found ? total : null;
+			}
+
+			function f(item, keys) {
+				for (var i = 0; i < keys.length; i++) {
+					if (item[keys[i]] != null && item[keys[i]] !== '') return item[keys[i]];
+				}
+				return '';
+			}
+
+			function hasVal(months) {
+				return (months || []).some(function (m) { return n(m.value) !== 0; });
+			}
+
+			function money(val) {
+				var v = n(val), sym = cc.symbol;
+				if (data.moneda && data.moneda !== '' && data.moneda !== cc.code) {
+					sym = data.moneda;
+					v = v / n(data.valor_cambio || 1);
+				}
+				return { sym: sym, amt: $.number(v, cc.decimals, cc.dec_sep, cc.thou_sep) };
+			}
+
+			function fmt(val) {
+				return $.number(n(val), cc.decimals, cc.dec_sep, cc.thou_sep);
+			}
+
+			function n(v) {
+				if (typeof v === 'number') return isNaN(v) ? 0 : v;
+				var t = String(v == null ? '0' : v).trim();
+				if (!t) return 0;
+				var r = parseFloat(t.replace(/\s+/g, '').replace(/\.(?=\d{3}(\D|$))/g, '').replace(',', '.'));
+				return isNaN(r) ? 0 : r;
+			}
+
+			function esc(v) {
+				return String(v == null ? '' : v)
+					.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+					.replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+			}
+
+			/* ── EXPONER solo lo que necesita el HTML inline ── */
+			window.openDetail = openDetail;
+			window.updateCambio = function (monthIdx, newVal) {
+				var cambio = parseFloat(String(newVal || '0').replace(',', '.'));
+				if (!cambio || isNaN(cambio)) return;
+				document.querySelectorAll('.m' + monthIdx).forEach(function (el) {
+					var raw = parseFloat(el.dataset.raw) || 0;
+					var valEl = el.querySelector('.val');
+					if (valEl) valEl.textContent = $.number(raw / cambio, cc.decimals, cc.dec_sep, cc.thou_sep);
+				});
+			};
+
+			$(document).ready(function () { init(); });
+
+		})();
+	</script>
+</head>
+
+<body>
+	<section class="sheet items">
+		<div id="container-reportes">
+
+			<div class="er-header">
+				<div class="er-header-left">
+					<h3 class="htitle">Reporte por area de negocio</h3>
+					<div class="er-subtitle">Vista anual por mes, acumulado y detalle de negocios</div>
+				</div>
+				<div class="er-badges">
+					<span class="er-badge er-badge--v">Ventas</span>
+				</div>
+			</div>
+
+			<div class="er-wrap">
+				<div class="er-grid">
+					<div class="er-hdr-concept">Concepto</div>
+					<div class="er-hdr-month">Enero</div>
+					<div class="er-hdr-month">Febrero</div>
+					<div class="er-hdr-month">Marzo</div>
+					<div class="er-hdr-month">Abril</div>
+					<div class="er-hdr-month">Mayo</div>
+					<div class="er-hdr-month">Junio</div>
+					<div class="er-hdr-month">Julio</div>
+					<div class="er-hdr-month">Agosto</div>
+					<div class="er-hdr-month">Septiembre</div>
+					<div class="er-hdr-month">Octubre</div>
+					<div class="er-hdr-month">Noviembre</div>
+					<div class="er-hdr-month">Diciembre</div>
+					<div class="er-hdr-month acum">Acumulado</div>
+					<div id="er-grid" style="display:contents;">
+						<div class="er-empty">Cargando datos...</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+	<div class="er-modal-backdrop" id="er-modal-backdrop">
+		<div class="er-modal" role="dialog" aria-modal="true">
+			<div class="er-modal-hdr">
+				<div>
+					<div class="er-modal-title" id="er-modal-title">Detalle</div>
+					<div class="er-modal-sub" id="er-modal-sub">Cargando...</div>
+				</div>
+				<button type="button" class="er-modal-close" id="er-modal-close" aria-label="Cerrar">×</button>
+			</div>
+			<div class="er-modal-body" id="er-modal-body"></div>
+		</div>
+	</div>
+</body>
+
+</html>

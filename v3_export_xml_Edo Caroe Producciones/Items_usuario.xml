@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Items_usuario>
+<record><field name="login">hGrunert</field><field name="llave_nv">CT295sc40Titulo4254424254</field><field name="acceso">True</field><field name="id_nv">295</field></record>
+<record><field name="login">hGrunert</field><field name="llave_nv">CT295sc50Item511787434</field><field name="acceso">True</field><field name="id_nv">295</field></record>
+<record><field name="login">hGrunert</field><field name="llave_nv">CT295sc60Item6375120992</field><field name="acceso">True</field><field name="id_nv">295</field></record>
+<record><field name="login">hGrunert</field><field name="llave_nv">CT295sc70Item7122831382</field><field name="acceso">True</field><field name="id_nv">295</field></record>
+<record><field name="login">PNALEGACH</field><field name="llave_nv">CT295sc10Titulo1155320746</field><field name="acceso">True</field><field name="id_nv">295</field></record>
+<record><field name="login">PNALEGACH</field><field name="llave_nv">CT295sc20Item2645782247</field><field name="acceso">True</field><field name="id_nv">295</field></record>
+<record><field name="login">PNALEGACH</field><field name="llave_nv">CT295sc30Item31687224</field><field name="acceso">True</field><field name="id_nv">295</field></record>
+<record><field name="login">PNALEGACH</field><field name="llave_nv">CT327sc10Titulo1666625080</field><field name="acceso">True</field><field name="id_nv">327</field></record>
+<record><field name="login">PNALEGACH</field><field name="llave_nv">CT327sc20Item2438910790</field><field name="acceso">True</field><field name="id_nv">327</field></record>
+<record><field name="login">hGrunert</field><field name="llave_nv">CT327sc10Titulo1548470380</field><field name="acceso">True</field><field name="id_nv">327</field></record>
+<record><field name="login">hGrunert</field><field name="llave_nv">CT327sc20Item2356761550</field><field name="acceso">True</field><field name="id_nv">327</field></record>
+<record><field name="login">hGrunert</field><field name="llave_nv">CT327sc30Item365163630</field><field name="acceso">True</field><field name="id_nv">327</field></record>
+<record><field name="login">hGrunert</field><field name="llave_nv">CT347sc10Titulo1</field><field name="acceso">True</field><field name="id_nv">347</field></record>
+<record><field name="login">hGrunert</field><field name="llave_nv">CT347sc20Item2</field><field name="acceso">True</field><field name="id_nv">347</field></record>
+</Items_usuario>

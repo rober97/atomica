@@ -1,0 +1,23 @@
+{	
+	"rows": [
+<!--#4DLOOP login -->
+{
+	"username": "<!--#4DTEXT login{login}-->",
+	"estado": <!--#4DIF estado{login}-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+	"nombre": "<!--#4DTEXT nombre{login}-->",
+	"apellido": "<!--#4DTEXT apellido{login}-->",
+	"password": "<!--#4DTEXT password{login}-->",
+	"name": "<!--#4DTEXT nombre{login} +" "+ apellido{login}-->",
+	"cargo": "<!--#4DTEXT cargo{login}-->",
+	"rut": "<!--#4DTEXT rut{login}-->",
+	"telefono": "<!--#4DTEXT telefono{login}-->",
+	"email": "<!--#4DTEXT email{login}-->",
+	"companie": {
+		"companieId": "<!--#4DHTML empresa{login}-->",
+		"statev3": <!--#4DIF activov3{login}-->true<!--#4DELSE-->false<!--#4DENDIF-->
+	},
+	"direccion": "<!--#4DTEXT direccion{login}-->"
+}<!--#4DIF NOT(login{login} = login{Size of array(login)})-->,<!--#4DENDIF-->
+<!--#4DENDLOOP-->
+	]
+}

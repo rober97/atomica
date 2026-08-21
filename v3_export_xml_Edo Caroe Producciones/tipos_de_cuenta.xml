@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tipos_de_cuenta>
+<record><field name="id_tipocuenta">1</field><field name="codigo_tipocuenta"></field><field name="descripcion_tipocuenta">VISTA</field><field name="estado_tipocuenta">True</field><field name="creado">True</field></record>
+<record><field name="id_tipocuenta">2</field><field name="codigo_tipocuenta"></field><field name="descripcion_tipocuenta">CORRIENTE</field><field name="estado_tipocuenta">True</field><field name="creado">True</field></record>
+<record><field name="id_tipocuenta">3</field><field name="codigo_tipocuenta"></field><field name="descripcion_tipocuenta">DE AHORRO</field><field name="estado_tipocuenta">True</field><field name="creado">True</field></record>
+<record><field name="id_tipocuenta">4</field><field name="codigo_tipocuenta"></field><field name="descripcion_tipocuenta">RUT</field><field name="estado_tipocuenta">True</field><field name="creado">True</field></record>
+</tipos_de_cuenta>

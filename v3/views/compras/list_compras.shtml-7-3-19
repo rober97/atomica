@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<!--#4DSCRIPT/_V3_serverInfo-->
+<html>
+	<head>
+		<title>Compras</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="/v3/views/compras/lista.css?<!--#4DTEXT _V3_version-->">
+		<link rel="stylesheet" type="text/css" href="/v3/views/compras/design/tooltips.css">
+		<link rel="stylesheet" type="text/css" href="/v3/views/compras/design/list.css">
+		<script type="text/javascript" src="/v3/views/compras/script/active_menu.js?<!--#4DTEXT _V3_version-->"></script>
+		<style type="text/css">
+			.rojoPastel{
+				color:red;
+			}
+			.folio *{
+				display: inline-block;
+			}
+
+		</style>
+
+		<script>			
+
+
+			// funcionalidad para boton "por validar"
+			var ocs = {
+				oc_por_validar: function(button){
+					$('input[name="validacion_gasto2"]').trigger("click");
+					if ($('input[name="validacion_gasto2"]').prop('checked')) {
+						button.css('border','2px double gray');
+					}else{
+						button.css('border','');
+					}
+				}
+			}
+
+
+			$(document).ready(function() {
+				document.title = 'OC - Lista / <!--#4DTEXT _V3_nombre_empresa-->';
+				
+				current_tab = 0;
+
+				var loadTooltips = function(target, id){
+
+					var tooltipHtml;
+					var ocValidada;
+
+		     				 $.ajax({
+				                'url':'/4DACTION/_V3_getItemFromOcList',
+				                data:{
+				                  'id_Oc':  id
+				                },
+				                dataType:'json',
+				                async: false,		                
+				                success:function(data){
+
+				                  var trbody;
+
+
+
+				                  for(var k = 0; k < data.rows.length; k++){
+
+				                  	var ocValidada = data.rows[k].ocValidada;
+
+									var aDiferencia =  $.number(data.rows[k].aPresupuesto - data.rows[k].aGastoActual, currency.decimals, currency.decimals_sep, currency.thousands_sep);
+									
+									var aDiferenciaValidado = $.number(data.rows[k].aPresupuesto - data.rows[k].aGastoActual - data.rows[k].aItem, currency.decimals, currency.decimals_sep, currency.thousands_sep);
+
+				                  	var aVenta = $.number(data.rows[k].aVenta, currency.decimals, currency.decimals_sep, currency.thousands_sep);
+				                  	
+				                  	var aPresupuesto = $.number(data.rows[k].aPresupuesto, currency.decimals, currency.decimals_sep, currency.thousands_sep);
+
+				                  	var aGastoActual = $.number(data.rows[k].aGastoActual, currency.decimals, currency.decimals_sep, currency.thousands_sep);
+
+				                  	var aItem = $.number(data.rows[k].aItem, currency.decimals, currency.decimals_sep, currency.thousands_sep);
+				          
+
+									if(access._452){
+										if(aVenta<0){
+					                  		var tdVenta = "<td class='rightNum redTd'>"+aVenta+"</td>";
+					                  	}else {
+					                  	var tdVenta = "<td class='rightNum'>"+aVenta+"</td>";
+					                  }
+									}
+
+				                  	var tdPresupuesto = "<td class='rightNum'>"+aPresupuesto+"</td>";
+
+				                  	var tdGastoActual = "<td class='rightNum'>"+aGastoActual+"</td>";
+				                 
+									var tdItem = "<td class='rightNum boldtext'>"+aItem+"</td>";
+									
+
+									if(parseFloat(aDiferencia)<0){
+										var tdDiferencia = "<td class='rightNum redTd'>"+aDiferencia+"</td>";
+									}else {
+										var tdDiferencia = "<td class='rightNum'>"+aDiferencia+"</td>";
+									}
+			                        
+									if(parseFloat(aDiferenciaValidado) < 0){
+										var tdDiferenciaValidado = "<td class='rightNum redTd'>"+aDiferenciaValidado+"</td>";
+									}else {
+										var tdDiferenciaValidado = "<td class='rightNum'>"+aDiferenciaValidado+"</td>";
+									}
+
+				                  	if(typeof trbody !== 'undefined'){
+				                  		if(ocValidada){
+						                  	trbody += "<tr>\
+						                      <td><a class='greenLink' target='_blank' href='/4DACTION/wbienvenidos#negocios/content.shtml?id="+data.rows[k].aNegocioID+"'>"+data.rows[k].aNegocio.slice(0,31)+"\
+						                      </a></td>\
+						                      <td class'nombreNv'>"+data.rows[k].aNombre+"\
+						                      </td>"+tdVenta+tdPresupuesto+tdGastoActual+tdDiferencia+"\
+						                    </tr>";
+
+				                  		}else{
+						                  	trbody += "<tr>\
+						                      <td><a class='greenLink' target='_blank' href='/4DACTION/wbienvenidos#negocios/content.shtml?id="+data.rows[k].aNegocioID+"'>"+data.rows[k].aNegocio.slice(0,31)+"\
+						                      </a></td>\
+						                      <td class'nombreNv'>"+data.rows[k].aNombre+"\
+						                      </td>"+tdVenta+tdPresupuesto+tdGastoActual+tdItem+tdDiferencia+tdDiferenciaValidado+"\
+						                    </tr>";
+
+				                  		}
+				                  		
+				                  	}else {
+				                  		if(ocValidada){
+						                  	trbody = "<tr>\
+						                      <td><a class='greenLink' target='_blank' href='/4DACTION/wbienvenidos#negocios/content.shtml?id="+data.rows[k].aNegocioID+"'>"+data.rows[k].aNegocio.slice(0,31)+"\
+						                      </a></td>\
+						                      <td class'nombreNv'>"+data.rows[k].aNombre+"\
+						                      </td>"+tdVenta+tdPresupuesto+tdGastoActual+tdDiferencia+"\
+						                    </tr>";
+
+				                  		}else{
+						                  	trbody = "<tr>\
+						                      <td><a class='greenLink' target='_blank' href='/4DACTION/wbienvenidos#negocios/content.shtml?id="+data.rows[k].aNegocioID+"'>"+data.rows[k].aNegocio.slice(0,31)+"\
+						                      </a></td>\
+						                      <td class'nombreNv'>"+data.rows[k].aNombre+"\
+						                      </td>"+tdVenta+tdPresupuesto+tdGastoActual+tdItem+tdDiferencia+tdDiferenciaValidado+"\
+						                    </tr>";
+
+				                  		}
+				                  		
+				                  	}
+				                  }
+
+					                  	// <tr>\
+					                  	// 	<th width='40%' colspan='3' class='blacknv'>Costo</th><th width='12%' class='greynv'>Presupuestado</th><th width='12%' class='orangenv'>Actual</th><th width='12%' class='orange2nv'>Por validar</th><th width='12%' class='greennv' colspan='2'>Diferencia</th>\
+					                  	// </tr>\
+					                if(access._452) { // ver precio venta
+					                	if(ocValidada){
+										tooltipHtml = "<table class='tabletooltip'>\
+					                  <thead>\
+					                    <tr>\
+					                      <th class='blacknv' width='15%'>Negocio\
+					                      </th>\
+					                      <th class='blacknv' width='30%'>Ítem\
+					                      </th>\
+					                      <th class='blacknv' width='10%'>Venta\
+					                      </th>\
+					                      <th class='greynv' width='10%'>Presupuestado\
+					                      </th>\
+					                      <th class='orangenv' width='10%'>Real Validado\
+					                      </th>\
+					                      <th class='greennv' width='10%'>Diferencia hoy\
+					                      </th>\
+					                    </tr>\
+					                  </thead>\
+					                  <tbody>\
+					                  "+trbody+"\
+					                  </tbody>\
+					                  </table>";
+
+					                	}else{
+										tooltipHtml = "<table class='tabletooltip'>\
+					                  <thead>\
+					                    <tr>\
+					                      <th class='blacknv' width='15%'>Negocio\
+					                      </th>\
+					                      <th class='blacknv' width='30%'>Ítem\
+					                      </th>\
+					                      <th class='blacknv' width='10%'>Venta\
+					                      </th>\
+					                      <th class='greynv' width='10%'>Presupuestado\
+					                      </th>\
+					                      <th class='orangenv' width='10%'>Real Validado\
+					                      </th>\
+					                      <th class='orange2nv' width='10%'>Real + Pendiente de validar\
+					                      </th>\
+					                      <th class='greennv' width='10%'>Diferencia hoy\
+					                      </th>\
+					                      <th class='greennv' width='10%'>Diferencia Posterior\
+					                      </th>\
+					                    </tr>\
+					                  </thead>\
+					                  <tbody>\
+					                  "+trbody+"\
+					                  </tbody>\
+					                  </table>";
+
+					                	}
+					    			}else{
+					                	if(ocValidada){
+					    				tooltipHtml = "<table class='tabletooltip'>\
+					                <thead>\
+					                      <th width='15%' class='blacknv'>Negocio\
+					                      </th>\
+					                      <th width='30%' class='blacknv'>Ítem\
+					                      </th>\
+					                      <th width='10%' class='greynv'>Presupuestado\
+					                      </th>\
+					                      <th width='10%' class='orangenv'>Real Validado\
+					                      </th>\
+					                      <th width='10%' class='greennv'>Diferencia hoy\
+					                      </th>\
+					                    </tr>\
+					                </thead>\
+					                  <tbody>\
+					                  "+trbody+"\
+					                  </tbody>\
+					                  </table>";
+
+					                	}else{
+					    				tooltipHtml = "<table class='tabletooltip'>\
+					                <thead>\
+					                      <th width='15%' class='blacknv'>Negocio\
+					                      </th>\
+					                      <th width='30%' class='blacknv'>Ítem\
+					                      </th>\
+					                      <th width='10%' class='greynv'>Presupuestado\
+					                      </th>\
+					                      <th width='10%' class='orangenv'>Real Validado\
+					                      </th>\
+					                      <th width='10%' class='orange2nv'>Real + Pendiente de validar\
+					                      </th>\
+					                      <th width='10%' class='greennv'>Diferencia hoy\
+					                      </th>\
+					                      <th width='10%' class='greennv'>Diferencia Posterior\
+					                      </th>\
+					                    </tr>\
+					                </thead>\
+					                  <tbody>\
+					                  "+trbody+"\
+					                  </tbody>\
+					                  </table>";
+
+					                	}
+					    			}
+
+				                }
+				            });		
+
+					target.tooltipster('update', tooltipHtml);
+
+				}
+
+				unaBase.toolbox.init();
+
+				// Inicializamos un buscador
+				var params = {
+					searchOff: true,
+					// Función que genera una URL de listado JSON
+					url: function() { return '/4DACTION/_V3_getGastosNew' },
+					entity: 'Compras',
+					data: {
+						'tipo_gasto' : "OC"
+					},
+					callback : function(data){
+						$('.especial .totales').find('span[data-neto]').text(data.totales.neto);
+						$('.especial .totales').find('span[data-exento]').text(data.totales.exento);
+						$('.especial .totales').find('span[data-total]').text(data.totales.total);
+						$('.especial .totales').find('span[data-pagado]').text(data.totales.pagado);
+						$('.especial .totales').find('span[data-porpagar]').text(data.totales.porpagar);
+						$('.especial .totales').find('span[data-justificado]').text(data.totales.justificado);
+						$('.especial .totales').find('span[data-porjustificar]').text(data.totales.porjustificar);
+
+						// Fijar header y footer
+						$('#viewport .fht-table-init').fixedHeaderTable('destroy');
+						//$('#viewport table.fixed').fixedHeaderTable({ footer: true, cloneHeadToFoot: false, fixedColumn: false });
+						// --ini-- corrección para ordenar - V3_212
+						$('#viewport table.fixed').fixedHeaderTable({
+							footer: true,
+							cloneHeadToFoot: false,
+							fixedColumn: false,
+							create: function() {
+								$('[data-sort-by]').removeClass('sort-order-desc').removeClass('sort-order-asc').removeData('sort-order');
+								$('[data-sort-by="' + data.sort.by + '"]').addClass('sort-order-' + data.sort.order).data('sort-order', data.sort.order);
+							}
+						});
+						// --fin-- corrección para ordenar - V3_212
+
+						//inicializa el tooltips con contenido vacio
+						var content = "";
+						$('td.tooltipsnv').tooltipster({
+							content: content,
+							contentAsHTML: true,  
+							contentCloning: false,
+							interactive: true,
+							maxWidth: 800,
+							multiple: true
+						});
+						// carga tooltips si es un negocio
+						$('td.tooltipsnv').on('hover', function(){
+							var tr = $(this).closest('tr');
+							if (tr.data('origen') == "PROYECTO") {
+								loadTooltips($(this), tr.data('id'));
+							}else {
+
+								$(this).tooltipster('update', "Gasto General");
+							}
+						});
+						//en la colunma proveedor verifica si tienes permisos para ver contactos, habilita el link para modificar el mismo
+						var btnproovedor = $('td.proveedor span');
+						if(access._468){
+							btnproovedor.addClass('greenLink');
+							btnproovedor.click(function() {
+								unaBase.loadInto.dialog('/v3/views/contactos/content.shtml?id='+ $(this).data('proveedor'), 'Perfil del Contacto ', 'large');
+							});
+						}else{
+							btnproovedor.attr("data-goto",true);
+						}
+							
+						
+						// boton por validar
+
+						// input "por validar(validacion_gasto2)"
+						var porvalidarbtn = $('input[name=validacion_gasto2]');
+
+						//oculta el checkbox y el label
+						porvalidarbtn.closest('label').hide();
+						// color naranja a a letra del nuevo boton "por validar"
+						$('li[data-name="oc_por_validar"]').find('span.ui-button-text').css({
+							'color':'#FF6103'
+						});
+
+
+						//borde verde o naranja para validado y NO validado
+						$('td.valSI').css({
+							'border-left': '6px solid #43af7c'
+						});
+						$('td.valNO').css({
+							'border-left': '6px solid #FF6103'
+						});
+
+
+
+					},
+					row: {
+						html: function(i, rows) {
+							var v2 = "";
+							var title = "";
+							if (rows[i].version=="") {
+								//v2 = '<strong style="font-size:8px!important;font-weight:bold">V2</strong>';
+								v2 = '<strong title="oc creada en versión antigua" style="font-size:11px!important;font-weight:bold">*</strong>';
+								title = "Orden de compra creada en versión antigua";
+							}
+
+							var desOrigen = "";
+							if (rows[i].origen == "PROYECTO" || rows[i].origen == "PRESUPUESTO") {
+								desOrigen = rows[i].nro_neg +' - '+ rows[i].referencia_neg_clasif;
+							}else{
+								desOrigen = rows[i].referencia_neg_clasif;
+							}
+
+							/*var color = "";
+							var color_neto = "neto_c";
+							var color_total = "total_c";
+							var color_justificado = "justificado_c";*/
+
+							var color = "";
+							var color_neto = "";
+							var color_total = "";
+							var color_justificado = "";
+							var orangeLine = "";
+							var validado = "";
+
+							if (rows[i].estado == "ANULADA") {
+								color = "rojoPastel";
+								rows[i].saldo_a_justificar = 0;
+								rows[i].justificado = 0;
+								color_neto = color;
+								color_total = color;
+								color_justificado = color;
+							}
+
+
+							return '<tr class="'+orangeLine+'" title="'+ title +'" data-id="' + rows[i].id + '" data-state="' + rows[i].estado + '"  data-origen="'+ rows[i].origen +'">' +
+								'<td data-goto="false" width="2%" class="center val'+rows[i].validado+'"><input class="selected chk" type="checkbox" name="selected_one"></td>' +										
+								'<td data-goto="true" width="5%" class="center folio"><span class="iconval validado'+rows[i].validado+'"></span>' + v2 + ' ' + rows[i].folio + '</span></td>' +
+								'<td data-goto="true" width="5%" class="center">' + rows[i].emisor + '</td>' +
+								'<td data-goto="true" width="2%" class="center" title="' + rows[i].doc + '">' + rows[i].abrev + '</td>' +
+								'<td data-goto="true" width="3%" class="center">' + rows[i].formapago + '</td>' +
+								'<td data-goto="true" width="5%" class="center">' + rows[i].fecha + '</td>' +
+								'<td data-goto="true" width="5%" class="center">' + rows[i].vencimiento + '</td>' +
+								'<td data-goto="true" width="5%" class="left '+ ((rows[i].validado == "NO") ? 'tooltipsnv greenLink' : '') +'"  >' + desOrigen + '</td>' +
+								'<td data-goto="true" width="3%" class="center">' + rows[i].estado + '</td>' +
+								'<td data-goto="true" width="10%" data-proveedor="'+rows[i].proveedorId+'" class="left proveedor"><span>' + rows[i].proveedor + '</span></td>' +
+								'<td data-goto="true" width="13%" class="left">' + rows[i].referencia + '</td>' +
+								'<td data-goto="true" width="5%" class="right">' + rows[i].neto + '</td>' +
+								'<td data-goto="true" width="5%" class="right">' + rows[i].exento + '</td>' +
+								'<td data-goto="true" width="5%" class="right">' + rows[i].total + '</td>' +
+								'<td data-goto="true" width="5%" class="right">' + rows[i].pago + '</td>' +
+								'<td data-goto="true" width="5%" class="right">' + rows[i].saldo_a_pagar + '</td>' +
+								'<td data-goto="true" width="5%" class="right">' + rows[i].justificado + '</td>' +
+								'<td data-goto="true" width="5%" class="right">' + rows[i].saldo_a_justificar + '</td>' +
+							'</tr>';
+   
+
+						}
+
+					},
+					// detail: {
+					// 	url: function(id) { return '/v3/views/compras/content.shtml?id=' + id +'&from=self'},
+					// 	iframe: false
+					// },
+					// Inflexiones
+					inflection: {
+						singular: 'gasto',
+						plural: 'gastos',
+						none: 'ningún'
+					},
+					filters: [
+						{ name: 'created_at', type: 'month', caption: 'Fecha de creación', range: true, currentMonth: true },
+						// { name: 'tipo_gasto', type: 'autocomplete', caption: 'Tipo de gastos', dataSource: 'get_tipo_gasto' },
+						{ name: 'validacion_gasto', type: 'autocomplete', caption: 'Por validación', dataSource: 'get_validacion' },
+
+						{ name: 'origen', type: 'autocomplete', caption: 'Origen', dataObject: [
+							{ id: "PROYECTO", text: 'NEGOCIOS'},
+							{ id: "PRESUPUESTO DE GASTO", text: 'PRESUPUESTO DE GASTO'},
+							{ id: "GASTO GENERAL", text: 'GASTOS GENERALES'}
+						] },
+
+						{ name: 'por_negocio', type: 'autocomplete', caption: 'Por negocio', dataSource: 'getNegociosActivos' },
+						{ name: 'por_presupuesto', type: 'autocomplete', caption: 'Por presupuesto', dataSource: 'getPresupuestosActivos' },
+						
+						{ name: 'por_clasificacion', type: 'autocomplete', caption: 'Por Clasificación', dataSource: 'getClasificacionGG' },
+						/*{ name: 'tipo_doc', type: 'autocomplete', caption: 'Tipo', dataSource: 'get_negocios_activos' },
+						{ name: 'forma_pago', type: 'autocomplete', caption: 'Forma pago', dataSource: 'get_negocios_activos' },*/
+						{ name: 'aprobado_por', type: 'autocomplete', caption: 'Aprobado por', dataSource: 'getUsuarioValidador?entity=Orden_de_compra' },
+						{ name: 'centroCosto', type: 'autocomplete', caption: 'Area de negocio', dataSource: 'getCentroCosto' },
+
+						{ name: 'tipo_dtc', type: 'autocomplete', caption: 'Tipo Doc.', dataSource: 'getTiposDocDeCompras' },
+
+						{ name: 'formas_de_pago', type: 'autocomplete', caption: 'Forma de pago', dataSource: 'getFormaPagos' },
+						{ name: 'solicitud_pago', type: 'autocomplete', caption: 'Solicitud de Pago', dataObject: [
+							{ id: "True", text: 'Realizada'},
+							{ id: "False", text: 'No realizada'}
+						] },
+						{ name: 'contabilizado', type: 'autocomplete', caption: 'Contabilizada', dataObject: [
+							{ id: "True", text: 'Contabilizada'},
+							{ id: "False", text: 'No contabilizada'}
+						] },
+
+						{ name: 'justificacion', type: 'autocomplete', caption: 'Por Justificar', dataObject: [
+							{ id: "justificado", text: 'Justificado'},
+							{ id: "xjustificar", text: 'Por Justificar'}
+						]},
+
+						{ name: 'mas', type: 'autocomplete', caption: 'Más filtros', dataObject: [
+							{ id: "abonado", text: 'Con abono'},
+							{ id: 'compartido', text: 'Compartido' },
+							{ id: 'no_compartido', text: 'Por compartir' },
+							{ id: 'validacion_solicitada', text: 'Validación solicitada (aún sin validar)' },
+							{ id: 'validacion_por_solicitar', text: 'Validación por solicitar' },
+							{ id: 'validacion_rechazada', text: 'Validación rechazada' }
+						]},
+
+						{ name: 'estado', type: 'checkbox', caption: 'Estado de la compra', options: [
+							{ caption: 'Emitida', name: 'estado_emitida', value: true },
+							{ caption: 'Pagada', name: 'estado_pagada', value: true },
+							{ caption: 'Cerrada', name: 'estado_cerrada', value: false },
+							{ caption: 'Anulada', name: 'estado_nulo', value: false }
+						]},
+						{ name: 'validacion_gasto2', type: 'checkbox', caption: 'Por validación', options: [
+							{ caption: 'Por Validar', name: 'validacion_gasto2', value: false },
+						] },
+					],
+					container : "listindex"
+				};
+
+				unaBase.toolbox.search.init(params);
+				unaBase.toolbox.menu.init({
+					entity: 'Compras',
+					buttons: ['searchOff',"create_gasto_from_oc", "export_list", "export_list_items_doc", "export_softland", "oc_por_validar", "import_gastos"]
+				});				
+
+				if(!access._437) { // crear compra
+					$('#menu ul').find('li[data-name="create_gasto_from_oc"]').hide();
+    			}
+
+    			/*if(access._437) { // crear compra desde importacion
+					$('#menu ul').find('li[data-name="import_gastos"] > button > .ui-button-text').css('color', 'gray');
+    			}*/
+
+    			$('#search').find('input[name="por_negocio"]').closest('.autocomplete').hide();
+    			$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').hide();
+    			$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').hide();
+    			$('#search').find('input[name="origen"]').blur(function(){
+    				switch($(this).val()){
+    					case '' :
+    						$('#search').find('input[name="por_negocio"]').closest('.autocomplete').hide();
+    						$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').hide();
+    						$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').hide();
+    						break;
+    					case 'NEGOCIOS' :
+    						$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').hide();
+    						$('#search').find('input[name="por_negocio"]').closest('.autocomplete').show();
+    						$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').hide();
+    						break;
+    					case 'GASTOS GENERALES' :
+    						$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').hide();
+    						$('#search').find('input[name="por_negocio"]').closest('.autocomplete').hide();
+    						$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').show();
+    						break;
+    					case 'PRESUPUESTO DE GASTO' :
+    						$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').hide();
+    						$('#search').find('input[name="por_negocio"]').closest('.autocomplete').hide();
+    						$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').show();
+    						break;
+    				}
+    			});
+				$('#menu ul').find('li[data-name="export_softland"]').hide();
+
+				$("body").on("click", "input.selected", function(){
+					var input = $(this);
+					if (input.attr('name') == "selected_all" ) {
+						if (input.prop("checked")) {
+							$('table tbody input[name="selected_one"]').prop("checked", true);
+							$('#menu ul').find('li[data-name="export_softland"]').show();
+							$('nav.toolbox').append(soft);
+						}else{
+							$('table tbody input[name="selected_one"]').prop("checked", false);
+							$('#menu ul').find('li[data-name="export_softland"]').hide();
+						}
+					}else{
+							var cantSelect = $('table.listpayout > tbody > tr > td > input:checked').length;
+							if (input.prop("checked")) {
+								if(input.closest('tr').attr("data-state") == "CERRADA"){
+									$('#menu ul').find('li[data-name="export_softland"]').show();
+								}else{
+									$('#menu ul').find('li[data-name="export_softland"]').hide();
+								}
+							}else{
+								if(cantSelect == 0){
+									$('#menu ul').find('li[data-name="export_softland"]').hide();
+								}
+							}
+						}
+				});
+
+
+				// ir a detalle
+				$('.padre table tbody').on('click', 'tr > td[data-goto="true"]', function(event) {
+					if(event.target.tagName != "SPAN"){
+					  	var idOc = $(this).closest("tr").data("id");
+					  	unaBase.loadInto.viewport('/v3/views/compras/content.shtml?id=' + idOc+'&from=self');					
+					}
+				});
+
+
+				//$('input[name="searchCheckbox"]').hide();
+			});
+
+
+		</script>
+		<style type="text/css">
+		/* ini --22.07.16 options select */
+	    	.chk{
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				margin:0px;
+				vertical-align: middle;
+				cursor:pointer;
+			}
+			.container-options{
+				height:30px;
+				margin:5px 0 0 0;
+				padding: 3px;
+				border-color: red;
+			}
+				.container-options > div{
+					display: inline-block;
+				}
+			#selectdtc{
+				height:24px;
+				width:70px;
+				background-color:#e6e6e6;
+			}
+			/* fin --22.07.16 options select */
+
+		</style>
+	</head>
+	<body>
+		<div  class="padre" style="width: 100%; height: calc(100% - 10px); overflow-x: scroll; overflow-y: scroll">
+			<table width="100%" data-tipogasto="OC" class="results especial listindex fixed">
+					<thead>
+						<tr>
+							<th class="center" width="2%"><div style="padding:2px">Todo</div><div><input class="selected chk" type="checkbox" name="selected_all"></div></th>
+							<!-- <th class="center" width="3%" data-sort-by="validado" data-sort-default="asc">Validado</th> -->
+							<th class="center" width="5%" data-sort-by="folio" data-sort-default="desc">Número</th>
+							<th class="center" width="5%" data-sort-by="emisor" data-sort-default="desc">Emisor</th>
+							<th class="center" width="2%" data-sort-by="doc" data-sort-default="desc">Doc.</th>
+							<th class="center" width="3%" data-sort-by="estado" data-sort-default="asc">F. Pago</th>
+							<th class="center" width="5%" data-sort-by="fecha" data-sort-default="desc">Emisión</th>
+							<th class="center" width="5%" data-sort-by="vencimiento" data-sort-default="desc">Vcto.</th>
+							<th class="center" width="5%" data-sort-by="origen" data-sort-default="desc">Neg/GG</th>
+							<th class="center" width="3%" data-sort-by="estado" data-sort-default="asc">Estado</th>
+							<th class="center" width="10%" data-sort-by="proveedor" data-sort-default="asc">Proveedor</th>
+							<th class="center" width="13%" data-sort-by="referencia" data-sort-default="asc">Referencia</th>
+							<th class="center" width="5%" data-sort-by="neto" data-sort-default="desc">Afecto [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+							<th class="center" width="5%">Exento [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+							<th class="center" width="5%" data-sort-by="total" data-sort-default="desc">Total [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+							<th class="center" width="5%" data-sort-by="pago" data-sort-default="desc">Pagado [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+							<th class="center" width="5%" data-sort-by="saldo_a_pagar" data-sort-default="desc">Por pagar [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+							<th class="center" width="5%" data-sort-by="justificado" data-sort-default="desc">Justificado [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+							<th class="center" width="5%" data-sort-by="saldo_a_justificar" data-sort-default="desc">Por Justificar [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+						</tr>
+					</thead>
+					<tfoot class="totales">
+						<th width="2%"></th>
+						<!-- <th width="3%"></th> -->
+						<th width="5%"></th>
+			            <th width="5%"></th>
+						<th width="2%"></th>
+						<th width="3%"></th>
+						<th width="5%"></th>
+						<th width="5%"></th>
+						<th width="5%"></th>
+						<th width="3%"></th>
+						<th width="10%"></th>
+						<th width="13%"></th>
+			            <th width="5%" class="center"><span data-neto="" class="label2"><!--#4DVAR _V3_defaultCurrencySymbol-->0</span></th>
+			            <th width="5%" class="center"><span data-exento="" class="label2"><!--#4DVAR _V3_defaultCurrencySymbol-->0</span></th>
+			          	<th width="5%" class="center"><span data-total="" class="label2"><!--#4DVAR _V3_defaultCurrencySymbol-->0</span></th>
+			           	<th width="5%" class="center"><span data-pagado="" class="label2"><!--#4DVAR _V3_defaultCurrencySymbol-->0</span></th>
+			            <th width="5%" class="center"><span data-porpagar="" class="label2"><!--#4DVAR _V3_defaultCurrencySymbol-->0</span></th>
+			            <th width="5%" class="center"><span data-justificado="" class="label2"><!--#4DVAR _V3_defaultCurrencySymbol-->0</span></th>
+						<th width="5%" class="center"><span data-porjustificar="" class="label2"><!--#4DVAR _V3_defaultCurrencySymbol-->0</span></th>
+					</tfoot>
+					<tbody></tbody>
+				</table>
+			</div>
+	</body>
+</html>

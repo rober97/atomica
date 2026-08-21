@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <title>Estado de Resultados · Unabase</title>
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <script src="https://kit.fontawesome.com/ce6248a3c0.js" crossorigin="anonymous"></script>
+
+    <!-- Toastr -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <!-- TomSelect -->
+    <link rel="stylesheet" href="/css/tom-select.css?v=43534434335">
+    <script type="text/javascript" src="/script/tom-select.js?v=43534434335"></script>
+
+    <!-- ★ Hoja de estilos propia (separada del HTML) ★ -->
+    <link rel="stylesheet" href="./eerr.css">
+</head>
+
+<body>
+    <div class="content-wrapper page">
+
+        <!-- ── PAGE HEADER ── -->
+        <div class="page-header">
+            <div>
+                <div class="header-eyebrow">Contabilidad · Reportes</div>
+                <h1 class="header-title">Estado de Resultados</h1>
+                <div class="header-subtitle" id="companySubtitle">Período acumulado al mes seleccionado</div>
+            </div>
+            <div class="header-actions">
+                <div class="period-badge" id="periodBadge">—</div>
+                <button class="btn-export" onclick="downloadExcel()">
+                    <i class="fas fa-file-excel"></i> Exportar XLS
+                </button>
+            </div>
+        </div>
+
+        <!-- ── KPI ROW ── -->
+        <div class="kpi-row" id="kpiRow">
+            <div class="kpi-card c-green">
+                <div class="kpi-label">Ingreso Operacional</div>
+                <div class="kpi-value" id="k-ioper">—</div>
+                <div class="kpi-bar">
+                    <div class="kpi-bar-fill" style="width:70%"></div>
+                </div>
+            </div>
+            <div class="kpi-card c-green">
+                <div class="kpi-label">Costos Operacionales</div>
+                <div class="kpi-value" id="k-coper">—</div>
+                <div class="kpi-bar">
+                    <div class="kpi-bar-fill" style="width:50%"></div>
+                </div>
+            </div>
+            <div class="kpi-card c-green">
+                <div class="kpi-label">Gastos Administración</div>
+                <div class="kpi-value" id="k-gadm">—</div>
+                <div class="kpi-bar">
+                    <div class="kpi-bar-fill" style="width:40%"></div>
+                </div>
+            </div>
+            <div class="kpi-card c-green">
+                <div class="kpi-label">Resultado del Ejercicio</div>
+                <div class="kpi-value" id="k-result">—</div>
+                <div class="kpi-bar">
+                    <div class="kpi-bar-fill" id="k-result-bar" style="width:60%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── FILTERS BAR ── -->
+        <div class="filters-bar">
+            <div class="filter-group">
+                <span class="filter-label">Ver hasta</span>
+                <i class="fa-solid fa-arrow-right" style="color:var(--text3);font-size:11px"></i>
+                <input type="month" name="dateTo" id="dateTo" class="filter-input">
+            </div>
+
+            <div class="filter-sep"></div>
+
+            <div class="filter-group">
+                <span class="filter-label">Impuesto EERR</span>
+                <input type="text" id="percent_eerr" class="filter-input sm"
+                    onchange="onChangePercent(this)"
+                    onkeyup="onKeyUp(this)"
+                    onkeypress="return checkNumber(event)"
+                    placeholder="27%">
+            </div>
+
+            <div class="filter-sep"></div>
+
+            <div class="filter-group">
+                <span class="filter-label">Centro de costo</span>
+                <select name="centro_costo" id="centro_costo" class="filter-input">
+                    <option value="">Selecciona</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-label">Centro 2</span>
+                <select name="centro_costo_2" id="centro_costo_2" class="filter-input">
+                    <option value="">Selecciona</option>
+                </select>
+            </div>
+
+            <div class="filter-sep"></div>
+
+            <div class="search-input">
+                <i class="fas fa-search" style="color:var(--text3);font-size:11px"></i>
+                <input type="text" placeholder="Buscar cuenta..." id="searchInput" oninput="filterTableRows()">
+            </div>
+
+            <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+                <button class="btn-apply" onclick="setTableMain()">
+                    <i class="fas fa-sync-alt"></i> Actualizar
+                </button>
+            </div>
+        </div>
+
+        <!-- ── MAIN TABLE ── -->
+        <div class="table-card">
+            <div class="table-card-header">
+                <div class="tch-title">
+                    <div class="tch-icon">📊</div>
+                    Detalle por cuenta
+                </div>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div id="loading-modal"></div>
+                </div>
+            </div>
+
+            <!-- Loading bar -->
+            <div class="loading-bar" id="uiLoadingBar">
+                <div class="loading-bar-fill"></div>
+            </div>
+
+            <!-- Loader line original (oculto por defecto, se muestra al cargar modales) -->
+            <div style="padding:0 20px;display:none;" id="loader-line">
+                <div class="loader-line" style="position:relative;"></div>
+            </div>
+
+            <!-- Barra de scroll SUPERIOR -->
+            <div class="scroll-bar-top" id="scrollBarTop">
+                <div class="scroll-bar-top-inner" id="scrollBarTopInner"></div>
+            </div>
+
+            <div class="table-wrap" id="scrollMain">
+                <table class="table table-hover eerr" cellspacing="0" id="tables">
+                    <thead class="table-light" id="table-head">
+                        <tr style="text-align:center">
+                            <th scope="col" style="text-align:left;padding-left:20px">Cuenta</th>
+                            <th>Enero</th>
+                            <th>Febrero</th>
+                            <th>Marzo</th>
+                            <th>Abril</th>
+                            <th>Mayo</th>
+                            <th>Junio</th>
+                            <th>Julio</th>
+                            <th>Agosto</th>
+                            <th>Septiembre</th>
+                            <th>Octubre</th>
+                            <th>Noviembre</th>
+                            <th>Diciembre</th>
+                            <th>Acumulado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-data"></tbody>
+                    <tfoot id="table-footer"></tfoot>
+                </table>
+            </div>
+        </div>
+
+    </div><!-- /page -->
+
+
+    <!-- ── MODAL: LIBRO MAYOR ── -->
+    <div class="modal fade" id="modalDocs" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title-custom">
+                        Libro Mayor
+                        <span class="modal-title-badge" id="account-detail">Cuenta</span>
+                    </div>
+                    <button type="button" class="btn-close-custom close_modal" data-bs-dismiss="modal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div style="padding:0 20px;display:none;position:relative" id="loader-line-modal">
+                        <div class="loader-line"></div>
+                    </div>
+                    <div class="table-responsive" style="padding:0">
+                        <table class="table table-hover" cellspacing="0" width="100%">
+                            <thead>
+                                <tr class="text-center">
+                                    <th style="text-align:left;width:150px">Fecha Contab.</th>
+                                    <th>N° Asiento</th>
+                                    <th>Debe</th>
+                                    <th>Haber</th>
+                                    <th>Acumulado</th>
+                                    <th>Obligación</th>
+                                    <th>Más info.</th>
+                                    <th>Auxiliar</th>
+                                    <th>Rut</th>
+                                    <th>Documento</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-details"></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── MODAL: DETALLE DE ASIENTO ── -->
+    <div class="modal fade" id="modalDetails" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title-custom">
+                        Detalle de asiento
+                        <span class="modal-title-badge" id="detail-asiento">—</span>
+                    </div>
+                    <button type="button" class="btn-close-custom close_modal" data-bs-dismiss="modal">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive" style="padding:0">
+                        <table class="table table-striped table-hover" cellspacing="0" width="100%">
+                            <thead>
+                                <tr class="text-center">
+                                    <th style="text-align:left">Cuenta</th>
+                                    <th style="text-align:left">CC1</th>
+                                    <th style="text-align:left">Nombre cuenta</th>
+                                    <th style="text-align:left">CC2</th>
+                                    <th style="text-align:left">Glosa</th>
+                                    <th>Debe</th>
+                                    <th>Haber</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-detalle-asiento"></tbody>
+                            <tfoot id="table-detalle-asiento-footer"></tfoot>
+                        </table>
+                    </div>
+                    <div style="padding:16px 20px;text-align:right">
+                        <button type="button" class="btn-custom" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ── SCRIPTS ── -->
+    <script src="/v3/script/jquery/jquery.js"></script>
+    <script src="/v3/script/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../../../base_object/general_template.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="../../script/general_functions.js" data-from="from-eerr"></script>
+
+    <!-- ── SCROLL BAR TOP SYNC ── -->
+    <script>
+    (function () {
+        var main  = null;
+        var top   = null;
+        var inner = null;
+        var lock  = false;
+
+        function syncWidth() {
+            if (!main || !inner) return;
+            var table = main.querySelector('table');
+            inner.style.width = (table ? table.scrollWidth : main.scrollWidth) + 'px';
+        }
+
+        function onMainScroll() {
+            if (lock) return;
+            lock = true;
+            top.scrollLeft = main.scrollLeft;
+            lock = false;
+        }
+
+        function onTopScroll() {
+            if (lock) return;
+            lock = true;
+            main.scrollLeft = top.scrollLeft;
+            lock = false;
+        }
+
+        function init() {
+            main  = document.getElementById('scrollMain');
+            top   = document.getElementById('scrollBarTop');
+            inner = document.getElementById('scrollBarTopInner');
+            if (!main || !top || !inner) return;
+
+            syncWidth();
+            window.addEventListener('resize', syncWidth);
+
+            // Re-sync when table content changes (JS fills tbody)
+            var obs = new MutationObserver(function() {
+                setTimeout(syncWidth, 50);
+            });
+            obs.observe(main, { childList: true, subtree: true });
+
+            main.addEventListener('scroll', onMainScroll, { passive: true });
+            top.addEventListener('scroll', onTopScroll, { passive: true });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
+
+</body>
+
+</html>

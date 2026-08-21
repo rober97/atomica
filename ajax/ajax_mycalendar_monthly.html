@@ -1,0 +1,48 @@
+<table class="table-simple" width="100%" border="0" cellspacing="5" cellspadding="0">    
+     <!--#4DLOOP aLoginAreaResp1-->           
+     <tr>
+         <td align="center" valign="top" width="10%">
+             <div class="cal-m-box-name-recurso"><!--#4DVAR aNombresAreaResp1{aLoginAreaResp1}--></div>
+         </td>                   
+         <td align="left" valign="top" width="85%">    
+           
+             <table class="table-simple-sub" border="0" cellspacing="0" cellspadding="0">
+                 <tr class="column-name-days">                                  
+                  <!--#4DLOOP aDesDias-->
+                     <td class="<!--#4DVAR aBackDias{aDesDias}-->">
+                         <!--#4DVAR aDesDias{aDesDias}-->
+                     </td>
+                  <!--#4DENDLOOP--> 
+                 </tr>
+
+                 <tr class="column-numbers-days">
+                     <!--#4DLOOP aIndiceDias-->
+                         <td><!--#4DVAR aNumeroDias{aIndiceDias}--></td>
+                     <!--#4DENDLOOP-->                             
+                 </tr>
+
+                 <!--#4dscript/get_ot_user-->
+                 <!--#4DLOOP aIdOtUser_monthly-->
+                 <tr title="Ir a OT" class="column-ots" id="<!--#4DVAR aIdOtUser_monthly{aIdOtUser_monthly}-->">
+                     <!--#4DLOOP aIndiceDias-->
+                        <!--#4dscript/get_planned-->                               
+                         <td style="<!--#4DVAR style-->">
+                             <!--#4dif vdesOt#""-->
+                                 <!--#4dif aAtrazadosOtUser_monthly{aIdOtUser_monthly}="no"-->
+                                     <div class="float-des"><!--#4DVAR vdesOt--></div>
+                                 <!--#4delse-->
+                                     <div class="float-des-red"><!--#4DVAR vdesOt--></div>
+                                 <!--#4dendif-->    
+                             <!--#4dendif-->              
+                         </td>
+                     <!--#4DENDLOOP-->
+                 </tr>
+                 <!--#4DENDLOOP-->
+                      
+             </table>
+            
+         </td>
+     </tr>
+     <tr><td colspan="7"><hr/></td></tr>
+     <!--#4DENDLOOP-->   
+ </table>

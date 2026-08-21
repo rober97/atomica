@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Acceso>
+<record><field name="Id_Acceso">1</field><field name="Desc_Acceso">REPORTE / LISTA DE PAGOS PENDIENTES</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">2</field><field name="Desc_Acceso">FACTURAS /  PAGAR FACTURAS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">3</field><field name="Desc_Acceso">PAGO / EMITIR CHEQUES</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">4</field><field name="Desc_Acceso">NEGOCIO / IMPRIMIR O ENVIAR COTIZACION</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">5</field><field name="Desc_Acceso">NEGOCIO / TRASPASAR DE COTIZACION A NEGOCIO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">6</field><field name="Desc_Acceso">NEGOCIO /TRASPASAR DE NEGOCIO A COTIZACION</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">7</field><field name="Desc_Acceso">CATALOGO / CREAR SERVICIOS E INSUMOS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">8</field><field name="Desc_Acceso">NEGOCIO / CAMBIAR GASTO PRESUPUESTADO EN NEGOCIO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">9</field><field name="Desc_Acceso">RF / ABRIR RENDICIONES</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">10</field><field name="Desc_Acceso">NEGOCIO / CERRAR / ABRIR COMPRAS DEL NEGOCIO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">11</field><field name="Desc_Acceso">NEGOCIO / GENERAR OC GASTOS EXTRAS EN NEGOCIO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">12</field><field name="Desc_Acceso">OC / GENERAR ORDENES DE COMPRA VALIDADA</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">13</field><field name="Desc_Acceso">BANCO / ACCEDER A BANCO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">14</field><field name="Desc_Acceso">BANCO / ELIMINAR MOVIMIENTOS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">15</field><field name="Desc_Acceso">BANCO / AGREGAR MOVIMIENTOS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">16</field><field name="Desc_Acceso">MODULO / ACCEDER A RENDICION</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">17</field><field name="Desc_Acceso">ADMIN / ACCESO A ADMINISTRAR USUARIOS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">18</field><field name="Desc_Acceso">PAGO / ELIMINAR PAGO CH/TR</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">19</field><field name="Desc_Acceso">MODULO / ACCEDER A COBRANZA</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">20</field><field name="Desc_Acceso">OC / MODIFICAR ITEMS - AGREGAR O QUITAR ITEMS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">21</field><field name="Desc_Acceso">NEGOCIO / CERRAR / ABRIR NEGOCIO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">22</field><field name="Desc_Acceso">MODULO / ACCEDER A GASTOS GENERALES</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">23</field><field name="Desc_Acceso">NEGOCIO / ANULAR &amp; VOLVER A ACTIVAR (DES-ANULAR)</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">24</field><field name="Desc_Acceso">OC / VALIDAR OC DE PROYECTO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">25</field><field name="Desc_Acceso">REPORTE / NEGOCIO - REPORTE</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">26</field><field name="Desc_Acceso">COBROS / ELIMINAR COBRO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">27</field><field name="Desc_Acceso">BANCO / DESCONCILIAR MOVIMIENTOS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">28</field><field name="Desc_Acceso">NEGOCIO / TRASPASAR NEGOCIO FACTURADO A COTIZACION </field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">29</field><field name="Desc_Acceso">RF / CERRAR RENDICION</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">30</field><field name="Desc_Acceso">OC / CAMBIAR ORIGEN OC</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">31</field><field name="Desc_Acceso">MODULO /  ACCEDER A MODULO OC</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">32</field><field name="Desc_Acceso">MODULO / ACCEDER A PRESUPUESTOS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">33</field><field name="Desc_Acceso">DTC / ELIMINAR DTC</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">34</field><field name="Desc_Acceso">DTC / MODIFICAR FORMA DE PAGO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">35</field><field name="Desc_Acceso">LIBROS / CERRAR/ABRIR LIBROS TRIBUTARIOS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">36</field><field name="Desc_Acceso">OC / ANULAR ORDENES DE COMPRA</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">37</field><field name="Desc_Acceso">PAGO / VALIDAR PAGOS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">38</field><field name="Desc_Acceso">MODULO / ACCEDER A MANTENEDORES</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">39</field><field name="Desc_Acceso">RF / MODIFICAR ORIGEN</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">40</field><field name="Desc_Acceso">OC / PRE-VALIDAR OC DE PROYECTO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">41</field><field name="Desc_Acceso">VT / CERRAR VISITA TECNICA</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">42</field><field name="Desc_Acceso">VT / ANULAR VISITA TECNICA</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">43</field><field name="Desc_Acceso">RF / VALIDACION</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">44</field><field name="Desc_Acceso">RF / PRE-VALIDACION</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">45</field><field name="Desc_Acceso">RF / AGREGAR DTC (DE CUALQUIER ORIGEN)</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">46</field><field name="Desc_Acceso">OC / MODIFICAR OC VALIDADAS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">47</field><field name="Desc_Acceso">RF / CREAR VALIDADAS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">48</field><field name="Desc_Acceso">OP / CREAR DESDE OC</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">49</field><field name="Desc_Acceso">DTC / MODIFICAR PROVEEDOR</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">50</field><field name="Desc_Acceso">FACTURAS / EMITIR FACTURAS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">51</field><field name="Desc_Acceso">FACTURAS / GENERAR NOTA DE CREDITO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">52</field><field name="Desc_Acceso">OP / ANULAR</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">53</field><field name="Desc_Acceso">RF / ANULAR RENDICION</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">54</field><field name="Desc_Acceso">MODULO / ACCEDER A DTC</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">55</field><field name="Desc_Acceso">FACTURAS / MODIFICAR CONDICION DE PAGO FACT. EMITIDA</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">56</field><field name="Desc_Acceso">DTC / EDITAR FOLIO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">57</field><field name="Desc_Acceso">OC / MODIFICAR TIPO DOCUMENTO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">58</field><field name="Desc_Acceso">OC / MODIFICAR CLASIFICACION EN ESTADO CERRADA</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">61</field><field name="Desc_Acceso">NEGOCIO / BLOQUEAR MODIFICACION DESCRIPCION ITEM (COTIZACION, NEGOCIO)
+</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">60</field><field name="Desc_Acceso">NEGOCIO / NO EDITA VALORES A ITEM CON GASTOS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">62</field><field name="Desc_Acceso">NEGOCIO / MODIFICAR SERVICIO ORIGEN ITEM NEGOCIO Y OC</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">63</field><field name="Desc_Acceso">OC / PRE-VALIDAR OC DE GASTOS GENERALES</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">64</field><field name="Desc_Acceso">OC / VALIDAR OC DE GASTOS GENERALES</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">65</field><field name="Desc_Acceso">NEGOCIO / MODIFICAR EN ESTADO NEGOCIO</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">66</field><field name="Desc_Acceso">NEGOCIO / VER COLUMNAS DE UTILIDAD PRESUP. EN ITEMS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">67</field><field name="Desc_Acceso">OC / HABILITAR EMISION CHEQUE GARANTIA</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">68</field><field name="Desc_Acceso">COTIZACION / VALIDAR</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">69</field><field name="Desc_Acceso">COTIZACION / CREAR VALIDADAS</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">70</field><field name="Desc_Acceso">ACC V3 / GENERAR COMPRAS EN V2</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+<record><field name="Id_Acceso">71</field><field name="Desc_Acceso">BLOQUEAR ACCESO FUNCIONALIDADES V2</field><field name="Check_Acceso">False</field><field name="Login"></field></record>
+</Acceso>

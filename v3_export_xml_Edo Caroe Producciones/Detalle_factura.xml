@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Detalle_factura>
+<record><field name="Llave_detalle_fact">1ITEM1</field><field name="Id_producto">0</field><field name="ID_Factura">1</field><field name="Cantidad">1</field><field name="Subtotal">1000000</field><field name="Item">1</field><field name="Precio_unitario">1000000</field><field name="Nombre_producto">(47%) EDO103-02 HABLA, COBARDE! PALERMO 16/03/NEG. 104</field><field name="Codigo_producto">EDO103-02 </field><field name="Id_Tipo_Producto"></field><field name="Secuencia">1</field><field name="Correlativo">1</field><field name="Check_Factura">False</field><field name="LLave_NV"></field><field name="ID_NV_Agrupada">0</field><field name="des_larga"></field><field name="v3_exchange_monto_facturado">1000000</field><field name="negocio_folio"></field><field name="negocio_nombre"></field></record>
+</Detalle_factura>

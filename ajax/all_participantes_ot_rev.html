@@ -1,0 +1,32 @@
+ <!--#4dloop aLoginAsig2-->
+    <!--#4dif aTipoAsig2{aLoginAsig2}="RESPONSABLE"-->
+      <input
+        class="check-revision disabled"
+        type="checkbox" 
+        name="<!--#4dvar aNombreAsig2{aLoginAsig2}-->" 
+        value="res/<!--#4dvar aLoginAsig2{aLoginAsig2}-->"
+      />
+      <span class="part-responsable"><!--#4dvar Lowercase(aNombreAsig2{aLoginAsig2})--></span>
+    <!--#4dendif-->
+
+    <!--#4dif aTipoAsig2{aLoginAsig2}="INTEGRANTE"-->
+      <input
+        class="check-revision disabled"
+        type="checkbox" 
+        name="<!--#4dvar aNombreAsig2{aLoginAsig2}-->" 
+        value="int/<!--#4dvar aLoginAsig2{aLoginAsig2}-->"
+      />
+      <span class="part-integrante"><!--#4dvar Lowercase(aNombreAsig2{aLoginAsig2})--></span>
+    <!--#4dendif-->
+
+    <!--#4dif aTipoAsig2{aLoginAsig2}="INVITADO"-->
+      <input
+        class="check-revision disabled"
+        type="checkbox" 
+        name="<!--#4dvar aNombreAsig2{aLoginAsig2}-->" 
+        value="inv/<!--#4dvar aLoginAsig2{aLoginAsig2}-->"
+      />
+      <span class="part-invitado"><!--#4dvar Lowercase(aNombreAsig2{aLoginAsig2})--></span>
+    <!--#4dendif-->
+
+  <!--#4dendloop-->

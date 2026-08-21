@@ -1,0 +1,266 @@
+/* ===== Tabla “ULTRA 2025” ===== */
+:root {
+    /* colores base */
+    --u25-bg: #0f1216;
+    --u25-panel: #12161c;
+    --u25-card: #151a22;
+    --u25-ink: #d8e0ea;
+    --u25-ink-dim: #a6b0be;
+    --u25-ink-soft: #8b95a3;
+
+    /* acentos */
+    --u25-accent: #60a5fa;
+    /* azul */
+    --u25-accent-2: #34d399;
+    /* verde */
+    --u25-warn: #f59e0b;
+    --u25-danger: #ef4444;
+
+    /* superficies & bordes */
+    --u25-border: rgba(148, 163, 184, 0.18);
+    --u25-row-hover: rgba(96, 165, 250, 0.08);
+    --u25-row-zebra: rgba(148, 163, 184, 0.06);
+    --u25-header: linear-gradient(180deg, #11161d 0%, #0e1319 100%);
+
+    /* tipografía */
+    --u25-font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    --u25-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    /* radios & sombras */
+    --u25-radius: 14px;
+    --u25-shadow: 0 8px 20px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
+    --u25-shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* @media (prefers-color-scheme: light) {
+    :root {
+        --u25-bg: #f5f7fb;
+        --u25-panel: #ffffff;
+        --u25-card: #ffffff;
+        --u25-ink: #0b1220;
+        --u25-ink-dim: #384152;
+        --u25-ink-soft: #5a6475;
+        --u25-border: rgba(15, 23, 42, 0.12);
+        --u25-row-hover: rgba(96, 165, 250, 0.12);
+        --u25-row-zebra: rgba(2, 6, 23, 0.04);
+        --u25-header: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        --u25-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        --u25-shadow-soft: 0 2px 10px rgba(15, 23, 42, 0.06);
+    }
+} */
+
+/* Contenedor (opcional) para scroll suave y borde */
+.items.ultra-2025 {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: var(--u25-ink);
+    font-family: var(--u25-font-ui);
+    box-shadow: var(--u25-shadow);
+    border: 1px solid var(--u25-border);
+    border-radius: var(--u25-radius);
+    overflow: hidden;
+}
+
+/* Header */
+.items.ultra-2025 thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--u25-header);
+    color: var(--u25-ink);
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0.2px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--u25-border);
+    white-space: nowrap;
+}
+
+/* Primer th (barra roja existente) queda tal cual pero con radios suaves */
+.items.ultra-2025 thead th.container-menu-origen {
+    width: 6px;
+    padding: 0;
+    border-right: 1px solid var(--u25-border);
+}
+
+/* Celdas */
+.items.ultra-2025 td {
+    padding: 12px 14px;
+    border-bottom: 1px dashed var(--u25-border);
+    vertical-align: middle;
+    background: transparent;
+}
+
+/* Zebra + hover */
+.items.ultra-2025 tbody tr:nth-child(odd) td {
+    background: var(--u25-row-zebra);
+}
+
+.items.ultra-2025 tbody tr:hover td {
+    background: var(--u25-row-hover);
+    transition: background 160ms ease;
+}
+
+/* Números: alineación y tipografía monoespaciada para lectura rápida */
+.items.ultra-2025 td.right,
+.items.ultra-2025 th.right {
+    text-align: right;
+    font-variant-numeric: tabular-nums lining-nums;
+    font-family: var(--u25-font-mono);
+}
+
+/* Columna secundaria (convertido) con tono suave y microetiquetas más sutiles */
+.items.ultra-2025 th.is-secondary,
+.items.ultra-2025 td.is-secondary {
+    color: var(--u25-ink-dim);
+}
+
+.items.ultra-2025 td.is-secondary input[disabled],
+.items.ultra-2025 td.is-secondary span {
+    opacity: 0.95;
+}
+
+/* Inputs internos (tus <input disabled> dentro de celdas) */
+.items.ultra-2025 td input[type="text"],
+.items.ultra-2025 td input[type="number"] {
+    background: transparent;
+    border: 1px solid transparent;
+    color: inherit;
+    padding: 4px 6px;
+    border-radius: 10px;
+    min-width: 70px;
+    font-family: var(--u25-font-mono);
+}
+
+.items.ultra-2025 td input[disabled] {
+    opacity: .9;
+    pointer-events: none;
+}
+
+/* Editables (cuando no están disabled) con foco bonito */
+.items.ultra-2025 td input:not([disabled]):focus {
+    outline: none;
+    border-color: var(--u25-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--u25-accent) 30%, transparent);
+    background: color-mix(in srgb, var(--u25-accent) 10%, transparent);
+    transition: box-shadow 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+/* “Chips” de moneda dentro del header (las <span> exchange_label*) */
+/* Chips de moneda con gradient suave basado en #DCF9FC */
+.items.ultra-2025 thead .exchange_label,
+.items.ultra-2025 thead .exchange_label_ext {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1;
+  color: #0b1220;
+
+  /* Fallback sólido */
+  background: #DCF9FC;
+
+  /* Gradient (compatible) usando un tono apenas más oscuro */
+  background: linear-gradient(90deg, #CDEFF5 0%, #DCF9FC 100%);
+
+  /* Borde y brillo muy sutil para que “flote” en el header */
+  border: 1px solid rgba(11, 18, 32, 0.06);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset, 0 1px 6px rgba(0,0,0,0.06);
+}
+
+/* Versión “inteligente” (si el navegador soporta color-mix) */
+@supports (background: color-mix(in srgb, #000 5%, #fff)) {
+  .items.ultra-2025 thead .exchange_label,
+  .items.ultra-2025 thead .exchange_label_ext {
+    /* Calcula un tono 14% más oscuro del base y mezcla a lo largo del gradient */
+    --chip-base: #DCF9FC;
+    --chip-dark: color-mix(in srgb, var(--chip-base) 86%, #0b1220);
+    background: linear-gradient(90deg, var(--chip-dark) 0%, var(--chip-base) 100%);
+  }
+}
+
+/* Opcional: modo claro/oscuro ajusta el borde para mejor contraste */
+@media (prefers-color-scheme: dark) {
+  .items.ultra-2025 thead .exchange_label,
+  .items.ultra-2025 thead .exchange_label_ext {
+    border-color: rgba(255,255,255,0.08);
+  }
+}
+
+/* En modo oscuro el texto del chip pasa a casi negro ya cubierto arriba. */
+
+/* Enlaces del “Origen” */
+.items.ultra-2025 td a {
+    color: var(--u25-ink);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+}
+
+.items.ultra-2025 td a:hover {
+    color: var(--u25-accent);
+    border-bottom-color: var(--u25-accent);
+}
+
+/* Iconos dentro de celdas (tu ui-icon) */
+.items.ultra-2025 .ui-icon {
+    opacity: .75;
+    transition: transform 120ms ease, opacity 120ms ease;
+}
+
+.items.ultra-2025 .ui-icon:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+/* Bordes redondeados en extremos de la tabla */
+.items.ultra-2025 thead th:first-child {
+    border-top-left-radius: var(--u25-radius);
+}
+
+.items.ultra-2025 thead th:last-child {
+    border-top-right-radius: var(--u25-radius);
+}
+
+.items.ultra-2025 tbody tr:last-child td:first-child {
+    border-bottom-left-radius: var(--u25-radius);
+}
+
+.items.ultra-2025 tbody tr:last-child td:last-child {
+    border-bottom-right-radius: var(--u25-radius);
+}
+
+/* Responsive: en pantallas chicas, reduce padding y permite scroll horizontal elegante */
+@media (max-width: 980px) {
+    .items.ultra-2025 {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .items.ultra-2025 thead th,
+    .items.ultra-2025 td {
+        white-space: nowrap;
+        padding: 10px 12px;
+    }
+}
+
+/* Modo impresión: sin sombras, bordes sutiles y fondo blanco */
+@media print {
+    .items.ultra-2025 {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .items.ultra-2025 thead th {
+        background: #f7f7f7 !important;
+        color: #111 !important;
+    }
+
+    .items.ultra-2025 tbody tr:nth-child(odd) td,
+    .items.ultra-2025 tbody tr:hover td {
+        background: transparent !important;
+    }
+}
+

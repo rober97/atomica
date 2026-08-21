@@ -1,0 +1,19 @@
+<!--#4dif Size of array(aLoginArea)>0-->
+	<ul class="lista-participantes">
+		<!--#4dloop aLoginArea-->
+			<!--#4dif aResponsableArea{aLoginArea}=true-->			
+				<li>
+					<input type="checkbox" name="<!--#4DVAR aNombresArea{aLoginArea}-->" value="res/<!--#4DVAR aLoginArea{aLoginArea}-->"/>
+					<span class="verde-resp"><!--#4DVAR aNombresArea{aLoginArea}--></span>
+				</li>
+			<!--#4delse-->
+				<li>
+					<input type="checkbox" name="<!--#4DVAR aNombresArea{aLoginArea}-->" value="int/<!--#4DVAR aLoginArea{aLoginArea}-->"/>
+					<span class="part-integrante"><!--#4DVAR aNombresArea{aLoginArea}--></span>
+				</li>
+			 <!--#4dendif-->			
+		<!--#4dendloop-->    		 
+ 	</ul>
+<!--#4delse-->
+	
+<!--#4dendif-->

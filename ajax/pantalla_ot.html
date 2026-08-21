@@ -1,0 +1,54 @@
+<table class="tables" width="100%">
+<thead>	
+<tr>
+	<th width="3%">Folio.</th>
+	<th width="3%">Emisión</th>
+	<th width="3%">Vencimiento</th>
+	<th width="3%">Cliente</th>
+	<th width="3%">Origen</th>			
+	<th width="3%">Referencia</th>
+	<th width="3%">Responsable</th>					
+	<th width="3%">Emisor</th>
+	<th width="3%">Estado</th>
+</tr>
+</thead>
+<tbody>
+<!--#4DLOOP a_OT_FOLIO-->
+<tr class="reg" id="<!--#4DVAR aIdOT{a_OT_FOLIO}-->">
+<td class="align-center <!--#4DVAR a_style_color{a_OT_FOLIO}-->"><!--#4DVAR aAliasTecnico{a_OT_FOLIO}--></td>
+<td class="align-center <!--#4DVAR a_style_color{a_OT_FOLIO}-->"><!--#4DVAR num(a_OT_FOLIO{a_OT_FOLIO})--></td>
+<td class="align-center"><!--#4DVAR aDiasVisita{a_OT_FOLIO}--></td>
+<td class="align-center <!--#4DVAR a_color_cot{a_OT_FOLIO}-->"><!--#4DVAR aIDNegocio{a_OT_FOLIO}--></td>
+<td class="align-center"><!--#4DVAR aDiasCotizacion{a_OT_FOLIO}--></td>
+<td class="align-center <!--#4DVAR a_color_oc{a_OT_FOLIO}-->"><!--#4DVAR aFolioOC{a_OT_FOLIO}--></td>
+<td class="align-center"><!--#4DVAR aDiasOC{a_OT_FOLIO}--></td>
+<td class="align-center <!--#4DVAR a_color_fact{a_OT_FOLIO}-->"><!--#4DVAR aFolioFact{a_OT_FOLIO}--></td>
+<td class="align-center"><!--#4DVAR aDiasFact{a_OT_FOLIO}--></td>
+
+<td class="align-center <!--#4DVAR a_color_Cobro{a_OT_FOLIO}-->"><!--#4DVAR aFolioCobro{a_OT_FOLIO}--></td>
+<td class="align-center"><!--#4DVAR aDiasCobro{a_OT_FOLIO}--></td>	
+
+<td class="align-left"><!--#4DVAR aAliasCliente{a_OT_FOLIO}--></td>
+<td class="align-left"><!--#4DVAR aContacto{a_OT_FOLIO}--></td>	
+<td class="align-center"><!--#4DVAR aFonoContacto{a_OT_FOLIO}--></td>	
+<td class="align-left"><!--#4DVAR a_OT_REF{a_OT_FOLIO}--></td>
+<td class="align-center"><!--#4DVAR aAliasEmisor{a_OT_FOLIO}--></td>
+</tr>
+<!--#4DENDLOOP-->	
+</tbody>
+<tfoot>
+	<tr>
+		<td class="back-no-average" colspan="2"></td>
+		<td class="back-average"><!--#4DVAR vAverageDVT--></td>
+		<td class="back-no-average"></td>		
+		<td class="back-average"><!--#4DVAR vAverageDCT--></td>
+		<td class="back-no-average"></td>
+		<td class="back-average"><!--#4DVAR vAverageDOC--></td>
+		<td class="back-no-average"></td>
+		<td class="back-average"><!--#4DVAR vAverageDF--></td>
+		<td class="back-no-average"></td>
+		<td class="back-average"><!--#4DVAR vAverageDP--></td>
+		<td class="back-no-average" colspan="5"></td>
+	</tr>
+</tfoot>
+</table>		

@@ -1,0 +1,52 @@
+{
+	"total":<!--#4DIF Not(Undefined($recordCount))-->"<!--#4DHTML $recordCount-->"<!--#4DELSE-->0<!--#4DENDIF-->,
+	"date_from":<!--#4DIF Not(Undefined(date_from))-->"<!--#4DHTML date_from-->"<!--#4DELSE-->"00-00-00"<!--#4DENDIF-->,
+	"date_to":<!--#4DIF Not(Undefined(date_to))-->"<!--#4DHTML date_to-->"<!--#4DELSE-->"00-00-00"<!--#4DENDIF-->,
+	"pageCount":<!--#4DIF Not(Undefined($pageCount))-->"<!--#4DHTML $pageCount-->"<!--#4DELSE-->0<!--#4DENDIF-->,
+	"startRecord":<!--#4DIF Not(Undefined($startRecord))-->"<!--#4DHTML $startRecord-->"<!--#4DELSE-->0<!--#4DENDIF-->,
+	"endRecord": <!--#4DIF Not(Undefined($endRecord))-->"<!--#4DHTML $endRecord-->"<!--#4DELSE-->0<!--#4DENDIF-->,
+	"details": [
+	<!--#4DLOOP aIdDetail -->
+			{
+				"id": "<!--#4DHTML aIdDetail{aIdDetail}-->",
+				"auxiliar_desc": "<!--#4DHTML _V3_escapeString(aAuxiliarDesc{aIdDetail})-->",
+				"id_comp": "<!--#4DHTML aIDComp{aIdDetail}-->",
+				"id_comp3": "<!--#4DHTML aIDComp3{aIdDetail}-->",
+				"cod_proyecto": "<!--#4DHTML _V3_escapeString(aCodProyecto{aIdDetail})-->",
+				"nro_proyecto": "<!--#4DHTML _V3_escapeString(aNroProyecto{aIdDetail})-->",
+				"codigoCuenta": "<!--#4DHTML _V3_escapeString(aCodigoCuenta{aIdDetail})-->",
+				"fechaRegistro": "<!--#4DHTML aRegistryDate{aIdDetail}-->",
+				"glosa": "<!--#4DHTML  _V3_escapeString(aGlosa{aIdDetail})-->",
+				"tipoReg": "<!--#4DHTML aTipoReg{aIdDetail}-->",
+				"tipoDoc": "<!--#4DHTML aTipoDoc{aIdDetail}-->",
+				"tipo_cuenta": "<!--#4DHTML aTipoCuenta{aIdDetail}-->",
+				"auxiliar": <!--#4DIF aAuxiliar{aIdDetail}-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+				"numReg": "<!--#4DHTML aNumReg{aIdDetail}-->",
+				"automatico": "<!--#4DHTML aAutomatico{aIdDetail}-->",
+				"obligacion": "<!--#4DHTML aObligacion{aIdDetail}-->",
+				"rut": "<!--#4DHTML _V3_escapeString(aRut{aIdDetail})-->",
+				"auxiliar_rut": "<!--#4DHTML _V3_escapeString(aRut{aIdDetail})-->",
+				"razon": "<!--#4DHTML _V3_escapeString(aRazon{aIdDetail})-->",
+				"documento": <!--#4DIF Not(Undefined(aCuentaDocumento{aIdDetail}))--><!--#4DIF aCuentaDocumento{aIdDetail}-->true<!--#4DELSE-->false<!--#4DENDIF--><!--#4DELSE-->false<!--#4DENDIF-->,
+				"typeDoc": "<!--#4DHTML _V3_escapeString(aTypeDoc{aIdDetail})-->",
+				"folioDoc": "<!--#4DHTML aFolioDoc{aIdDetail}-->",
+				"idDoc": <!--#4DHTML aIdDoc{aIdDetail}-->,
+				"param4":  <!--#4DIF Not(Undefined(aParam4{aIdDetail}))-->"<!--#4DHTML _V3_escapeString(aParam4{aIdDetail})-->"<!--#4DELSE-->""<!--#4DENDIF-->,
+				"numDoc": "<!--#4DHTML aNumDoc{aIdDetail}-->",
+				"debe": "<!--#4DHTML aDebe{aIdDetail}-->",
+				"correlativo": <!--#4DHTML aCorrelativo{aIdDetail}-->,
+				"haber": "<!--#4DHTML aHaber{aIdDetail}-->",
+				"cuentaContable": "<!--#4DHTML _V3_escapeString(aCuentacontable{aIdDetail})-->"
+			}<!--#4DIF NOT(aIdDetail{aIdDetail} = aIdDetail{Size of array(aIdDetail)})-->,<!--#4DENDIF-->
+	<!--#4DENDLOOP-->
+		],
+		"saldos": [
+	<!--#4DLOOP aCuentasSaldoAnterior -->
+			{
+				"saldo_anterior": <!--#4DHTML aSaldoAnterior{aCuentasSaldoAnterior}-->,
+				"codigoCuenta": "<!--#4DHTML _V3_escapeString(aCuentasSaldoAnterior{aCuentasSaldoAnterior})-->"
+			}<!--#4DIF NOT(aCuentasSaldoAnterior{aCuentasSaldoAnterior} = aCuentasSaldoAnterior{Size of array(aCuentasSaldoAnterior)})-->,<!--#4DENDIF-->
+	<!--#4DENDLOOP-->
+		]
+}
+

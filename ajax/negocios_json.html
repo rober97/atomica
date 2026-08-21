@@ -1,0 +1,16 @@
+{
+	"negocios":
+	[
+		<!--#4DLOOP [Nota_de_venta]-->
+			{
+				"idnv":<!--#4DTEXT [Nota_de_venta]ID_NV-->,
+				"idnegocio":<!--#4DTEXT [Nota_de_venta]Id_Negocio-->,
+				"referencia":"<!--#4DHTML _V3_escapeString([Nota_de_venta]Referencia)-->",
+				"razoncliente":"<!--#4DHTML _V3_escapeString([Nota_de_venta]Razon_cliente)-->",
+				"estado":"<!--#4DHTML [Nota_de_venta]Estado-->",
+				"fechaEmision":"<!--#4DTEXT String([Nota_de_venta]Fecha_emision;Internal date short)-->"				
+			}
+			<!--#4DIF Selected record number([Nota_de_venta])<Records in selection([Nota_de_venta])-->,<!--#4DENDIF-->
+		<!--#4DENDLOOP-->		
+	]
+}

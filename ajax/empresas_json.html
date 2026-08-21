@@ -1,0 +1,18 @@
+{
+	"empresas":
+	[
+		<!--#4DLOOP [Contacto]-->
+			{
+				"idemp":<!--#4Dvar [Contacto]Id_Cont-->,
+				"nombre":"<!--#4Dvar [Contacto]nombre_completo-->",
+				"tipo":"<!--#4Dvar [Contacto]Tipo-->",
+				"email":"<!--#4Dvar [Contacto]Email_Cont-->",
+				"giro":"<!--#4Dvar [Contacto]Giro_Cont-->",
+				"direccion":"<!--#4Dvar [Contacto]Dir_Calle_Cont--> <!--#4Dvar [Contacto]Dir_Nro_Cont-->",
+				"rut":"<!--#4Dvar [Contacto]Rut_Cont-->",
+				"fono":"<!--#4Dvar [Contacto]Telefono1_Cont-->"
+			}
+			<!--#4DIF Selected record number([Contacto])<Records in selection([Contacto])-->,<!--#4DENDIF-->
+		<!--#4DENDLOOP-->
+	]
+}

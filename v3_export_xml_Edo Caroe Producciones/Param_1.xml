@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Param_1>
+<record><field name="ID_Param1">9</field><field name="Param1">NLS</field><field name="Activo">True</field><field name="param2_cod">NLS</field><field name="correlativo_actual">0</field></record>
+<record><field name="ID_Param1">8</field><field name="Param1">COMO EN CASA</field><field name="Activo">True</field><field name="param2_cod">CEC</field><field name="correlativo_actual">0</field></record>
+<record><field name="ID_Param1">7</field><field name="Param1">LEY DE MURPHY</field><field name="Activo">True</field><field name="param2_cod">LDM</field><field name="correlativo_actual">6</field></record>
+<record><field name="ID_Param1">6</field><field name="Param1">EDO NO TIENE SHOW</field><field name="Activo">True</field><field name="param2_cod">ENTD</field><field name="correlativo_actual">27</field></record>
+<record><field name="ID_Param1">10</field><field name="Param1">NO TUVE VACACIONES</field><field name="Activo">True</field><field name="param2_cod">NVD</field><field name="correlativo_actual">3</field></record>
+<record><field name="ID_Param1">11</field><field name="Param1">LOLLAPALOOZA STREAMING</field><field name="Activo">True</field><field name="param2_cod">LOL</field><field name="correlativo_actual">2</field></record>
+<record><field name="ID_Param1">12</field><field name="Param1">MEDIA SEMANA</field><field name="Activo">True</field><field name="param2_cod">MS</field><field name="correlativo_actual">2</field></record>
+<record><field name="ID_Param1">13</field><field name="Param1">COBERTURA OLMUÉ</field><field name="Activo">True</field><field name="param2_cod">COB</field><field name="correlativo_actual">0</field></record>
+<record><field name="ID_Param1">14</field><field name="Param1">TOMÁS FELDS</field><field name="Activo">True</field><field name="param2_cod">TOM</field><field name="correlativo_actual">2</field></record>
+<record><field name="ID_Param1">15</field><field name="Param1">FREESOLO</field><field name="Activo">True</field><field name="param2_cod">FS</field><field name="correlativo_actual">15</field></record>
+<record><field name="ID_Param1">16</field><field name="Param1">BITÁCORA</field><field name="Activo">True</field><field name="param2_cod">BIT</field><field name="correlativo_actual">8</field></record>
+<record><field name="ID_Param1">17</field><field name="Param1">POSCREDITO</field><field name="Activo">True</field><field name="param2_cod">POS</field><field name="correlativo_actual">3</field></record>
+<record><field name="ID_Param1">18</field><field name="Param1">ENTRE LOS ARCHIVOS</field><field name="Activo">True</field><field name="param2_cod">ELA</field><field name="correlativo_actual">1</field></record>
+<record><field name="ID_Param1">19</field><field name="Param1">PRIMERIZAS</field><field name="Activo">True</field><field name="param2_cod">PRI</field><field name="correlativo_actual">17</field></record>
+<record><field name="ID_Param1">20</field><field name="Param1">HABLA, COBARDE! </field><field name="Activo">True</field><field name="param2_cod">HC</field><field name="correlativo_actual">12</field></record>
+<record><field name="ID_Param1">21</field><field name="Param1">TOMAS VA A MORIR</field><field name="Activo">True</field><field name="param2_cod">TVM</field><field name="correlativo_actual">7</field></record>
+<record><field name="ID_Param1">22</field><field name="Param1">CHARLAS EN UN PUEBLO FANSTASMA</field><field name="Activo">True</field><field name="param2_cod">CHA</field><field name="correlativo_actual">2</field></record>
+<record><field name="ID_Param1">23</field><field name="Param1">NEVERLAND</field><field name="Activo">True</field><field name="param2_cod">NEV</field><field name="correlativo_actual">4</field></record>
+<record><field name="ID_Param1">24</field><field name="Param1">PROBANDO CHISTES</field><field name="Activo">True</field><field name="param2_cod">PRO</field><field name="correlativo_actual">6</field></record>
+<record><field name="ID_Param1">25</field><field name="Param1">ABASTECIMIENTO</field><field name="Activo">True</field><field name="param2_cod">ADM</field><field name="correlativo_actual">0</field></record>
+<record><field name="ID_Param1">26</field><field name="Param1">EDO TIENE MOVISTAR</field><field name="Activo">True</field><field name="param2_cod"></field><field name="correlativo_actual">4</field></record>
+<record><field name="ID_Param1">27</field><field name="Param1">BIRRAS</field><field name="Activo">True</field><field name="param2_cod">BIR</field><field name="correlativo_actual">1</field></record>
+<record><field name="ID_Param1">28</field><field name="Param1">ARTE Y UTILERÍA</field><field name="Activo">True</field><field name="param2_cod">ART</field><field name="correlativo_actual">1</field></record>
+</Param_1>

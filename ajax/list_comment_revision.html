@@ -1,0 +1,19 @@
+<!--#4dloop aIdComRev-->
+  <div class="items-comentario" id="<!--#4DVAR aIdComRev{aIdComRev}-->">   
+    <span class="photo"><img src="<!--#4DVAR aPhotoRespComRev{aIdComRev}-->"></span>
+    <span>
+    	<span class="name">
+          <!--#4DVAR aNomRespComRev{aIdComRev}--> / 
+          <span class="especial-span"><!--#4DVAR aEmailRespComRev{aIdComRev}--></span>
+          <!--#4dif aTypeRespComRev{aIdComRev}="guest"-->
+              <span class="guest-tag">( Invitado )</span>
+          <!--#4dendif-->
+      </span>    
+		<span class="comment"><!--#4DVAR aDesComRev{aIdComRev}--></span>
+    	<span class="date">
+    		Comentado el <!--#4DVAR aDateComRev{aIdComRev}--> a las <!--#4DVAR aTimeComRev{aIdComRev}--></span>
+    </span>		   	    
+  </div>    
+<!--#4dendloop-->
+
+

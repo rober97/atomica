@@ -1,0 +1,9 @@
+{	
+	"rows": [
+<!--#4DLOOP nombre -->
+{
+	"nombre": "<!--#4DTEXT nombre{nombre}-->"
+}<!--#4DIF NOT(nombre{nombre} = nombre{Size of array(nombre)})-->,<!--#4DENDIF-->
+<!--#4DENDLOOP-->
+	]
+}

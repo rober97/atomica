@@ -1,0 +1,179 @@
+{
+	"page": {
+		"current": <!--#4DHTML page-->,
+		"last": <!--#4DIF results#0--><!--#4DHTML -INT(($total/results)* -1)--><!--#4DELSE-->0<!--#4DENDIF-->
+	},
+	"records": {
+		"from": <!--#4DHTML $offset-1-->,
+		"to": <!--#4DHTML (Selected record number([Orden_de_compra]) - 2)-->,
+		"total": <!--#4DHTML $total-->
+	},
+	"sort": {
+		"by": "<!--#4DTEXT sort_by-->",
+		"order": "<!--#4DTEXT sort_order-->"
+	},
+	"totales": {
+		"neto": "<!--#4DHTML _V3_formatCurrency(vNeto)-->",
+		"exento": "<!--#4DHTML _V3_formatCurrency(vExento)-->",
+		"adicional": "<!--#4DHTML _V3_formatCurrency(vAdicional)-->",
+		"total": "<!--#4DHTML _V3_formatCurrency(vTotal)-->",
+		"justificado": "<!--#4DHTML _V3_formatCurrency(vJustificado)-->",
+		"porjustificar": "<!--#4DHTML _V3_formatCurrency(vPorJustificar)-->",
+		"justificado_fxr": "<!--#4DHTML _V3_formatCurrency(vJustificado_fxr)-->",
+		"porjustificar_fxr": "<!--#4DHTML _V3_formatCurrency(vPorJustificar_fxr)-->",
+		"pagado": "<!--#4DHTML _V3_formatCurrency(vPagado)-->",
+		"porpagar": "<!--#4DHTML _V3_formatCurrency(vPorPagar)-->",
+		"depositado": "<!--#4DHTML _V3_formatCurrency(vDepositado)-->",
+		"saldo": "<!--#4DHTML _V3_formatCurrency(vSaldo)-->",
+		"gastoReal": "<!--#4DHTML _V3_formatCurrency(vGastoReal)-->"
+	},
+	"totales_globales": {
+		"neto": "<!--#4DHTML _V3_formatCurrency(vNetoGlobal)-->",
+		"exento": "<!--#4DHTML _V3_formatCurrency(vExentoGlobal)-->",
+		"adicional": "<!--#4DHTML _V3_formatCurrency(vAdicionalGlobal)-->",
+		"total": "<!--#4DHTML _V3_formatCurrency(vTotalGlobal)-->",
+		"justificado": "<!--#4DHTML _V3_formatCurrency(vJustificadoGlobal)-->",
+		"porjustificar": "<!--#4DHTML _V3_formatCurrency(vPorJustificarGlobal)-->",
+		"justificado_fxr": "<!--#4DHTML _V3_formatCurrency(vJustificado_fxrGlobal)-->",
+		"porjustificar_fxr": "<!--#4DHTML _V3_formatCurrency(vPorJustificar_fxrGlobal)-->",
+		"pagado": "<!--#4DHTML _V3_formatCurrency(vPagadoGlobal)-->",
+		"porpagar": "<!--#4DHTML _V3_formatCurrency(vPorPagarGlobal)-->",
+		"depositado": "<!--#4DHTML _V3_formatCurrency(vDepositadoGlobal)-->",
+		"saldo": "<!--#4DHTML _V3_formatCurrency(vSaldoGlobal)-->",
+		"gastoReal": "<!--#4DHTML _V3_formatCurrency(vGastoRealGlobal)-->"
+	},
+	"rows": [
+<!--#4DLOOP aIdOC-->
+		{
+			"id": <!--#4DHTML aIdOC{aIdOC}-->,
+			"id_nv": <!--#4DHTML aIdNV{aIdOC}-->,
+			"id_forma_pago": "<!--#4DHTML aIdFormaPago{aIdOC}-->",
+			"emisor": "<!--#4DHTML aEmisorOC{aIdOC}-->",
+			"version": "<!--#4DHTML aVersionOC{aIdOC}-->",
+			"folio": "<!--#4DHTML aNroOC{aIdOC}-->",
+			"tipo": "<!--#4DHTML aTipoOC{aIdOC}-->",
+			"doc": "<!--#4DHTML aDocOC{aIdOC}-->",
+			"abrev": "<!--#4DHTML _V3_escapeString(aAbrvDocDtc{aIdOC})-->",
+			"fecha": "<!--#4DHTML String(aFechaOC{aIdOC};7)-->",
+			"vencimiento": "<!--#4DHTML String(aVencimientoOC{aIdOC};7)-->",
+			"vencimiento2": "<!--#4DHTML String(aVencimientoOC2{aIdOC};7)-->",
+			"vencimiento3": "<!--#4DHTML String(aVencimientoOC3{aIdOC};7)-->",
+			"fecha_vcto_fxr": "<!--#4DHTML String(aFechaVctoFxrOC{aIdOC};7)-->",
+			"dias_atrasados_fxr": <!--#4DHTML aDiasAtrasadosFxrOC{aIdOC}-->,
+			"fecha_pagado": "<!--#4DHTML String(aFechaPagado{aIdOC};7)-->",
+			"cierre_admin": <!--#4DIF aCierreAdmin{aIdOC}-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			"cierre_admin_fecha": "<!--#4DHTML String(aCierreAdminFecha{aIdOC};7)-->",
+			"cierre_admin_hora": "<!--#4DHTML aCierreAdminHora{aIdOC}-->",
+			"cierre_admin_responsable": "<!--#4DHTML aCierreAdminResponsable{aIdOC}-->",
+			"cierre_proceso_produccion_fecha": "<!--#4DHTML String(aFechaCierreProduccion{aIdOC};7)-->",
+			"solicitud_pago": <!--#4DIF aSolicitudPago{aIdOC}-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			"contabilizado": <!--#4DIF aContabilizadooc{aIdOC}-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			"validado": "<!--#4DHTML aValidadoOC{aIdOC}-->",
+			"estado": "<!--#4DHTML aEstadoOC{aIdOC}-->",
+			"color": "<!--#4DHTML aColor{aIdOC}-->",
+			"codigo_proyecto": "<!--#4DHTML _V3_escapeString(aNomProyecto{aIdOC})-->",
+			"referencia": "<!--#4DHTML _V3_escapeString(aReferenciaOC{aIdOC})-->",
+			"referencia_oc": "<!--#4DHTML _V3_escapeString(aReferenciaOCC{aIdOC})-->",
+			"centro_costo": "<!--#4DHTML _V3_escapeString(aCentroCosto{aIdOC})-->",
+			"codigo_centro_costo": "<!--#4DHTML _V3_escapeString(aCodigoCentroCosto{aIdOC})-->",
+			"item_directo": "<!--#4DHTML _V3_escapeString(aNombreItemDirecto{aIdOC})-->",
+			"codigo_item_directo": "<!--#4DHTML _V3_escapeString(aCodigoItemDirecto{aIdOC})-->",
+			"origen": "<!--#4DHTML aOrigenGasto{aIdOC}-->",
+			"nro_neg": <!--#4DHTML aFolioNeg{aIdOC}-->,
+			"referencia_neg_clasif": "<!--#4DHTML _V3_escapeString(aRefNegClasif{aIdOC})-->",
+			"cliente_neg": "<!--#4DHTML _V3_escapeString(aNegCliente{aIdOC})-->",
+			"responsable_rendir": "<!--#4DHTML _V3_escapeString(aResponsableDeRendir{aIdOC})-->",
+			"proveedor": "<!--#4DHTML _V3_escapeString(aProveedorOC{aIdOC})-->",
+			"proveedorId": <!--#4DHTML aProveedorOCID{aIdOC}-->,
+			"rut": "<!--#4DHTML _V3_escapeString(aRutProveedorOC{aIdOC})-->",
+			"cesionario": "<!--#4DHTML _V3_escapeString(aCesionarioOC{aIdOC})-->",
+			"correo_proveedor": "<!--#4DHTML _V3_escapeString(aCorreoProveedor{aIdOC})-->",
+			"banco_proveedor": "<!--#4DHTML _V3_escapeString(aBancoProveedor{aIdOC})-->",
+			"num_cuenta_proveedor": "<!--#4DHTML _V3_escapeString(aNumCuentaProveedor{aIdOC})-->",
+			"tipo_cuenta_proveedor": "<!--#4DHTML _V3_escapeString(aTipoCuentaProveedor{aIdOC})-->",
+			"formapago": "<!--#4DHTML _V3_escapeString(aFormaPagoOC{aIdOC})-->",
+			"neto": "<!--#4DHTML _V3_formatCurrency(aNetoOC{aIdOC})-->",
+			"exento": "<!--#4DHTML _V3_formatCurrency(aExentoOC{aIdOC})-->",
+			"impuesto": "<!--#4DHTML _V3_formatCurrency(aImpuestoFxrOC{aIdOC})-->",
+			"adicional": "<!--#4DHTML _V3_formatCurrency(aAdicionalFxrOC{aIdOC})-->",
+			"adicional_raw": <!--#4DHTML String(aAdicionalFxrOC{aIdOC};"&xml")-->,
+			"total": "<!--#4DHTML _V3_formatCurrency(aTotalOC{aIdOC})-->",
+			"total_ventas": "<!--#4DHTML _V3_formatCurrency(aTotalVentasFactoring{aIdOC})-->",
+			"neto_": <!--#4DHTML String(aNetoOC{aIdOC};"&xml")-->,
+			"exento_": <!--#4DHTML String(aExentoOC{aIdOC};"&xml")-->,
+			"total_": <!--#4DHTML String(aTotalOC{aIdOC};"&xml")-->,
+			"saldo_a_pagar": "<!--#4DHTML _V3_formatCurrency(aSaldoAPagar{aIdOC})-->",
+			"saldo_a_pagar_": <!--#4DHTML String(aSaldoAPagar{aIdOC};"&xml")-->,
+			"pago": "<!--#4DHTML _V3_formatCurrency(aPago{aIdOC})-->",
+			"pago_": "<!--#4DHTML String(aPago{aIdOC};"&xml")-->",
+			"justificado": "<!--#4DHTML _V3_formatCurrency(aJustificado{aIdOC})-->",
+			"justificado_": <!--#4DHTML String(aJustificado{aIdOC};"&xml")-->,
+			"saldo_a_justificar": "<!--#4DHTML _V3_formatCurrency(aSaldoAJustificar{aIdOC})-->",
+			"saldo_a_justificar_": <!--#4DHTML String(aSaldoAJustificar{aIdOC};"&xml")-->,
+			"justificado_fxr": "<!--#4DHTML _V3_formatCurrency(aJustificado_fxr{aIdOC})-->",
+			"justificado_fxr_": <!--#4DHTML String(aJustificado_fxr{aIdOC};"&xml")-->,
+			"saldo_a_justificar_fxr": "<!--#4DHTML _V3_formatCurrency(aSaldoAJustificar_fxr{aIdOC})-->",
+			"saldo_a_justificar_fxr_": <!--#4DHTML String(aSaldoAJustificar_fxr{aIdOC};"&xml")-->,
+			"gastoReal": "<!--#4DHTML _V3_formatCurrency(aTotalGastoReal{aIdOC})-->",
+			"deposito": "<!--#4DHTML _V3_formatCurrency(aDeposito{aIdOC})-->",
+			"deposito_": <!--#4DHTML String(aDeposito{aIdOC};"&xml")-->,
+			"saldo_real": "<!--#4DHTML _V3_formatCurrency(aSaldoReal{aIdOC})-->",
+			"saldo_real_": <!--#4DHTML String(aSaldoReal{aIdOC};"&xml")-->,
+			"gasto_real_pagado": "<!--#4DHTML _V3_formatCurrency(aGastoRealPagado{aIdOC})-->",
+			"gasto_real_pagado_": <!--#4DHTML String(aGastoRealPagado{aIdOC};"&xml")-->,
+			"excluir_gasto": <!--#4DHTML aFree{aIdOC}-->,
+			"dtc_folio": "<!--#4DHTML _V3_escapeString(aDtcFolio{aIdOC})-->",
+			"dtc_fecha": "<!--#4DHTML aDtcFecha{aIdOC}-->",
+			"dtc_info_completa": "<!--#4DHTML _V3_escapeString(aDtcInfoCompleta{aIdOC})-->",
+			"pagos_info_completa": "<!--#4DHTML _V3_escapeString(aPagosInfoCompleta{aIdOC})-->",
+			"moneda_tipo": "<!--#4DHTML aMonedaTipo{aIdOC}-->",
+			"moneda_valor_cambio": <!--#4DHTML String(aMonedaValorCambio{aIdOC};"&xml")-->,
+			"new_system_currency": <!--#4DIF aNewSystemCurrency{aIdOC}-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			"afp": "<!--#4DHTML aDescAfpOC{aIdOC}-->",
+			"afp_porc": "<!--#4DHTML aDescPorcAfpOC{aIdOC}-->",
+			"isapre": "<!--#4DHTML aDescIsapreOC{aIdOC}-->",
+			"isapre_porc": "<!--#4DHTML aDescPorcIsapreOC{aIdOC}-->",
+			"fecha_inicio": "<!--#4DHTML aFechaInicioOC{aIdOC}-->",
+			"fecha_termino": "<!--#4DHTML aFechaTerminoOC{aIdOC}-->",
+			"horas_extras": "<!--#4DHTML aHorasExtrasOC{aIdOC}-->",
+			"valor_horas_extras": <!--#4DHTML String(aValorHorasExtrasOC{aIdOC};"&xml")-->,
+			"sindicato": "<!--#4DHTML aSindicatoOC{aIdOC}-->",
+			"items": [
+			<!--#4DLOOP aItemParentUnico-->
+			<!--#4DIF aItemParentUnico{aItemParentUnico}=aUnico{aUnico}-->
+				{
+					"id_factura": <!--#4DHTML aItemIdFactura{aItemParentUnico}-->,
+					"llave": "<!--#4DHTML _V3_escapeString(aItemLlave{aItemParentUnico})-->",
+					"llave_nv": "<!--#4DHTML _V3_escapeString(aItemLlaveNV{aItemParentUnico})-->",
+					"id_producto": <!--#4DHTML aItemIdProducto{aItemParentUnico}-->,
+					"id_nv_agrupada": <!--#4DHTML aItemIdNVAgrupada{aItemParentUnico}-->,
+					"secuencia": <!--#4DHTML aItemSecuencia{aItemParentUnico}-->,
+					"correlativo": <!--#4DHTML aItemCorrelativo{aItemParentUnico}-->,
+					"nombre": "<!--#4DHTML _V3_escapeString(aItemNombre{aItemParentUnico})-->",
+					"codigo": "<!--#4DHTML _V3_escapeString(aItemCodigo{aItemParentUnico})-->",
+					"descripcion_larga": "<!--#4DHTML _V3_escapeString(aItemDescripcionLarga{aItemParentUnico})-->",
+					"cantidad": <!--#4DHTML String(aItemCantidad{aItemParentUnico};"&xml")-->,
+					"precio_unitario": <!--#4DHTML String(aItemPrecioUnitario{aItemParentUnico};"&xml")-->,
+					"subtotal": <!--#4DHTML String(aItemSubtotal{aItemParentUnico};"&xml")-->,
+					"monto_facturado": <!--#4DHTML String(aItemMontoFacturado{aItemParentUnico};"&xml")-->,
+					"negocio_folio": "<!--#4DHTML _V3_escapeString(aItemNegocioFolio{aItemParentUnico})-->",
+					"negocio_nombre": "<!--#4DHTML _V3_escapeString(aItemNegocioNombre{aItemParentUnico})-->"
+				}<!--#4DTEXT aItemSep{aItemParentUnico}-->
+			<!--#4DENDIF-->
+			<!--#4DENDLOOP-->
+			],
+            "impuestos": [
+<!--#4DLOOP aImpIdOC-->
+<!--#4DIF aImpIdOC{aImpIdOC}=aIdOC{aIdOC}-->
+				{
+					"tipo_imp": "<!--#4DHTML _V3_escapeString(aImpTipo{aImpIdOC})-->",
+					"porcentaje": "<!--#4DHTML aImpPorcentaje{aImpIdOC}-->",
+					"valor": <!--#4DHTML String(aImpValor{aImpIdOC};"&xml")-->
+				}<!--#4DTEXT aImpSep{aImpIdOC}-->
+<!--#4DENDIF-->
+<!--#4DENDLOOP-->
+			]
+		}<!--#4DIF NOT(aIdOC{aIdOC} = aIdOC{Size of array(aIdOC)})-->,<!--#4DENDIF-->
+<!--#4DENDLOOP-->
+	]
+}

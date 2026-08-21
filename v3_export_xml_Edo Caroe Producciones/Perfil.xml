@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Perfil>
+<record><field name="ID_Perfil">25</field><field name="Nombre">soporteadmin</field><field name="Fecha">18-05-2018</field><field name="Responsable">soporte</field><field name="usuario_origen">soporte</field><field name="Activo">True</field><field name="Modulo"></field><field name="Observaciones"></field></record>
+<record><field name="ID_Perfil">32</field><field name="Nombre">soporte</field><field name="Fecha">18-07-2018</field><field name="Responsable">soporte</field><field name="usuario_origen">soporte</field><field name="Activo">True</field><field name="Modulo"></field><field name="Observaciones"></field></record>
+</Perfil>

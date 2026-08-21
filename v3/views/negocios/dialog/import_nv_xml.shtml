@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Carga XML</title>
+	<script type="text/javascript">
+		
+			$(document).ready(function() {
+				var importLoad = function(append, element) {
+					unaBase.ui.block();
+
+					
+					var data = new FormData();
+
+					var attachment = $('.ui-dialog fieldset [name="upload[attachment]"]').get(0).files[0];
+				
+					let name= attachment.name;
+
+					data.append('upload[attachment]', attachment);
+					//data.append('id', unaBase.doc.id);
+					//data.append('sid', unaBase.sid.encoded());
+					//data.append('name', name);
+
+
+					$.ajax({
+						url: nodeUrl +'/import-nv-xml?hostname=' + window.location.origin+'&sid='+ unaBase.sid.encoded(),
+						type: 'POST',
+						contentType: false,
+						data: data,
+						processData: false,
+						cache: false,
+						//crossDomain: true,
+						success: function(data) {
+							
+							console.log("data..");
+							console.log(data);
+							unaBase.ui.unblock();
+							if (data.success) {
+								toastr.success('Archivo cargado con éxito!');
+								
+								$(element).parentTo('.ui-dialog-content').dialog('close');
+								 unaBase.loadInto.viewport(
+						            "/v3/views/negocios/list.shtml"
+						          );
+							}
+
+						},
+						fail: function(e1,e2,e3) {
+							toastr.error('No fue posible realizar la cargar de los datos debido a un problema con el servidor, Por favor intente nuevamente. <p><small>Si el inconveniente persiste, por favor comuniquese con Unabase.</small></p>');
+						}
+					});
+				};
+				$('.ui-dialog fieldset.import button').button({
+						icons: {
+							primary: 'ui-icon-circle-arrow-n'
+						},
+						text: true
+					}).click(function() {
+						let element = this;
+
+						
+
+						
+							importLoad(false, element);
+						
+
+
+					});
+
+				
+			});
+	</script>
+</head>
+<body>
+
+		<fieldset class="import">
+			<legend>Importar desde XML</legend>
+
+			<div>
+				<span>Archivo XML</span>
+				<input type="file" name="upload[attachment]" accept="application/xml">
+			</div>
+				
+			<div>
+				<br>
+				<button>CARGAR</button>
+			</div>
+		
+		</fieldset>
+</body>
+</html>

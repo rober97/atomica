@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<!--#4DSCRIPT/_V3_serverInfo-->
+<html>
+<head>
+	<title>Documentos</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- ============================================================
+		 HOJAS DE ESTILO
+		 ============================================================ -->
+	<link rel="stylesheet" href="/v3/views/compras/lista.css?54656gg4gdfdfs">
+	<!-- CSS general reutilizable para listados (paginador, page-size, responsive) -->
+	<link rel="stylesheet" type="text/css" href="/v3/views/shared/listados.css?<!--#4DTEXT _V3_version-->">
+
+	<script>
+
+		var mostrar_por_revisar = <!--#4DTEXT mostrar_por_revisar_dtc-->;
+		var elegidos = [];
+		var clase = "idem1";
+
+		unaBase.ui.block();
+
+		$(document).ready(function () {
+
+			// ============================================================
+			// Almacenar las ids seleccionadas
+			// ============================================================
+			const $dtcView = $('#viewport .padre').first();
+			$dtcView.data('seleccionDtc', new Map());
+
+			function getSeleccionDtc() {
+				return $dtcView.data('seleccionDtc');
+			}
+
+			function guardarSeleccionFila($tr, checked) {
+				const seleccion = getSeleccionDtc();
+				const id = String($tr.data('id'));
+				const saldo = parseFloat($tr.find('input[name="selected_one"]').data('saldo')) || 0;
+
+				if (checked) {
+					seleccion.set(id, { id, saldo });
+				} else {
+					seleccion.delete(id);
+				}
+			}
+
+			function restaurarSeleccionPagina() {
+				const seleccion = getSeleccionDtc();
+
+				$dtcView.find('input[name="selected_all"]').prop('checked', false);
+				$dtcView.find('table.results tbody input[name="selected_one"]').prop('checked', false);
+
+				$dtcView.find('table.results tbody tr[data-id]').each(function () {
+					const id = String($(this).data('id'));
+					$(this).find('input[name="selected_one"]').prop('checked', seleccion.has(id));
+				});
+
+				actualizarSelectedAllPagina();
+				actualizarBotonesSeleccion();
+				selectedSum();
+			}
+
+			$('.country-label-rut').text(country.label_rut);
+
+			// ============================================================
+			// Suma del saldo seleccionado
+			// ============================================================
+			var selectedSum = function () {
+				let finalValue = 0;
+				const seleccion = getSeleccionDtc();
+
+				seleccion.forEach(function (item) {
+					finalValue += item.saldo || 0;
+				});
+
+				$('.totalseleccionado span').html(currency.symbol + " <strong>" + finalValue + "</strong>");
+				$('span.numeric.currency > strong').number(true, 0, ',', '.');
+			};
+
+			// ============================================================
+			// Descarga / visualización de documentos
+			// ============================================================
+			const downloadDTC = (id) => {
+				$.ajax({
+					'url': '/4DACTION/_V3_proxy_getDtcContent',
+					data: { "id": id, "api": true },
+					dataType: 'json',
+					async: false,
+					success: function (data) {
+
+						var url = data.urlCargaLista;
+						if (!data.isLibroBoleta) {
+							url = nodeUrl +
+								"/download-pdf-dtc/?download=true&entity=conexion_sii" +
+								"&id=" + data.idCargaLista +
+								"&folio=" + data.folio +
+								"&sid=" + unaBase.sid.encoded() +
+								"&hostname=" + window.location.origin;
+						}
+						var download = window.open(url);
+						download.blur();
+						window.focus();
+					}
+				});
+			};
+
+			const viewAdjunto = (id) => {
+				let flag = true;
+				$.ajax({
+					'url': '/4DACTION/_V3_getUpload',
+					data: { "index": "Doc_Tributario_Compra|" + id },
+					dataType: 'json',
+					async: false,
+					success: function (data) {
+						if (data == null) {
+							toastr.warning("No hay archivo adjunto asociado");
+							flag = false;
+							return;
+						}
+					}
+				});
+
+				if (flag) {
+					let url = `/4DACTION/_V3_getUpload?index=Doc_Tributario_Compra|${id}`;
+					unaBase.loadInto.dialog(url, 'Archivo adjunto', 'large', true);
+					return false;
+				}
+			};
+
+			// ============================================================
+			// Tooltip de acciones por fila
+			// ============================================================
+			var loadTooltips = function (target, id) {
+
+				var tooltipHtml = $(`
+					<div class='container' id='tooltipdtc'>
+						<div class='row'>
+							<div class='col-6'><strong>Descargar documento</strong></div>
+							<div class='col-6'><strong>Visualizar adjunto</strong></div>
+						</div>
+						<div class='row'>
+							<div class='col ml-5'>
+								<br>
+								<a class="pe-auto pointer" id="downloadDTC" title="Clic para descargar documento"><i class="fas fa-download"></i></a>
+							</div>
+							<div class='col ml-5'>
+								<br>
+								<a class="pe-auto" id="viewAdjunto" title="Clic para visualizar archivo adjunto"><i class="fas fa-eye"></i></a>
+							</div>
+						</div>
+					</div>
+				`);
+
+				tooltipHtml.find('#downloadDTC').click(function () { downloadDTC(id); });
+				tooltipHtml.find('#viewAdjunto').click(function () { viewAdjunto(id); });
+
+				target.tooltipster('update', tooltipHtml);
+			};
+
+			// ============================================================
+			// Inicialización del toolbox y del buscador
+			// ============================================================
+			unaBase.toolbox.init();
+
+			var params = {
+				searchOff: true,
+				url: function () { return '/4DACTION/_V3_getDtc'; },
+				entity: 'Dtc',
+
+				// --- Callback: tooltips, sort numérico y restauración de selección ---
+				callback: function (data) {
+
+					var content = "";
+					$('td.tooltipsnv').tooltipster({
+						content: content,
+						contentAsHTML: true,
+						contentCloning: false,
+						interactive: true,
+						maxWidth: 800,
+						multiple: true
+					});
+
+					$('td.tooltipsnv').on('hover', function () {
+						var tr = $(this).closest('tr');
+						loadTooltips($(this), tr.data('id'));
+					});
+
+					// Ordenamiento numérico personalizado para la columna NÚMERO
+					setTimeout(function () {
+						$('th[data-sort-by="numero"]').off('click').on('click', function (e) {
+							e.preventDefault();
+							e.stopPropagation();
+
+							var $header = $(this);
+							var currentOrder = $header.data('sort-order');
+							var newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+
+							$('th[data-sort-by]').removeClass('sort-order-asc sort-order-desc').removeData('sort-order');
+							$header.addClass('sort-order-' + newOrder).data('sort-order', newOrder);
+
+							var $rows = $('table.results tbody tr').toArray();
+							$rows.sort(function (a, b) {
+								var numA = parseInt($(a).find('td:eq(2)').text().trim()) || 0;
+								var numB = parseInt($(b).find('td:eq(2)').text().trim()) || 0;
+								return newOrder === 'asc' ? numA - numB : numB - numA;
+							});
+
+							$('table.results tbody').empty().append($rows);
+							selectedSum();
+						});
+					}, 1000);
+
+					restaurarSeleccionPagina();
+					unaBase.ui.unblock();
+				},
+
+				// --- Render de cada fila ---
+				row: {
+					html: function (i, rows) {
+
+						// --- Parseo de fechas ---
+						const day   = parseInt(rows[i].emision.substring(0, 2));
+						const month = parseInt(rows[i].emision.substring(3, 5));
+						const year  = parseInt(rows[i].emision.substring(6, 10));
+						const dtc_date = new Date(year, month - 1, day);
+
+						// Fecha de vencimiento
+						let vencDay   = parseInt(rows[i].vencimiento.substring(0, 2));
+						let vencMonth = parseInt(rows[i].vencimiento.substring(3, 5));
+						let vencYear  = parseInt(rows[i].vencimiento.substring(6, 10));
+						const venc_date = new Date(vencYear, vencMonth - 1, vencDay);
+
+						// Fecha actual (sin horas para comparar correctamente)
+						const hoy = new Date();
+						hoy.setHours(0, 0, 0, 0);
+
+						// --- Colores por estado / vencimiento ---
+						let color = "";
+						if (rows[i].estado === "NULO") {
+							color = "red";
+						} else if (venc_date < hoy) {
+							color = "orange";
+						}
+
+						// --- Formateo de montos ---
+						const fmt = (n) =>
+							currency.symbol + " " +
+							$.number(n, currency.decimals, currency.decimals_sep, currency.thousands_sep);
+
+						let afeDTC = fmt(rows[i].afecto_);
+						let exeDTC = fmt(rows[i].exento_);
+						let impDTC = fmt(rows[i].impuesto_);
+						let totDTC = fmt(rows[i].total_);
+						let aboDTC = fmt(rows[i].abono_);
+						let salDTC = fmt(rows[i].saldo_);
+
+						// --- Conversión de moneda ---
+						let symbolAux = currency.symbol;
+						let valorCambio = 1;
+						if (rows[i].moneda && rows[i].moneda !== currency.code) {
+							symbolAux = rows[i].moneda;
+							valorCambio = rows[i].valor_cambio || 1;
+
+							const fmtConv = (n) =>
+								symbolAux + " " +
+								$.number(n / valorCambio, currency.decimals, currency.decimals_sep, currency.thousands_sep);
+
+							afeDTC = fmtConv(rows[i].afecto_);
+							exeDTC = fmtConv(rows[i].exento_);
+							impDTC = fmtConv(rows[i].impuesto_);
+							totDTC = fmtConv(rows[i].total_);
+							aboDTC = fmtConv(rows[i].abono_);
+							salDTC = fmtConv(rows[i].saldo_);
+						}
+
+						// --- Estilos de vencimiento ---
+						const vencidoStyle = venc_date < hoy
+							? 'color:#e53935;font-weight:600;cursor:pointer;'
+							: 'cursor:pointer;';
+
+						// --- Generación HTML ---
+						return `
+							<tr class="unselectable"
+								data-estado="${rows[i].estado}"
+								data-oc="${rows[i].foliooc}"
+								data-id="${rows[i].id}"
+								${rows[i].contabilizado ? 'data-contabilizado="true"' : ""}
+								data-tp="${rows[i].pago_desde_oc}"
+								data-oc="${rows[i].idoc}"
+								data-tgasto="${rows[i].oc_tipogasto}"
+								data-ndoc="${rows[i].doc}"
+								data-doc="${rows[i].id_doc}"
+								data-idpro="${rows[i].idproveedor}"
+								data-libro="${rows[i].libro}">
+								<td width="1%"><input class="each selected chk" data-saldo="${rows[i].saldo_}" type="checkbox" name="selected_one"></td>
+								<td width="1%" class="tooltipsnv greenLink"><i class="fas fa-info" aria-hidden="true"></i></td>
+								<td width="3%"  data-goto="true" style="cursor:pointer;">${rows[i].numero}</td>
+								<td width="3%"  data-goto="true" class="center" title="${rows[i].doc}" style="cursor:pointer;">${rows[i].doc_abrv}</td>
+								<td width="3%"  data-goto="true" class="center" style="cursor:pointer;">${rows[i].param4}</td>
+								<td width="18%" data-goto="true" class="fpago-column" style="cursor:pointer;">${rows[i].formapago}</td>
+								<td width="3%"  data-goto="true" style="cursor:pointer;">${rows[i].foliooc}</td>
+								<td width="5%"  data-goto="true" style="cursor:pointer;">${rows[i].emision}</td>
+								<td width="5%"  data-goto="true" style="cursor:pointer;">${rows[i].recepcion}</td>
+								<td width="5%"  data-goto="true" style="${vencidoStyle}">${rows[i].vencimiento}</td>
+								<td width="5%"  data-goto="true" style="white-space:nowrap;cursor:pointer;">${rows[i].contable === "00-00-00" ? "N/A" : rows[i].contable}</td>
+								<td width="4%"  data-goto="true" class="${color}" style="cursor:pointer;">${rows[i].estado}</td>
+								<td width="10%" data-goto="true" class="left" style="cursor:pointer;">${rows[i].proveedor}</td>
+								<td width="5%"  data-goto="true" style="cursor:pointer;">${rows[i].rut}</td>
+								<td width="6%"  data-goto="true" data-total="${rows[i].afecto_}"   style="cursor:pointer;">${afeDTC}</td>
+								<td width="6%"  data-goto="true" data-total="${rows[i].exento_}"   style="cursor:pointer;">${exeDTC}</td>
+								<td width="6%"  data-goto="true" data-total="${rows[i].impuesto_}" style="cursor:pointer;">${impDTC}</td>
+								<td width="6%"  data-goto="true" data-total="${rows[i].total_}"    style="min-width:100px;cursor:pointer;">${totDTC}</td>
+								<td width="6%"  data-goto="true" data-total="${rows[i].abono_}"    style="min-width:100px;cursor:pointer;">${aboDTC}</td>
+								<td width="6%"  data-goto="true" data-total="${rows[i].saldo_}"    style="min-width:100px;cursor:pointer;">${salDTC}</td>
+							</tr>
+						`;
+					}
+				},
+
+				// --- Inflexiones ---
+				inflection: {
+					singular: 'Documento',
+					plural: 'Documentos',
+					none: 'ninguna'
+				},
+
+				// --- Filtros ---
+				filters: [
+					{ name: 'created_at',       type: 'month',        caption: 'Fecha de emisión',         range: true, currentMonth: false },
+					{ name: 'received_at',      type: 'month',        caption: 'Fecha de recepción',       range: true, currentMonth: true  },
+					{ name: 'contabilizado_at', type: 'month',        caption: 'Fecha de contabilización', range: true, currentMonth: false },
+					{ name: 'date_vencimiento', type: 'new_date',     caption: 'Fecha de vencimiento',     range: true, currentMonth: false },
+					{ name: 'responsable',      type: 'new_select',   caption: 'Emisor',           dataSource: 'getUsuario' },
+					{ name: 'tipo_doc',         type: 'new_select',   caption: 'Tipo Doc.',        dataSource: 'getTiposDocDeCompras' },
+					{ name: 'formas_de_pago',   type: 'new_select',   caption: 'Forma de pago',    dataSource: 'getFormaPagos?compra=true' },
+					{ name: 'tipo_libro',       type: 'new_select',   caption: 'Tipo de libros',   dataSource: 'getTipoLibros' },
+					{ name: 'contabilizado',    type: 'new_select',   caption: '¿Contabilizado?', dataObject: [
+						{ id: false, text: 'Sin contabilizar' },
+						{ id: true,  text: 'Contabilizado'    }
+					]},
+					{ name: 'origen',           type: 'autocomplete', caption: 'Origen', dataObject: [
+						{ id: "PROYECTO",             text: 'NEGOCIOS' },
+						{ id: "PRESUPUESTO DE GASTO", text: 'PRESUPUESTO DE GASTO' },
+						{ id: "GASTO GENERAL",        text: 'GASTOS GENERALES' }
+					]},
+					{ name: 'por_negocio',      type: 'autocomplete', caption: 'Por negocio',       dataSource: 'getNegociosActivos' },
+					{ name: 'por_presupuesto',  type: 'autocomplete', caption: 'Por presupuesto',   dataSource: 'getPresupuestosActivos' },
+					{ name: 'por_clasificacion',type: 'autocomplete', caption: 'Por Clasificación', dataSource: 'getClasificacionGG' },
+					{ name: 'estado',           type: 'checkbox',     caption: 'Estado del documento', options: [
+						{ caption: 'Por revisar', name: 'estado_por_revisar', value: mostrar_por_revisar },
+						{ caption: 'Por asignar', name: 'estado_por_asignar', value: false },
+						{ caption: 'Por pagar',   name: 'estado_por_pagar',   value: true  },
+						{ caption: 'Pagado',      name: 'estado_pagado',      value: false },
+						{ caption: 'Emitida',     name: 'estado_emitida',     value: false },
+						{ caption: 'Nulo',        name: 'estado_nulo',        value: false }
+					]},
+					{ name: 'tipo_gasto',       type: 'new_select',   caption: 'Tipo gasto', dataObject: [
+						{ id: 'OC',  text: 'Orden de compra' },
+						{ id: 'FXR', text: 'Rendiciones'     }
+					]},
+					{ name: 'area_negocio',     type: 'autocomplete', caption: 'Áreas de negocio', dataSource: 'getAreaNegocio' }
+				]
+			};
+
+			unaBase.toolbox.search.init(params);
+
+			// ============================================================
+			// Menú de acciones
+			// ============================================================
+			unaBase.toolbox.menu.init({
+				entity: 'Dtc',
+				buttons: [
+					'searchOff',
+					'create_dtc',
+					'views',
+					'dtc_pay_selection',
+					'export_list',
+					'export_softland',
+					'export_sap',
+					'export_compras_pe'
+				],
+				buttonAccess: {
+					dtc_pay_selection: '_659'
+				}
+			});
+
+			// ============================================================
+			// Selector de items por página (one-time init)
+			// ============================================================
+			(function initPageSizeSelector() {
+
+				var STORAGE_KEY = 'dtc_page_size';
+				var $select = $('#page-size-select');
+				if (!$select.length) return;
+
+				// Restaurar preferencia guardada
+				try {
+					var saved = localStorage.getItem(STORAGE_KEY);
+					if (saved) {
+						var savedSize = parseInt(saved, 10);
+						if (!isNaN(savedSize) && $select.find('option[value="' + savedSize + '"]').length) {
+							$select.val(savedSize);
+							unaBase.toolbox.search.userPageSize = savedSize;
+						}
+					}
+				} catch (e) { /* localStorage no disponible */ }
+
+				// Cambio del selector → guardar preferencia y recargar desde página 1
+				$(document).off('change.pageSize', '#page-size-select');
+				$(document).on('change.pageSize', '#page-size-select', function () {
+
+					var newSize = parseInt($(this).val(), 10);
+					if (isNaN(newSize) || newSize <= 0) return;
+
+					try { localStorage.setItem(STORAGE_KEY, newSize); } catch (e) {}
+
+					unaBase.toolbox.search.userPageSize = newSize;
+
+					// Recargar desde la página 1 con los últimos filtros
+					if (typeof appendResult === 'function') {
+						appendResult(1, lastQuery, lastSortBy, lastSortOrder, lastAdvancedFilter, lastQuery2);
+					} else if (unaBase.toolbox.search && typeof unaBase.toolbox.search.search === 'function') {
+						unaBase.toolbox.search.search();
+					}
+				});
+
+			})();
+
+			// ============================================================
+			// Permisos: ocultar opciones según permiso del usuario
+			// ============================================================
+			if (currency.code != "PEN") {
+				$('#menu ul').find('li[data-name="export_compras_pe"]').hide();
+			}
+
+			if (!access._504) { // crear dtc
+				$('#menu ul').find('li[data-name="create_dtc"]').hide();
+			}
+
+			// ============================================================
+			// Filtros condicionales según el origen seleccionado
+			// ============================================================
+			$('#search').find('input[name="por_negocio"]').closest('.autocomplete').hide();
+			$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').hide();
+			$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').hide();
+
+			$('#search').find('input[name="origen"]').blur(function () {
+				switch ($(this).val()) {
+					case '':
+						$('#search').find('input[name="por_negocio"]').closest('.autocomplete').hide();
+						$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').hide();
+						$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').hide();
+						break;
+					case 'NEGOCIOS':
+						$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').hide();
+						$('#search').find('input[name="por_negocio"]').closest('.autocomplete').show();
+						$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').hide();
+						break;
+					case 'GASTOS GENERALES':
+						$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').hide();
+						$('#search').find('input[name="por_negocio"]').closest('.autocomplete').hide();
+						$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').show();
+						break;
+					case 'PRESUPUESTO DE GASTO':
+						$('#search').find('input[name="por_clasificacion"]').closest('.autocomplete').hide();
+						$('#search').find('input[name="por_negocio"]').closest('.autocomplete').hide();
+						$('#search').find('input[name="por_presupuesto"]').closest('.autocomplete').show();
+						break;
+				}
+			});
+
+			// Estado inicial de los botones de menú dependientes de selección
+			$('#menu ul').find('li[data-name="dtc_pay_selection"]').hide();
+			$('#menu ul').find('li[data-name="export_softland"]').hide();
+			$('#menu ul').find('li[data-name="export_sap"]').hide();
+
+			// ============================================================
+			// Click en una fila → ir al detalle
+			// ============================================================
+			$('.padre table tbody').on('click', 'tr > td[data-goto="true"]', function () {
+				var id  = $(this).closest("tr").data("id");
+				var doc = $(this).closest("tr").data("doc");
+
+				if (doc == "60" || doc == "61" || doc == "55" || doc == "56") {
+					unaBase.loadInto.viewport('/v3/views/dtc/contentnc.shtml?id=' + id);
+				} else {
+					unaBase.loadInto.viewport('/v3/views/dtc/content.shtml?id=' + id);
+				}
+			});
+
+			// ============================================================
+			// Manejo de selección múltiple
+			// ============================================================
+			$dtcView.off('change.dtc-select', 'input.selected');
+			$dtcView.on('change.dtc-select', 'input.selected', function () {
+
+				const $input = $(this);
+
+				if ($input.attr('name') === 'selected_all') {
+					const checked = $input.prop('checked');
+
+					$dtcView.find('table.results tbody tr[data-id]').each(function () {
+						const $tr = $(this);
+						$tr.find('input[name="selected_one"]').prop('checked', checked);
+						guardarSeleccionFila($tr, checked);
+					});
+
+					actualizarSelectedAllPagina();
+					actualizarBotonesSeleccion();
+					selectedSum();
+					return;
+				}
+
+				const $tr = $input.closest('tr');
+				guardarSeleccionFila($tr, $input.prop('checked'));
+
+				actualizarSelectedAllPagina();
+				actualizarBotonesSeleccion();
+				selectedSum();
+			});
+
+			function actualizarSelectedAllPagina() {
+				const $checks = $('table.results tbody input[name="selected_one"]');
+				const total = $checks.length;
+				const marcados = $checks.filter(':checked').length;
+
+				$('input[name="selected_all"]').prop('checked', total > 0 && total === marcados);
+			}
+
+			function actualizarBotonesSeleccion() {
+				const cantidad = getSeleccionDtc().size;
+
+				if (cantidad > 0) {
+					if (access._659) $('#menu ul').find('li[data-name="dtc_pay_selection"]').show();
+					else             $('#menu ul').find('li[data-name="dtc_pay_selection"]').hide();
+
+					if (access._661) $('#menu ul').find('li[data-name="export_softland"]').show();
+					else             $('#menu ul').find('li[data-name="export_softland"]').hide();
+
+					if (access._660) $('#menu ul').find('li[data-name="export_sap"]').show();
+					else             $('#menu ul').find('li[data-name="export_sap"]').hide();
+				} else {
+					$('#menu ul').find('li[data-name="dtc_pay_selection"]').hide();
+					$('#menu ul').find('li[data-name="export_softland"]').hide();
+					$('#menu ul').find('li[data-name="export_sap"]').hide();
+				}
+			}
+
+			document.title = nombreEmpresa + ' / DTC - Lista';
+		});
+	</script>
+
+	<!-- ============================================================
+		 ESTILOS ESPECÍFICOS DE DTC
+		 (lo común — paginador, page-size, responsive, sticky thead/tfoot,
+		  checkboxes — vive en /v3/views/shared/listados.css)
+		 ============================================================ -->
+	<style type="text/css">
+
+		/* --- Tooltip de acciones por fila --- */
+		#tooltipdtc {
+			width: 400px;
+			background-color: rgb(110, 108, 108);
+			color: white;
+			padding: 10px 50px;
+			border-radius: 5px;
+			font-size: 30px;
+		}
+
+		#downloadDTC,
+		#viewAdjunto {
+			cursor: pointer;
+		}
+
+		.dropdown-button {
+			padding: 5px 5px;
+		}
+
+		/* --- Bordes laterales por estado de ítem --- */
+		.idem1 { border-left: 5px solid yellow !important; }
+		.idem2 { border-left: 5px solid orange !important; }
+
+		/* --- Footer de totales --- */
+		.totales {
+			position: relative;
+			font-size: 10px !important;
+		}
+
+		.totales tr th { position: relative; }
+
+		.totales div { display: inline-block; }
+
+		.totales div.totalseleccionado {
+			position: absolute;
+			left: 0px;
+			top: 7px;
+		}
+
+		.totales div.afecto,
+		.totales div.exento,
+		.totales div.impuesto,
+		.totales div.total,
+		.totales div.abono,
+		.totales div.saldo {
+			right: 0%;
+		}
+
+		.totales div.afecto.label2 {
+			right: 0%;
+			color: red;
+		}
+
+		div.padre table {
+			width: 100% !important;
+		}
+
+		/* --- Sticky tfoot dentro del scroll de la tabla --- */
+		.table-responsive tfoot {
+			position: sticky;
+			bottom: 0;
+			background: white;
+			z-index: 1;
+			box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+		}
+
+		/* --- Layout de scroll: vertical en .table-wrap, horizontal en .table-responsive --- */
+		.table-wrap {
+			height: calc(100vh - 350px);
+			overflow-y: auto;
+			overflow-x: hidden;
+			min-height: 0;
+			margin-bottom: 0;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.table-responsive {
+			width: 100%;
+			overflow-x: auto;
+			overflow-y: visible;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		/* --- Responsive: ajustar la altura del wrapper en pantallas pequeñas --- */
+		@media (max-width: 1024px) {
+			.table-wrap { height: calc(100vh - 320px); }
+		}
+
+		@media (max-width: 768px) {
+			.table-wrap { height: calc(100vh - 280px); }
+
+			#tooltipdtc {
+				width: 280px;
+				padding: 8px 20px;
+				font-size: 20px;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.table-wrap { height: calc(100vh - 240px); }
+
+			#tooltipdtc {
+				width: 220px;
+				padding: 6px 12px;
+				font-size: 16px;
+			}
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div class="padre">
+		<div class="list-layout">
+
+			<!-- ============================================================
+				 TABLA DE DOCUMENTOS
+				 ============================================================ -->
+			<div class="table-wrap">
+				<div class="table-responsive">
+					<table width="100%" class="results especial listpayout fixed">
+
+						<thead id="table-header-dtc">
+							<tr>
+								<th class="center" width="1%">
+									<div style="padding:2px"></div>
+									<div><input class="selected chk" type="checkbox" name="selected_all"></div>
+								</th>
+								<th class="center" width="1%"  data-sort-by="numero"      data-sort-default="desc"></th>
+								<th class="center" width="3%"  data-sort-by="numero"      data-sort-default="desc">Número</th>
+								<th class="center" width="3%"  data-sort-by="doc"         data-sort-default="asc" >Doc.</th>
+								<th class="center" width="3%"  data-sort-by="codigo"      data-sort-default="asc" >Codigo</th>
+								<th class="center" width="18%" data-sort-by="doc"         data-sort-default="asc" >F. Pago</th>
+								<th class="center" width="3%"  data-sort-by="oc"          data-sort-default="desc">OC</th>
+								<th class="center" width="5%"  data-sort-by="emision"     data-sort-default="desc">F. Emisión</th>
+								<th class="center" width="5%"  data-sort-by="recepcion"   data-sort-default="desc">F. Recepción</th>
+								<th class="center" width="5%"  data-sort-by="vencimiento" data-sort-default="desc">F. Vencimiento</th>
+								<th class="center" width="5%"  data-sort-by="contable"    data-sort-default="desc">F. Contable</th>
+								<th class="center" width="4%"  data-sort-by="estado"      data-sort-default="asc" >Estado</th>
+								<th class="center" width="10%" data-sort-by="proveedor"   data-sort-default="asc" >Proveedor</th>
+								<th class="center country-label-rut" width="5%" data-sort-by="rut" data-sort-default="asc">rut</th>
+								<th class="center" width="6%" data-sort-by="afecto"   data-sort-default="desc">Afecto   [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+								<th class="center" width="6%" data-sort-by="exento"   data-sort-default="desc">Exento   [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+								<th class="center" width="6%" data-sort-by="impuesto" data-sort-default="desc">Impuesto [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+								<th class="center" width="6%" data-sort-by="total"    data-sort-default="desc">Total    [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+								<th class="center" width="6%" data-sort-by="abono"    data-sort-default="desc">Pagado   [<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+								<th class="center" width="6%" data-sort-by="saldo"    data-sort-default="desc">Por pagar[<!--#4DVAR _V3_defaultCurrencySymbol-->]</th>
+							</tr>
+						</thead>
+
+						<tbody></tbody>
+
+						<tfoot class="totales">
+							<tr>
+								<th colspan="20">
+									<div class="totalseleccionado">
+										<label>Total saldo seleccionado </label>
+										<span class="numeric currency"><strong>0</strong></span>
+									</div>
+								</th>
+							</tr>
+						</tfoot>
+
+					</table>
+				</div>
+			</div>
+
+			<!-- ============================================================
+				 PAGINADOR + SELECTOR DE ITEMS POR PÁGINA
+				 ============================================================ -->
+			<div class="pagination-wrapper">
+				<div class="page-size">
+					<label for="page-size-select">Mostrar:</label>
+					<select id="page-size-select" name="page_size">
+						<option value="50">50</option>
+						<option value="100">100</option>
+						<option value="150" selected>150</option>
+						<option value="300">300</option>
+						<option value="500">500</option>
+					</select>
+					<span>por página</span>
+				</div>
+				<div id="pagination" class="pagination"></div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

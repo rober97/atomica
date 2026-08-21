@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Comuna>
+<record><field name="Id_Comuna">1</field><field name="Des_Comuna">SANTIAGO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">2</field><field name="Des_Comuna">INDEPENDENCIA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">3</field><field name="Des_Comuna">CONCHALI</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">4</field><field name="Des_Comuna">HUECHURABA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">5</field><field name="Des_Comuna">PUDAHUEL</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">6</field><field name="Des_Comuna">CERRO NAVIA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">7</field><field name="Des_Comuna">RECOLETA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">8</field><field name="Des_Comuna">PROVIDENCIA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">9</field><field name="Des_Comuna">VITACURA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">10</field><field name="Des_Comuna">LO BARNECHEA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">11</field><field name="Des_Comuna">LAS CONDES</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">12</field><field name="Des_Comuna">ÑUÑOA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">13</field><field name="Des_Comuna">LA REINA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">14</field><field name="Des_Comuna">MACUL</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">15</field><field name="Des_Comuna">PEÑALOLEN</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">16</field><field name="Des_Comuna">LA FLORIDA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">17</field><field name="Des_Comuna">SAN JOAQUIN</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">18</field><field name="Des_Comuna">LA GRANJA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">19</field><field name="Des_Comuna">LA PINTANA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">20</field><field name="Des_Comuna">SAN RAMON</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">21</field><field name="Des_Comuna">SAN MIGUEL</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">22</field><field name="Des_Comuna">LA CISTERNA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">23</field><field name="Des_Comuna">EL BOSQUE</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">24</field><field name="Des_Comuna">PEDRO AGUIRRE CERDA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">25</field><field name="Des_Comuna">LO ESPEJO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">26</field><field name="Des_Comuna">ESTACION CENTRAL</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">27</field><field name="Des_Comuna">CERRILLOS</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">28</field><field name="Des_Comuna">MAIPU</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">29</field><field name="Des_Comuna">QUINTA NORMAL</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">30</field><field name="Des_Comuna">LO PRADO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">31</field><field name="Des_Comuna">RENCA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">32</field><field name="Des_Comuna">QUILICURA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">33</field><field name="Des_Comuna">COLINA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">34</field><field name="Des_Comuna">LAMPA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">35</field><field name="Des_Comuna">TILTIL</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">36</field><field name="Des_Comuna">PUENTE ALTO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">37</field><field name="Des_Comuna">SAN JOSE DE MAIPO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">38</field><field name="Des_Comuna">PIRQUE</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">39</field><field name="Des_Comuna">SAN BERNARDO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">40</field><field name="Des_Comuna">BUIN</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">41</field><field name="Des_Comuna">PAINE</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">42</field><field name="Des_Comuna">CALERA DE TANGO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">43</field><field name="Des_Comuna">MELIPILLA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">44</field><field name="Des_Comuna">MARIA PINTO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">45</field><field name="Des_Comuna">CURACAVI</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">46</field><field name="Des_Comuna">ALHUE</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">47</field><field name="Des_Comuna">SAN PEDRO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">48</field><field name="Des_Comuna">TALAGANTE</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">49</field><field name="Des_Comuna">PEÑAFLOR</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">50</field><field name="Des_Comuna">ISLA DE MAIPO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">51</field><field name="Des_Comuna">EL MONTE</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">52</field><field name="Des_Comuna">PADRE HURTADO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">53</field><field name="Des_Comuna">ARICA</field><field name="Id_Region">15</field><field name="id_pais">0</field><field name="Des_Ciudad">ARICA</field></record>
+<record><field name="Id_Comuna">54</field><field name="Des_Comuna">CAMARONES</field><field name="Id_Region">15</field><field name="id_pais">0</field><field name="Des_Ciudad">ARICA</field></record>
+<record><field name="Id_Comuna">55</field><field name="Des_Comuna">PUTRE</field><field name="Id_Region">15</field><field name="id_pais">0</field><field name="Des_Ciudad">ARICA</field></record>
+<record><field name="Id_Comuna">56</field><field name="Des_Comuna">GENERAL LAGOS</field><field name="Id_Region">15</field><field name="id_pais">0</field><field name="Des_Ciudad">ARICA</field></record>
+<record><field name="Id_Comuna">57</field><field name="Des_Comuna">ALTO HOSPICIO</field><field name="Id_Region">1</field><field name="id_pais">0</field><field name="Des_Ciudad">IQUIQUE</field></record>
+<record><field name="Id_Comuna">58</field><field name="Des_Comuna">IQUIQUE</field><field name="Id_Region">1</field><field name="id_pais">0</field><field name="Des_Ciudad">IQUIQUE</field></record>
+<record><field name="Id_Comuna">59</field><field name="Des_Comuna">HUARA</field><field name="Id_Region">1</field><field name="id_pais">0</field><field name="Des_Ciudad">IQUIQUE</field></record>
+<record><field name="Id_Comuna">60</field><field name="Des_Comuna">CAMIÑA</field><field name="Id_Region">1</field><field name="id_pais">0</field><field name="Des_Ciudad">IQUIQUE</field></record>
+<record><field name="Id_Comuna">61</field><field name="Des_Comuna">COLCHANE</field><field name="Id_Region">1</field><field name="id_pais">0</field><field name="Des_Ciudad">IQUIQUE</field></record>
+<record><field name="Id_Comuna">62</field><field name="Des_Comuna">PICA</field><field name="Id_Region">1</field><field name="id_pais">0</field><field name="Des_Ciudad">IQUIQUE</field></record>
+<record><field name="Id_Comuna">63</field><field name="Des_Comuna">POZO ALMONTE</field><field name="Id_Region">1</field><field name="id_pais">0</field><field name="Des_Ciudad">IQUIQUE</field></record>
+<record><field name="Id_Comuna">64</field><field name="Des_Comuna">TOCOPILLA</field><field name="Id_Region">2</field><field name="id_pais">0</field><field name="Des_Ciudad">ANTOFAGASTA</field></record>
+<record><field name="Id_Comuna">65</field><field name="Des_Comuna">MARIA ELENA</field><field name="Id_Region">2</field><field name="id_pais">0</field><field name="Des_Ciudad">ANTOFAGASTA</field></record>
+<record><field name="Id_Comuna">66</field><field name="Des_Comuna">CALAMA</field><field name="Id_Region">2</field><field name="id_pais">0</field><field name="Des_Ciudad">ANTOFAGASTA</field></record>
+<record><field name="Id_Comuna">67</field><field name="Des_Comuna">OLLAGUE</field><field name="Id_Region">2</field><field name="id_pais">0</field><field name="Des_Ciudad">ANTOFAGASTA</field></record>
+<record><field name="Id_Comuna">68</field><field name="Des_Comuna">SAN PEDRO DE ATACAMA</field><field name="Id_Region">2</field><field name="id_pais">0</field><field name="Des_Ciudad">ANTOFAGASTA</field></record>
+<record><field name="Id_Comuna">69</field><field name="Des_Comuna">ANTOFAGASTA</field><field name="Id_Region">2</field><field name="id_pais">0</field><field name="Des_Ciudad">ANTOFAGASTA</field></record>
+<record><field name="Id_Comuna">70</field><field name="Des_Comuna">MEJILLONES</field><field name="Id_Region">2</field><field name="id_pais">0</field><field name="Des_Ciudad">ANTOFAGASTA</field></record>
+<record><field name="Id_Comuna">71</field><field name="Des_Comuna">SIERRA GORDA</field><field name="Id_Region">2</field><field name="id_pais">0</field><field name="Des_Ciudad">ANTOFAGASTA</field></record>
+<record><field name="Id_Comuna">72</field><field name="Des_Comuna">TALTAL</field><field name="Id_Region">2</field><field name="id_pais">0</field><field name="Des_Ciudad">ANTOFAGASTA</field></record>
+<record><field name="Id_Comuna">73</field><field name="Des_Comuna">CHAÑARAL</field><field name="Id_Region">3</field><field name="id_pais">0</field><field name="Des_Ciudad">COPIAPO</field></record>
+<record><field name="Id_Comuna">74</field><field name="Des_Comuna">DIEGO DE ALMAGRO</field><field name="Id_Region">3</field><field name="id_pais">0</field><field name="Des_Ciudad">COPIAPO</field></record>
+<record><field name="Id_Comuna">75</field><field name="Des_Comuna">COPIAPO</field><field name="Id_Region">3</field><field name="id_pais">0</field><field name="Des_Ciudad">COPIAPO</field></record>
+<record><field name="Id_Comuna">76</field><field name="Des_Comuna">CALDERA</field><field name="Id_Region">3</field><field name="id_pais">0</field><field name="Des_Ciudad">COPIAPO</field></record>
+<record><field name="Id_Comuna">77</field><field name="Des_Comuna">TIERRA AMARILLA</field><field name="Id_Region">3</field><field name="id_pais">0</field><field name="Des_Ciudad">COPIAPO</field></record>
+<record><field name="Id_Comuna">78</field><field name="Des_Comuna">VALLENAR</field><field name="Id_Region">3</field><field name="id_pais">0</field><field name="Des_Ciudad">VALLENAR</field></record>
+<record><field name="Id_Comuna">79</field><field name="Des_Comuna">FREIRINA</field><field name="Id_Region">3</field><field name="id_pais">0</field><field name="Des_Ciudad">VALLENAR</field></record>
+<record><field name="Id_Comuna">80</field><field name="Des_Comuna">HUASCO</field><field name="Id_Region">3</field><field name="id_pais">0</field><field name="Des_Ciudad">VALLENAR</field></record>
+<record><field name="Id_Comuna">81</field><field name="Des_Comuna">ALTO DEL CARMEN</field><field name="Id_Region">3</field><field name="id_pais">0</field><field name="Des_Ciudad">VALLENAR</field></record>
+<record><field name="Id_Comuna">82</field><field name="Des_Comuna">LA SERENA</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">LA SERENA</field></record>
+<record><field name="Id_Comuna">83</field><field name="Des_Comuna">LA HIGUERA</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">LA SERENA</field></record>
+<record><field name="Id_Comuna">84</field><field name="Des_Comuna">COQUIMBO</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">LA SERENA</field></record>
+<record><field name="Id_Comuna">85</field><field name="Des_Comuna">ANDACOLLO</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">LA SERENA</field></record>
+<record><field name="Id_Comuna">86</field><field name="Des_Comuna">VICUÑA</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">LA SERENA</field></record>
+<record><field name="Id_Comuna">87</field><field name="Des_Comuna">PAIHUANO</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">LA SERENA</field></record>
+<record><field name="Id_Comuna">88</field><field name="Des_Comuna">OVALLE</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">OVALLE</field></record>
+<record><field name="Id_Comuna">89</field><field name="Des_Comuna">RIO HURTADO</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">OVALLE</field></record>
+<record><field name="Id_Comuna">90</field><field name="Des_Comuna">MONTE PATRIA</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">OVALLE</field></record>
+<record><field name="Id_Comuna">91</field><field name="Des_Comuna">COMBARBALA</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">OVALLE</field></record>
+<record><field name="Id_Comuna">92</field><field name="Des_Comuna">PUNITAQUI</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">OVALLE</field></record>
+<record><field name="Id_Comuna">93</field><field name="Des_Comuna">ILLAPEL</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">OVALLE</field></record>
+<record><field name="Id_Comuna">94</field><field name="Des_Comuna">SALAMANCA</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">OVALLE</field></record>
+<record><field name="Id_Comuna">95</field><field name="Des_Comuna">LOS VILOS</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">OVALLE</field></record>
+<record><field name="Id_Comuna">96</field><field name="Des_Comuna">CANELA</field><field name="Id_Region">4</field><field name="id_pais">0</field><field name="Des_Ciudad">OVALLE</field></record>
+<record><field name="Id_Comuna">97</field><field name="Des_Comuna">LA LIGUA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">98</field><field name="Des_Comuna">PETORCA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">99</field><field name="Des_Comuna">CABILDO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">100</field><field name="Des_Comuna">ZAPALLAR</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">101</field><field name="Des_Comuna">PAPUDO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">102</field><field name="Des_Comuna">LOS ANDES</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">103</field><field name="Des_Comuna">SAN ESTEBAN</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">104</field><field name="Des_Comuna">CALLE LARGA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">105</field><field name="Des_Comuna">RINCONADA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">106</field><field name="Des_Comuna">SAN FELIPE</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">107</field><field name="Des_Comuna">PUTAENDO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">108</field><field name="Des_Comuna">SANTA MARIA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">109</field><field name="Des_Comuna">PANQUEHUE</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">110</field><field name="Des_Comuna">LLAYLLAY</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">111</field><field name="Des_Comuna">CATEMU</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANDES</field></record>
+<record><field name="Id_Comuna">112</field><field name="Des_Comuna">QUILLOTA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">113</field><field name="Des_Comuna">LA CRUZ</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">114</field><field name="Des_Comuna">CALERA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">115</field><field name="Des_Comuna">NOGALES</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">116</field><field name="Des_Comuna">HIJUELAS</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">117</field><field name="Des_Comuna">LIMACHE</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">118</field><field name="Des_Comuna">OLMUE</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">LA LIGUA</field></record>
+<record><field name="Id_Comuna">119</field><field name="Des_Comuna">VALPARAISO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">VALPARAISO</field></record>
+<record><field name="Id_Comuna">120</field><field name="Des_Comuna">VIÑA DEL MAR</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">VALPARAISO</field></record>
+<record><field name="Id_Comuna">121</field><field name="Des_Comuna">QUINTERO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">VALPARAISO</field></record>
+<record><field name="Id_Comuna">122</field><field name="Des_Comuna">PUCHUNCAVI</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">VALPARAISO</field></record>
+<record><field name="Id_Comuna">123</field><field name="Des_Comuna">QUILPUE</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">VALPARAISO</field></record>
+<record><field name="Id_Comuna">124</field><field name="Des_Comuna">VILLA ALEMANA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">VALPARAISO</field></record>
+<record><field name="Id_Comuna">125</field><field name="Des_Comuna">CASABLANCA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">VALPARAISO</field></record>
+<record><field name="Id_Comuna">126</field><field name="Des_Comuna">CONCON</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">VALPARAISO</field></record>
+<record><field name="Id_Comuna">127</field><field name="Des_Comuna">JUAN FERNANDEZ</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">VALPARAISO</field></record>
+<record><field name="Id_Comuna">128</field><field name="Des_Comuna">SAN ANTONIO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">SAN ANTONIO</field></record>
+<record><field name="Id_Comuna">129</field><field name="Des_Comuna">CARTAGENA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">SAN ANTONIO</field></record>
+<record><field name="Id_Comuna">130</field><field name="Des_Comuna">EL TABO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">SAN ANTONIO</field></record>
+<record><field name="Id_Comuna">131</field><field name="Des_Comuna">EL QUISCO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">SAN ANTONIO</field></record>
+<record><field name="Id_Comuna">132</field><field name="Des_Comuna">ALGARROBO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">SAN ANTONIO</field></record>
+<record><field name="Id_Comuna">133</field><field name="Des_Comuna">SANTO DOMINGO</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">SAN ANTONIO</field></record>
+<record><field name="Id_Comuna">134</field><field name="Des_Comuna">ISLA DE PASCUA</field><field name="Id_Region">5</field><field name="id_pais">0</field><field name="Des_Ciudad">ISLA DE PASCUA</field></record>
+<record><field name="Id_Comuna">135</field><field name="Des_Comuna">RANCAGUA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">136</field><field name="Des_Comuna">GRANEROS</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">137</field><field name="Des_Comuna">SAN FRANCISCO DE MOSTAZAL</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">138</field><field name="Des_Comuna">CODEGUA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">139</field><field name="Des_Comuna">MACHALI</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">140</field><field name="Des_Comuna">OLIVAR</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">141</field><field name="Des_Comuna">REQUINOA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">142</field><field name="Des_Comuna">RENGO</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">143</field><field name="Des_Comuna">MALLOA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">144</field><field name="Des_Comuna">QUINTA DE TILCOCO</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">145</field><field name="Des_Comuna">SAN VICENTE</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">146</field><field name="Des_Comuna">PICHIDEGUA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">147</field><field name="Des_Comuna">PEUMO</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">148</field><field name="Des_Comuna">COLTAUCO</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">149</field><field name="Des_Comuna">COINCO</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">150</field><field name="Des_Comuna">DOÑIHUE</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">151</field><field name="Des_Comuna">LAS CABRAS</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">152</field><field name="Des_Comuna">SAN FERNANDO</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">153</field><field name="Des_Comuna">CHIMBARONGO</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">154</field><field name="Des_Comuna">PLACILLA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">155</field><field name="Des_Comuna">NANCAGUA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">156</field><field name="Des_Comuna">CHEPICA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">157</field><field name="Des_Comuna">SANTA CRUZ</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">158</field><field name="Des_Comuna">LOLOL</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">159</field><field name="Des_Comuna">PUMANQUE</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">160</field><field name="Des_Comuna">PALMILLA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">161</field><field name="Des_Comuna">PERALILLO</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">162</field><field name="Des_Comuna">PICHILEMU</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">163</field><field name="Des_Comuna">NAVIDAD</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">164</field><field name="Des_Comuna">LITUECHE</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">165</field><field name="Des_Comuna">LA ESTRELLA</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">166</field><field name="Des_Comuna">MARCHIGUE</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">167</field><field name="Des_Comuna">PAREDONES</field><field name="Id_Region">6</field><field name="id_pais">0</field><field name="Des_Ciudad">RANCAGUA</field></record>
+<record><field name="Id_Comuna">168</field><field name="Des_Comuna">CURICO</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">169</field><field name="Des_Comuna">TENO</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">170</field><field name="Des_Comuna">ROMERAL</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">171</field><field name="Des_Comuna">MOLINA</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">172</field><field name="Des_Comuna">SAGRADA FAMILIA</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">173</field><field name="Des_Comuna">HUALAÑE</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">174</field><field name="Des_Comuna">LICANTEN</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">175</field><field name="Des_Comuna">VICHUQUEN</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">176</field><field name="Des_Comuna">RAUCO</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">177</field><field name="Des_Comuna">TALCA</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CURICO</field></record>
+<record><field name="Id_Comuna">178</field><field name="Des_Comuna">PELARCO</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CONSTITUCION</field></record>
+<record><field name="Id_Comuna">179</field><field name="Des_Comuna">RIO CLARO</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CONSTITUCION</field></record>
+<record><field name="Id_Comuna">180</field><field name="Des_Comuna">SAN CLEMENTE</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CONSTITUCION</field></record>
+<record><field name="Id_Comuna">181</field><field name="Des_Comuna">MAULE</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CONSTITUCION</field></record>
+<record><field name="Id_Comuna">182</field><field name="Des_Comuna">SAN RAFAEL</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CONSTITUCION</field></record>
+<record><field name="Id_Comuna">183</field><field name="Des_Comuna">EMPEDRADO</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CONSTITUCION</field></record>
+<record><field name="Id_Comuna">184</field><field name="Des_Comuna">PENCAHUE</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CONSTITUCION</field></record>
+<record><field name="Id_Comuna">185</field><field name="Des_Comuna">CONSTITUCION</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CONSTITUCION</field></record>
+<record><field name="Id_Comuna">186</field><field name="Des_Comuna">CUREPTO</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">CONSTITUCION</field></record>
+<record><field name="Id_Comuna">187</field><field name="Des_Comuna">LINARES</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">188</field><field name="Des_Comuna">YERBAS BUENAS</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">189</field><field name="Des_Comuna">COLBUN</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">190</field><field name="Des_Comuna">LONGAVI</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">191</field><field name="Des_Comuna">PARRAL</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">192</field><field name="Des_Comuna">RETIRO</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">193</field><field name="Des_Comuna">VILLA ALEGRE</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">194</field><field name="Des_Comuna">SAN JAVIER</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">195</field><field name="Des_Comuna">CAUQUENES</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">196</field><field name="Des_Comuna">PELLUHUE</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">197</field><field name="Des_Comuna">CHANCO</field><field name="Id_Region">7</field><field name="id_pais">0</field><field name="Des_Ciudad">LINARES</field></record>
+<record><field name="Id_Comuna">198</field><field name="Des_Comuna">CHILLAN</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">199</field><field name="Des_Comuna">SAN CARLOS</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">200</field><field name="Des_Comuna">ÑIQUEN</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">201</field><field name="Des_Comuna">SAN FABIAN</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">202</field><field name="Des_Comuna">COIHUECO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">203</field><field name="Des_Comuna">PINTO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">204</field><field name="Des_Comuna">SAN IGNACIO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">205</field><field name="Des_Comuna">EL CARMEN</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">206</field><field name="Des_Comuna">YUNGAY</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">207</field><field name="Des_Comuna">PEMUCO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">208</field><field name="Des_Comuna">BULNES</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">209</field><field name="Des_Comuna">QUILLON</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">210</field><field name="Des_Comuna">RANQUIL</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">211</field><field name="Des_Comuna">PORTEZUELO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">212</field><field name="Des_Comuna">COELEMU</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">213</field><field name="Des_Comuna">TREHUACO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">214</field><field name="Des_Comuna">COBQUECURA</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">215</field><field name="Des_Comuna">QUIRIHUE</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">216</field><field name="Des_Comuna">NINHUE</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">217</field><field name="Des_Comuna">SAN NICOLAS</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">218</field><field name="Des_Comuna">CHILLAN VIEJO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CHILLAN</field></record>
+<record><field name="Id_Comuna">219</field><field name="Des_Comuna">ALTO BIOBIO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">220</field><field name="Des_Comuna">LOS ANGELES</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">221</field><field name="Des_Comuna">CABRERO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">222</field><field name="Des_Comuna">TUCAPEL</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">223</field><field name="Des_Comuna">ANTUCO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">224</field><field name="Des_Comuna">QUILLECO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">225</field><field name="Des_Comuna">SANTA BARBARA</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">226</field><field name="Des_Comuna">QUILACO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">227</field><field name="Des_Comuna">MULCHEN</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">228</field><field name="Des_Comuna">NEGRETE</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">229</field><field name="Des_Comuna">NACIMIENTO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">230</field><field name="Des_Comuna">LAJA</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">231</field><field name="Des_Comuna">SAN ROSENDO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">232</field><field name="Des_Comuna">YUMBEL</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">LOS ANGELES</field></record>
+<record><field name="Id_Comuna">233</field><field name="Des_Comuna">CONCEPCION</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">234</field><field name="Des_Comuna">TALCAHUANO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">235</field><field name="Des_Comuna">PENCO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">236</field><field name="Des_Comuna">TOME</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">237</field><field name="Des_Comuna">FLORIDA</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">238</field><field name="Des_Comuna">HUALPEN</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">239</field><field name="Des_Comuna">HUALQUI</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">240</field><field name="Des_Comuna">SANTA JUANA</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">241</field><field name="Des_Comuna">LOTA</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">242</field><field name="Des_Comuna">CORONEL</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">243</field><field name="Des_Comuna">SAN PEDRO DE LA PAZ</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">244</field><field name="Des_Comuna">CHIGUAYANTE</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">245</field><field name="Des_Comuna">LEBU</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">246</field><field name="Des_Comuna">ARAUCO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">247</field><field name="Des_Comuna">CURANILAHUE</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">248</field><field name="Des_Comuna">LOS ALAMOS</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">249</field><field name="Des_Comuna">CA?ETE</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">250</field><field name="Des_Comuna">CONTULMO</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">251</field><field name="Des_Comuna">TIRUA</field><field name="Id_Region">8</field><field name="id_pais">0</field><field name="Des_Ciudad">CONCEPCION</field></record>
+<record><field name="Id_Comuna">252</field><field name="Des_Comuna">ANGOL</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">253</field><field name="Des_Comuna">RENAICO</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">254</field><field name="Des_Comuna">COLLIPULLI</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">255</field><field name="Des_Comuna">LONQUIMAY</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">256</field><field name="Des_Comuna">CURACAUTIN</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">257</field><field name="Des_Comuna">ERCILLA</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">258</field><field name="Des_Comuna">VICTORIA</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">259</field><field name="Des_Comuna">TRAIGUEN</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">260</field><field name="Des_Comuna">LUMACO</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">261</field><field name="Des_Comuna">PUREN</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">262</field><field name="Des_Comuna">LOS SAUCES</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">263</field><field name="Des_Comuna">TEMUCO</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">264</field><field name="Des_Comuna">LAUTARO</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">265</field><field name="Des_Comuna">PERQUENCO</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">266</field><field name="Des_Comuna">VILCUN</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">267</field><field name="Des_Comuna">CHOLCHOL</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">268</field><field name="Des_Comuna">CUNCO</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">269</field><field name="Des_Comuna">MILIPEUCO</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">270</field><field name="Des_Comuna">CURARREHUE</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">271</field><field name="Des_Comuna">PUCON</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">272</field><field name="Des_Comuna">VILLARRICA</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">273</field><field name="Des_Comuna">FREIRE</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">274</field><field name="Des_Comuna">PITRUFQUEN</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">275</field><field name="Des_Comuna">GORBEA</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">276</field><field name="Des_Comuna">LONCOCHE</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">277</field><field name="Des_Comuna">TOLTEN</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">278</field><field name="Des_Comuna">TEODORO SCHMIDT</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">279</field><field name="Des_Comuna">SAAVEDRA</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">280</field><field name="Des_Comuna">CARAHUE</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">281</field><field name="Des_Comuna">NUEVA IMPERIAL</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">282</field><field name="Des_Comuna">GALVARINO</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">283</field><field name="Des_Comuna">PADRE LAS CASAS</field><field name="Id_Region">9</field><field name="id_pais">0</field><field name="Des_Ciudad">TEMUCO</field></record>
+<record><field name="Id_Comuna">284</field><field name="Des_Comuna">VALDIVIA</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">285</field><field name="Des_Comuna">MARIQUINA</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">286</field><field name="Des_Comuna">LANCO</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">287</field><field name="Des_Comuna">LOS LAGOS</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">288</field><field name="Des_Comuna">FUTRONO</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">289</field><field name="Des_Comuna">CORRAL</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">290</field><field name="Des_Comuna">MAFIL</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">291</field><field name="Des_Comuna">PANGUIPULLI</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">292</field><field name="Des_Comuna">LA UNION</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">293</field><field name="Des_Comuna">PAILLACO</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">294</field><field name="Des_Comuna">RIO BUENO</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">295</field><field name="Des_Comuna">LAGO RANCO</field><field name="Id_Region">14</field><field name="id_pais">0</field><field name="Des_Ciudad">VALDIVIA</field></record>
+<record><field name="Id_Comuna">296</field><field name="Des_Comuna">OSORNO</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">297</field><field name="Des_Comuna">SAN PABLO</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">298</field><field name="Des_Comuna">PULLEHUE</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">299</field><field name="Des_Comuna">PUERTO OCTAY</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">300</field><field name="Des_Comuna">PURRANQUE</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">301</field><field name="Des_Comuna">RIO NEGRO</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">302</field><field name="Des_Comuna">SAN JUAN DE LA COSTA</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">303</field><field name="Des_Comuna">PUERTO MONTT</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">304</field><field name="Des_Comuna">PUERTO VARAS</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">305</field><field name="Des_Comuna">COCHAMO</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">306</field><field name="Des_Comuna">CALBUCO</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">307</field><field name="Des_Comuna">MAULLIN</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">308</field><field name="Des_Comuna">LOS MUERMOS</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">309</field><field name="Des_Comuna">FRESIA</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">310</field><field name="Des_Comuna">LLANQUIHUE</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">311</field><field name="Des_Comuna">FRUTILLAR</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">312</field><field name="Des_Comuna">CASTRO</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">313</field><field name="Des_Comuna">ANCUD</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">314</field><field name="Des_Comuna">QUEMCHI</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">315</field><field name="Des_Comuna">DALCAHUE</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">316</field><field name="Des_Comuna">CURACO DE VELEZ</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">317</field><field name="Des_Comuna">QUINCHAO</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">318</field><field name="Des_Comuna">PUQUELDON</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">319</field><field name="Des_Comuna">CHONCHI</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">320</field><field name="Des_Comuna">QUEILEN</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">321</field><field name="Des_Comuna">QUELLON</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">322</field><field name="Des_Comuna">CHAITEN</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">323</field><field name="Des_Comuna">HUALAIHUE</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">324</field><field name="Des_Comuna">FUTALEUFU</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">325</field><field name="Des_Comuna">PALENA</field><field name="Id_Region">10</field><field name="id_pais">0</field><field name="Des_Ciudad">OSORNO</field></record>
+<record><field name="Id_Comuna">326</field><field name="Des_Comuna">COYHAIQUE</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">327</field><field name="Des_Comuna">LAGO VERDE</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">328</field><field name="Des_Comuna">AYSEN</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">329</field><field name="Des_Comuna">CISNES</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">330</field><field name="Des_Comuna">GUAITECAS</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">331</field><field name="Des_Comuna">CHILE CHICO</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">332</field><field name="Des_Comuna">RIO IBANEZ</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">333</field><field name="Des_Comuna">COCHRANE</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">334</field><field name="Des_Comuna">O'HIGGINS</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">335</field><field name="Des_Comuna">TORTEL</field><field name="Id_Region">11</field><field name="id_pais">0</field><field name="Des_Ciudad">COYHAIQUE</field></record>
+<record><field name="Id_Comuna">336</field><field name="Des_Comuna">TORRES DEL PAINE</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">337</field><field name="Des_Comuna">PUNTA ARENAS</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">338</field><field name="Des_Comuna">RIO VERDE</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">339</field><field name="Des_Comuna">LAGUNA BLANCA</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">340</field><field name="Des_Comuna">SAN GREGORIO</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">341</field><field name="Des_Comuna">PORVENIR</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">342</field><field name="Des_Comuna">PRIMAVERA</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">343</field><field name="Des_Comuna">TIMAUKEL</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">344</field><field name="Des_Comuna">CABO DE HORNOS</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">345</field><field name="Des_Comuna">ANTARTIDA</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">346</field><field name="Des_Comuna">PUERTO NATALES</field><field name="Id_Region">12</field><field name="id_pais">0</field><field name="Des_Ciudad">PUNTA ARENAS</field></record>
+<record><field name="Id_Comuna">352</field><field name="Des_Comuna"></field><field name="Id_Region">20</field><field name="id_pais">0</field><field name="Des_Ciudad"></field></record>
+<record><field name="Id_Comuna">353</field><field name="Des_Comuna">|LAS CONDES</field><field name="Id_Region">21</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">354</field><field name="Des_Comuna">FRIBOURG</field><field name="Id_Region">20</field><field name="id_pais">0</field><field name="Des_Ciudad"></field></record>
+<record><field name="Id_Comuna">355</field><field name="Des_Comuna">SAN BERNANRDO</field><field name="Id_Region">21</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">356</field><field name="Des_Comuna">MIRAFLORES</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">357</field><field name="Des_Comuna">CERILLOS </field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">358</field><field name="Des_Comuna">SAN DIEGO 612 </field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">359</field><field name="Des_Comuna"> AVDA. VICUÑA MACKENA 1013 OFICINA G 3ER. PISO SANTIAGO </field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">360</field><field name="Des_Comuna">CANAVERAL 095 20, QUILICURA, SANTIAGO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">361</field><field name="Des_Comuna"> SANTIAGO</field><field name="Id_Region">21</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">362</field><field name="Des_Comuna">COLON </field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SERENA </field></record>
+<record><field name="Id_Comuna">363</field><field name="Des_Comuna">CAMINO DEL ESCRIBANO 12986, LO BARNECHEA</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">364</field><field name="Des_Comuna">BENAVENTE 1470</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">LA SERENA </field></record>
+<record><field name="Id_Comuna">365</field><field name="Des_Comuna">HOUCUN TOWN DONGGANG DISTRICT</field><field name="Id_Region">27</field><field name="id_pais">0</field><field name="Des_Ciudad">RIZHAO</field></record>
+<record><field name="Id_Comuna">366</field><field name="Des_Comuna">PEDRO LEON UGALDE 1464</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">367</field><field name="Des_Comuna">MONJITAS 513, OFICINA 53, SANTIAGO</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">368</field><field name="Des_Comuna">AVDA. COSTANERA SUR 2710, TORRE A</field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+<record><field name="Id_Comuna">369</field><field name="Des_Comuna">MATEO DE TORO Y ZAMBRANO 2125</field><field name="Id_Region">30</field><field name="id_pais">0</field><field name="Des_Ciudad">LA SERENA </field></record>
+<record><field name="Id_Comuna">370</field><field name="Des_Comuna">VIÑA DEL MAR </field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">VIÑA DEL MAR </field></record>
+<record><field name="Id_Comuna">371</field><field name="Des_Comuna"> AVDA. OSSA 655 PISO 5 , LA REINA </field><field name="Id_Region">20</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO </field></record>
+<record><field name="Id_Comuna">372</field><field name="Des_Comuna">SAN MIGUEL </field><field name="Id_Region">13</field><field name="id_pais">0</field><field name="Des_Ciudad">SANTIAGO</field></record>
+</Comuna>

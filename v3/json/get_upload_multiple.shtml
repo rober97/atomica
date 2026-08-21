@@ -1,0 +1,103 @@
+{
+  "page": {
+		"current": <!--#4DHTML $page-->,
+		"last": <!--#4DHTML -INT(($totalItems/$limit)* -1)-->
+	},
+	"records": {
+		"from": <!--#4DHTML $from--> ,
+		"to": <!--#4DHTML $to-1--> ,
+		"total": <!--#4DHTML $totalItems-->
+	},
+  "ok": true,
+  "negocio": "<!--#4DHTML _V3_escapeString($nombreNegocio)-->",
+  "ocs": [
+<!--#4DLOOP aGastoIdOC --><!--#4DHTML aGastoSep{aGastoIdOC}-->
+    {
+      "id_oc": <!--#4DHTML aGastoIdOC{aGastoIdOC}-->,
+      "folio_oc": "<!--#4DHTML _V3_escapeString(aFolioGastoOC{aGastoIdOC})-->",
+      "des_tipo_gasto": "<!--#4DHTML _V3_escapeString(aTipoGastoOC{aGastoIdOC})-->",
+      "nombre": "<!--#4DHTML _V3_escapeString(aGastoNombre{aGastoIdOC})-->",
+
+      "adjuntos_oc": [
+<!--#4DLOOP aOcAdjIdOC --><!--#4DIF (aOcAdjIdOC{aOcAdjIdOC} = aGastoIdOC{aGastoIdOC})--><!--#4DHTML aOcAdjSep{aOcAdjIdOC}-->
+        {
+          "id": <!--#4DHTML aUploadEntityId{aOcAdjUploadPos{aOcAdjIdOC}}-->,
+          "id_upload": <!--#4DHTML aUploadIdUpload{aOcAdjUploadPos{aOcAdjIdOC}}-->,
+          "index": "<!--#4DHTML _V3_escapeString(aUploadIndex{aOcAdjUploadPos{aOcAdjIdOC}})-->",
+          "username": "<!--#4DHTML _V3_escapeString(aUploadUsername{aOcAdjUploadPos{aOcAdjIdOC}})-->",
+          "user_full_name": "<!--#4DHTML _V3_escapeString(aUploadUserFullName{aOcAdjUploadPos{aOcAdjIdOC}})-->",
+          "created_at_date": "<!--#4DHTML String(aUploadCreatedAtDate{aOcAdjUploadPos{aOcAdjIdOC}};ISO date format)-->",
+          "created_at_time_raw": <!--#4DHTML aUploadCreatedAtTimeRaw{aOcAdjUploadPos{aOcAdjIdOC}}-->,
+          "filename": "<!--#4DHTML _V3_escapeString(aUploadFilename{aOcAdjUploadPos{aOcAdjIdOC}})-->",
+          "mimetype": "<!--#4DHTML _V3_escapeString(aUploadMimetype{aOcAdjUploadPos{aOcAdjIdOC}})-->"
+        }<!--#4DENDIF--><!--#4DENDLOOP-->
+      ],
+
+      
+      "documentos": [
+<!--#4DLOOP aDocIdDoc --><!--#4DIF (aDocIdOC{aDocIdDoc} = aGastoIdOC{aGastoIdOC})--><!--#4DHTML aDocSep{aDocIdDoc}-->
+        {
+          "id_doc": <!--#4DHTML aDocIdDoc{aDocIdDoc}-->,
+          "folio_dtc": "<!--#4DHTML _V3_escapeString(aDtcFolio{aDocIdDoc})-->",
+          "nombre": "<!--#4DHTML _V3_escapeString(aDocNombre{aDocIdDoc})-->",
+          "adjunto": <!--#4DIF aDocUploadPos{aDocIdDoc} > 0 -->{
+            "id": <!--#4DHTML aUploadEntityId{aDocUploadPos{aDocIdDoc}}-->,
+            "id_upload": <!--#4DHTML aUploadIdUpload{aDocUploadPos{aDocIdDoc}}-->,
+            "index": "<!--#4DHTML _V3_escapeString(aUploadIndex{aDocUploadPos{aDocIdDoc}})-->",
+            "username": "<!--#4DHTML _V3_escapeString(aUploadUsername{aDocUploadPos{aDocIdDoc}})-->",
+            "user_full_name": "<!--#4DHTML _V3_escapeString(aUploadUserFullName{aDocUploadPos{aDocIdDoc}})-->",
+            "created_at_date": "<!--#4DHTML String(aUploadCreatedAtDate{aDocUploadPos{aDocIdDoc}};ISO date format)-->",
+            "created_at_time_raw": <!--#4DHTML aUploadCreatedAtTimeRaw{aDocUploadPos{aDocIdDoc}}-->,
+            "filename": "<!--#4DHTML _V3_escapeString(aUploadFilename{aDocUploadPos{aDocIdDoc}})-->",
+            "mimetype": "<!--#4DHTML _V3_escapeString(aUploadMimetype{aDocUploadPos{aDocIdDoc}})-->"
+          }<!--#4DELSE-->null<!--#4DENDIF-->,
+
+          "pagos_doc": [
+<!--#4DLOOP aPagoIdOP --><!--#4DIF ((aPagoParentType{aPagoIdOP}="DOC") & (aPagoParentId{aPagoIdOP}=aDocIdDoc{aDocIdDoc}))--><!--#4DHTML aPagoSep{aPagoIdOP}-->
+            {
+              "id_op": <!--#4DHTML aPagoIdOP{aPagoIdOP}-->,
+              "nombre": "<!--#4DHTML _V3_escapeString(aPagoNombre{aPagoIdOP})-->",
+              "adjuntos_pago": [
+<!--#4DLOOP aPagoAdjIdOP --><!--#4DIF (aPagoAdjIdOP{aPagoAdjIdOP} = aPagoIdOP{aPagoIdOP})--><!--#4DHTML aPagoAdjSep{aPagoAdjIdOP}-->
+                {
+                  "id": <!--#4DHTML aUploadEntityId{aPagoAdjUploadPos{aPagoAdjIdOP}}-->,
+                  "id_upload": <!--#4DHTML aUploadIdUpload{aPagoAdjUploadPos{aPagoAdjIdOP}}-->,
+                  "index": "<!--#4DHTML _V3_escapeString(aUploadIndex{aPagoAdjUploadPos{aPagoAdjIdOP}})-->",
+                  "username": "<!--#4DHTML _V3_escapeString(aUploadUsername{aPagoAdjUploadPos{aPagoAdjIdOP}})-->",
+                  "user_full_name": "<!--#4DHTML _V3_escapeString(aUploadUserFullName{aPagoAdjUploadPos{aPagoAdjIdOP}})-->",
+                  "created_at_date": "<!--#4DHTML String(aUploadCreatedAtDate{aPagoAdjUploadPos{aPagoAdjIdOP}};ISO date format)-->",
+                  "created_at_time_raw": <!--#4DHTML aUploadCreatedAtTimeRaw{aPagoAdjUploadPos{aPagoAdjIdOP}}-->,
+                  "filename": "<!--#4DHTML _V3_escapeString(aUploadFilename{aPagoAdjUploadPos{aPagoAdjIdOP}})-->",
+                  "mimetype": "<!--#4DHTML _V3_escapeString(aUploadMimetype{aPagoAdjUploadPos{aPagoAdjIdOP}})-->"
+                }<!--#4DENDIF--><!--#4DENDLOOP-->
+              ]
+            }<!--#4DENDIF--><!--#4DENDLOOP-->
+          ]
+        }<!--#4DENDIF--><!--#4DENDLOOP-->
+      ],
+
+      "pagos_oc": [
+<!--#4DLOOP aPagoIdOP --><!--#4DIF ((aPagoParentType{aPagoIdOP}="OC") & (aPagoParentId{aPagoIdOP}=aGastoIdOC{aGastoIdOC}))--><!--#4DHTML aPagoSep{aPagoIdOP}-->
+        {
+          "id_op": <!--#4DHTML aPagoIdOP{aPagoIdOP}-->,
+          "nombre": "<!--#4DHTML _V3_escapeString(aPagoNombre{aPagoIdOP})-->",
+          "adjuntos_pago": [
+<!--#4DLOOP aPagoAdjIdOP --><!--#4DIF (aPagoAdjIdOP{aPagoAdjIdOP} = aPagoIdOP{aPagoIdOP})--><!--#4DHTML aPagoAdjSep{aPagoAdjIdOP}-->
+            {
+              "id": <!--#4DHTML aUploadEntityId{aPagoAdjUploadPos{aPagoAdjIdOP}}-->,
+              "id_upload": <!--#4DHTML aUploadIdUpload{aPagoAdjUploadPos{aPagoAdjIdOP}}-->,
+              "index": "<!--#4DHTML _V3_escapeString(aUploadIndex{aPagoAdjUploadPos{aPagoAdjIdOP}})-->",
+              "username": "<!--#4DHTML _V3_escapeString(aUploadUsername{aPagoAdjUploadPos{aPagoAdjIdOP}})-->",
+              "user_full_name": "<!--#4DHTML _V3_escapeString(aUploadUserFullName{aPagoAdjUploadPos{aPagoAdjIdOP}})-->",
+              "created_at_date": "<!--#4DHTML String(aUploadCreatedAtDate{aPagoAdjUploadPos{aPagoAdjIdOP}};ISO date format)-->",
+              "created_at_time_raw": <!--#4DHTML aUploadCreatedAtTimeRaw{aPagoAdjUploadPos{aPagoAdjIdOP}}-->,
+              "filename": "<!--#4DHTML _V3_escapeString(aUploadFilename{aPagoAdjUploadPos{aPagoAdjIdOP}})-->",
+              "mimetype": "<!--#4DHTML _V3_escapeString(aUploadMimetype{aPagoAdjUploadPos{aPagoAdjIdOP}})-->"
+            }<!--#4DENDIF--><!--#4DENDLOOP-->
+          ]
+        }<!--#4DENDIF--><!--#4DENDLOOP-->
+      ]
+    }
+<!--#4DENDLOOP-->
+  ]
+}

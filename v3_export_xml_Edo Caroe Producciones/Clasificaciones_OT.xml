@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Clasificaciones_OT>
+<record><field name="ID_ClasifOT">3</field><field name="Nombre">REOTQUE PIEL</field><field name="Tiempo_Estandar">00:30:00</field></record>
+<record><field name="ID_ClasifOT">4</field><field name="Nombre">REOTOQUE PIEL MEDIO</field><field name="Tiempo_Estandar">00:50:00</field></record>
+<record><field name="ID_ClasifOT">5</field><field name="Nombre">RETOQUE PIEL AVANZADO</field><field name="Tiempo_Estandar">02:00:00</field></record>
+<record><field name="ID_ClasifOT">6</field><field name="Nombre">RETOQUE VESTIDO TELA NEGRA</field><field name="Tiempo_Estandar">00:10:00</field></record>
+<record><field name="ID_ClasifOT">7</field><field name="Nombre">DISENO PORTADA</field><field name="Tiempo_Estandar">00:30:00</field></record>
+<record><field name="ID_ClasifOT">8</field><field name="Nombre"></field><field name="Tiempo_Estandar">00:00:00</field></record>
+</Clasificaciones_OT>

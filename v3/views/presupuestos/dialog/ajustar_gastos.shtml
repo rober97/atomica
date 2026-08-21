@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ajustar Gastos</title>
+		<meta charset="utf-8">
+		<style>
+			.ajustar-gastos-table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-bottom: 10px;
+			}
+			.ajustar-gastos-table thead th {
+				background: #f0f4f7;
+				color: #8a9bb0;
+				font-size: 11px;
+				font-weight: bold;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				padding: 8px 12px;
+				border-bottom: 2px solid #dde3ea;
+				text-align: left;
+			}
+			.ajustar-gastos-table thead th:last-child {
+				text-align: right;
+			}
+			.ajustar-gastos-table tbody tr:nth-child(even) {
+				background: #fafbfc;
+			}
+			.ajustar-gastos-table tbody tr:hover {
+				background: #f0f8f5;
+			}
+			.ajustar-gastos-table tbody td {
+				padding: 9px 12px;
+				border-bottom: 1px solid #eaedf0;
+				font-size: 12px;
+				color: #0a1628;
+				vertical-align: middle;
+			}
+			.ajustar-gastos-table tbody td:last-child {
+				text-align: right;
+				white-space: nowrap;
+			}
+			.ajustar-gastos-table tbody td input[type="number"] {
+				width: 80px;
+				text-align: right;
+				padding: 4px 6px;
+				border: 1px solid #ccd2d9;
+				border-radius: 3px;
+				font-size: 12px;
+				background: #fff;
+			}
+			.ajustar-gastos-table tbody td input[type="number"]:focus {
+				border-color: #1dba8e;
+				outline: none;
+				box-shadow: 0 0 0 2px rgba(29,186,142,0.15);
+			}
+			.ajustar-gastos-table tbody td input[type="number"].input-error {
+				border-color: #c00;
+				background: #fff5f5;
+				box-shadow: 0 0 0 2px rgba(204,0,0,0.15);
+			}
+			.ajustar-gastos-table tbody td .pct-label {
+				display: inline-block;
+				margin-left: 4px;
+				color: #8a9bb0;
+				font-size: 12px;
+				width: 14px;
+			}
+			.ajustar-gastos-sum-row {
+				text-align: right;
+				font-size: 12px;
+				color: #555;
+				padding: 6px 12px 12px 0;
+				border-bottom: 1px solid #eaedf0;
+				margin-bottom: 14px;
+			}
+			.ajustar-gastos-sum-row strong {
+				font-size: 14px;
+				color: #0a1628;
+			}
+			.ajustar-gastos-sum-row strong.over-limit {
+				color: #c00;
+			}
+			.ajustar-gastos-actions {
+				display: flex;
+				justify-content: flex-end;
+				gap: 8px;
+			}
+			#btn-ajustar-aceptar.ui-button {
+				background: #1dba8e;
+				border-color: #17a37d;
+				color: #fff;
+			}
+			#btn-ajustar-aceptar.ui-button:hover {
+				background: #17a37d;
+			}
+		</style>
+		<script>
+			$(document).ready(function() {
+
+				var presupuestoId = $('section.sheet').data('id');
+
+				var recalcSum = function() {
+					var sum = 0;
+					$('.ajustar-gastos-table input[type="number"]').each(function() {
+						sum += parseFloat($(this).val()) || 0;
+					});
+					sum = Math.round(sum * 100) / 100;
+					var $sum = $('#ajustar-gastos-sum');
+					$sum.text(sum);
+					if (sum > 100) {
+						$sum.addClass('over-limit');
+					} else {
+						$sum.removeClass('over-limit');
+					}
+					return sum;
+				};
+
+				// Carga centros de costos y distribución existente en paralelo
+				$.when(
+					$.ajax({ url: '/4DACTION/_V3_getCentroCostos', data: { tipo: 2 }, dataType: 'json' }),
+					$.ajax({ url: '/4DACTION/_dario_getDistributionPresGasto', data: { id: presupuestoId }, dataType: 'json' })
+				).done(function(centrosResp, distResp) {
+
+					var centrosData = centrosResp[0];
+					var distData    = distResp[0];
+
+					if (!centrosData.success || !centrosData.rows) {
+						toastr.error('No se pudieron cargar los centros de costos.');
+						return;
+					}
+
+					// Mapa idCentroCosto → porcentaje existente
+					var distMap = {};
+					if (distData && distData.success && distData.rows) {
+						$.each(distData.rows, function(i, row) {
+							distMap[row.idCentroCosto] = row.porcentaje;
+						});
+					}
+
+					// Mergear y ordenar por porcentaje desc (solo al abrir)
+					var merged = $.map(centrosData.rows, function(item) {
+						return {
+							text:       item.text,
+							value:      item.value,
+							porcentaje: distMap[item.value] || 0
+						};
+					});
+					merged.sort(function(a, b) { return b.porcentaje - a.porcentaje; });
+
+					// Renderizar filas
+					var tbody = $('.ajustar-gastos-table tbody');
+					tbody.empty();
+					$.each(merged, function(i, item) {
+						tbody.append(
+							'<tr>' +
+								'<td>' + item.text + '</td>' +
+								'<td>' +
+									'<input type="number" min="0" max="100" step="0.01" value="' + item.porcentaje + '" ' +
+										'data-cc-value="' + item.value + '" ' +
+										'data-cc-text="' + item.text + '">' +
+									'<span class="pct-label">%</span>' +
+								'</td>' +
+							'</tr>'
+						);
+					});
+
+					recalcSum();
+
+					// Sin re-ordenar al editar; validación en tiempo real
+					var overLimitNotified = false;
+					tbody.on('input', 'input[type="number"]', function() {
+						var $input = $(this);
+						var sum = recalcSum();
+
+						if (sum > 100) {
+							$input.addClass('input-error');
+							if (!overLimitNotified) {
+								toastr.error('La distribución no puede superar el 100%.');
+								overLimitNotified = true;
+							}
+						} else {
+							$('.ajustar-gastos-table input[type="number"]').removeClass('input-error');
+							overLimitNotified = false;
+						}
+					});
+
+				}).fail(function() {
+					toastr.error('Error al cargar los datos.');
+				});
+
+				// Botones acción con jQuery UI
+				$('#btn-ajustar-cancelar').button();
+				$('#btn-ajustar-aceptar').button();
+
+				// Cerrar al hacer click en el overlay
+				setTimeout(function() {
+					$('.ui-widget-overlay').one('click', function() {
+						$('.ui-dialog-content').dialog('close');
+					});
+				}, 100);
+
+				$('#btn-ajustar-cancelar').click(function() {
+					$('.ui-dialog-content').dialog('close');
+				});
+
+				$('#btn-ajustar-aceptar').click(function() {
+					var sum = recalcSum();
+					if (sum > 100) {
+						toastr.error('La distribución no puede superar el 100%.');
+						return;
+					}
+					if (sum < 100) {
+						toastr.error('La distribución no puede ser menor al 100%.');
+						return;
+					}
+
+					var postData = { id: presupuestoId };
+					var k = 0;
+					$('.ajustar-gastos-table input[type="number"]').each(function() {
+						var val = parseFloat($(this).val()) || 0;
+						if (val !== 0) {
+							postData['item[' + k + '][text]']       = $(this).data('cc-text');
+							postData['item[' + k + '][value]']      = $(this).data('cc-value');
+							postData['item[' + k + '][porcentaje]'] = val;
+							k++;
+						}
+					});
+
+					$.ajax({
+						url: '/4DACTION/_dario_setDistributionPresGasto',
+						type: 'GET',
+						dataType: 'json',
+						data: postData,
+						success: function(response) {
+							if (response && response.success) {
+								toastr.success('Distribución guardada correctamente');
+								$('.ui-dialog-content').dialog('close');
+							} else {
+								toastr.error('No se pudo guardar la distribución.');
+							}
+						},
+						error: function() {
+							toastr.error('Error al guardar la distribución.');
+						}
+					});
+				});
+
+			});
+		</script>
+	</head>
+	<body>
+		<table class="ajustar-gastos-table">
+			<thead>
+				<tr>
+					<th>Centro de Costos 2</th>
+					<th>Porcentaje</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- filas cargadas por JS -->
+			</tbody>
+		</table>
+		<div class="ajustar-gastos-sum-row">
+			Total asignado: <strong><span id="ajustar-gastos-sum">0</span> %</strong>
+		</div>
+		<div class="ajustar-gastos-actions">
+			<button id="btn-ajustar-cancelar">Cancelar</button>
+			<button id="btn-ajustar-aceptar">Aceptar</button>
+		</div>
+	</body>
+</html>

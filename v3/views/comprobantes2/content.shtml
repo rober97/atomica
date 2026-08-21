@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--#4DSCRIPT/_V3_proxy_getComprobante-->
+		<title>Comprobantes</title>
+		<meta charset="utf-8">
+    
+		<script type="text/javascript" src="/v3/views/comprobantes/comprobantes.js"></script>
+    <script type="text/javascript" src="/v3/script/datepicker_es.js?<!--#4DTEXT _V3_version-->"></script>
+    <!-- <script type="text/javascript" src="/v3/views/ajustes/impuestos/content.js"></script> -->
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+          // $('button.show.cuentaContable').click(function() {
+          //   console.log(this.dataset.id);
+          //   // $('input[name="select_imp"]').autocomplete('search', '@').focus();
+          // });
+          $( ".datepicker" ).datepicker( "option", "dateFormat", "dd-mm-yy" );
+            let cuentaContableElements = document.querySelectorAll('input[name="cuentaContable"]');
+            for(let item of cuentaContableElements){
+              comprobantes.addAutocomplete(item);
+        
+            }
+
+            const textareaElement = document.querySelector('textarea[name="description"]');
+            const selectElement = document.querySelector('select[name="docType"]');
+            const inputElement = document.getElementById('docDate');
+
+            textareaElement.addEventListener('input', (event) => {
+              if(event.target.value !== ''){
+                event.target.style.border = ""
+              }
+            });
+
+
+            selectElement.addEventListener('change', (event) => {
+              if (event.target.value) {
+                event.target.style.border = '';
+              } 
+            });
+
+            
+            
+
+      })
+    </script>
+
+  	<style type="text/css">
+  		.newcolor input:not([type=checkbox]),textarea{
+  			background-color: #ffffff !important;
+        width: 100%;
+  		}
+      .newcolor {
+        width: 70%;
+      }
+      input[name="cuentaContable"]{
+        width: 80%!important;
+      }
+      .inlineGrid{
+        display: inline-grid;;
+      }
+      li.right{
+       text-align: right;
+      }
+
+      .input-container {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+      }
+
+      .input-container button {
+        max-width: 20px;
+        min-width: 20px;
+      }
+
+      .input-container button span.ui-icon-carat-1-s {
+        background-position: -64px 0;
+        transform: scale(1.3) !important; margin-top: 4px !important;
+      }
+
+      .show.cuentaContable {
+        margin-right: 5px; /* Ajusta este valor según tus preferencias de espaciado */
+      }
+
+      .elements-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin-left: 10px;
+      }
+
+      input[name="cuentaContable"]::placeholder {
+        opacity: 0.5; /* Ajusta este valor según la opacidad deseada (0-1) */
+      }
+
+      table#detail tbody tr{
+        background-color: white;
+      }
+
+      /* Tabs container */
+      .ub-tabs-container {
+          display: flex;
+          flex-wrap: nowrap; 
+          overflow-x: auto; 
+          position: sticky; 
+          top: 0; 
+          background-color: white; 
+          z-index: 1
+      }
+
+      /* Individual tab */
+      .ub-tab {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start; 
+          padding: 10px 20px;
+          cursor: pointer;
+          color: #888;
+          border-bottom: 3px solid #e0e0e0; 
+          transition: color 0.3s, border-bottom-color 0.3s;
+          flex: 1; 
+          white-space: nowrap; /* Evita que el texto se quiebre en múltiples líneas */
+      }
+
+      .ub-tab i {
+          margin-right: 8px;
+          color: #20A789; /* Color del icono */
+      }
+
+      .ub-tab span {
+          flex-grow: 1; /* Permitir que el span ocupe el espacio restante */
+          text-align: left; /* Asegurar que el texto se alinee a la izquierda dentro del span */
+          font-weight: 500;
+      }
+
+      /* Active tab */
+      .ub-active-tab {
+          color: #20A789;
+          border-bottom: 3px solid #20A789;
+          border-radius: 2px;
+      }
+
+      /* Hover effect for inactive tabs */
+      .ub-tab:not(.ub-active-tab):hover {
+          color: #98EBD9; /* Cambiar color del texto al pasar el mouse */
+          border-bottom: 3px solid #98EBD9; /* Cambiar color de la línea inferior al pasar el mouse */
+      }
+
+      /* Content container */
+      .ub-content-container {
+          padding: 20px;
+          background-color: white;
+          border-radius: 5px;
+          margin-top: 20px;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+          .ub-tab {
+              padding: 10px;
+              font-size: 14px;
+          }
+
+          .ub-content-container {
+              padding: 10px;
+          }
+      }
+
+  	</style>
+		<link href="/css/form1.css" rel="stylesheet">
+	</head>
+
+	<body>
+    <div class="ub-tabs-container">
+      <div class="ub-tab ub-active-tab" data-content="detalle">
+          <i class="fas fa-folder"></i>
+          <span>Detalle</span>
+      </div>
+      <div class="ub-tab" data-content="historial">
+          <i class="fas fa-file-alt"></i>
+          <span>Historial</span>
+      </div>
+    </div>
+
+    <!-- Contenedor para tu contenido -->
+    <div class="ub-content-container" id="detalle">
+      <section class="sheet" id="comprobantes" data-id="<!--#4DIF Not(Undefined(id))--><!--#4DHTML id--><!--#4DELSE-->null<!--#4DENDIF-->">
+        <footer>
+            <article style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; margin-bottom: 20px;">
+              <h1 id="mainTitle">Información general - Comprobantes - <!--#4DIF Not(Undefined(id))-->Nro. <!--#4DHTML id--><!--#4DENDIF--></h1>
+    
+              <ol class="newcolor inlineGrid">  
+                <li class="">
+                  <label class="" id="check-active" for="active">Habilitado<input checked="checked" name="active" id="active" class="checkbox item" type="checkbox"></label>
+    
+                  <label class="" for="active" id="excluir-check">Excluir<input checked="checked" name="excluir" id="excluir" class="checkbox item" type="checkbox"></label>
+    
+    
+    
+                </li>  
+                
+                <li class="right">
+                  <label class="" for="apertura">Apertura<input  name="apertura" id="check_apertura" class="checkbox item" type="checkbox"></label>
+                  <label class="" for="ok">Revisado<input  name="ok" id="ok" class="checkbox item" type="checkbox"></label>
+                
+                </li> 
+                <li class="li right">
+                  <span class="sg-input-title">Tipo</span>
+                  <select name="docType" class="item">
+                    <option value="ingreso">Ingreso</option>
+                    <option value="egreso">Egreso</option>
+                    <option value="traspaso">Traspaso</option>
+                  </select>
+                </li>
+    
+                <li class="li "><span class="sg-input-title">Descripción</span> <span><textarea style="font-size: 1.2em;" class="form-control rise item" id="description" type="text" name="description"></textarea> </span></li>
+              </ol>
+              <!-- <ul class="editable newcolor"> -->
+              <ol class="">
+                <li class="li hide" hidden=""> <input name="id" id="id" class="item" type="number"></li>
+    
+              
+                <li  class="li" style="display: none;"><label class="sg-input-title" for="registryDate">Fecha de Registro</label> 
+                  <input disabled name="registryDate" id="registryDate" class="item" type="text" style="width: 20%; margin-left: 5px; background-color: #ffffff;">
+                </li>        
+    
+                <li class="li"> <label class="sg-input-title" for="docDate">Fecha contable</label>
+                  <input name="docDate" id="docDate" class="item"  placeholder="dd-mm-aaaa" type="search" style="width: 20%; margin-left: 5px; background-color: #ffffff;">
+                </li>        
+    
+              </ol>
+    
+        <!--        <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li>
+    
+                <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li>
+    
+                <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li>
+                
+                <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li> -->
+    
+            
+            </article>
+    
+        
+          
+          <article>
+            <h1>Detalle</h1>
+            <!--<div>
+              <input type="search" name="detail" placeholder="" >
+              <button  class="show detail"></button>
+            </div> -->
+            <table id="detail"  class="results" style="display: table;" >
+              <thead>
+                <tr>
+                  <th >Contacto</th>
+                  <th >Documento</th>
+                  <th >Código</th>
+                  <th >Cuenta contable</th>
+                  <th >Debe</th>
+                  <th >Haber</th>
+                  <th >Editar</th>
+                  <th >Eliminar</th>
+                </tr>
+              </thead>
+              <tbody name="detail" id="detail-data" class="ui-selectable">
+                
+              </tbody>  
+            </table>
+            <!--        <ul>
+            <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li>
+            <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li>
+            <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li>
+            </ul>
+            <ul>
+            <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li>
+            <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li>
+            <li class="li"><span class="sg-input-title">Descripción</span> <span><input class="form-control rise item" id="description" type="text" name="description"></span></li>
+            </ul> -->
+          </article>
+        </footer>
+      </section>
+    </div>
+    <div class="ub-content-container" id="historial" style="display: none;">
+        <p>Contenido para historial.</p>
+    </div>
+
+	</body>
+</html>

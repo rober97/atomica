@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Negocios_usuario>
+<record><field name="login">iovalle</field><field name="id_nv">17</field><field name="acceso">True</field></record>
+<record><field name="login">PNALEGACH</field><field name="id_nv">295</field><field name="acceso">True</field></record>
+<record><field name="login">hGrunert</field><field name="id_nv">295</field><field name="acceso">True</field></record>
+<record><field name="login">PNALEGACH</field><field name="id_nv">327</field><field name="acceso">True</field></record>
+<record><field name="login">hGrunert</field><field name="id_nv">327</field><field name="acceso">True</field></record>
+<record><field name="login">PNALEGACH</field><field name="id_nv">347</field><field name="acceso">True</field></record>
+<record><field name="login">hGrunert</field><field name="id_nv">347</field><field name="acceso">True</field></record>
+<record><field name="login">cPinet</field><field name="id_nv">360</field><field name="acceso">True</field></record>
+<record><field name="login">mHerrera</field><field name="id_nv">360</field><field name="acceso">True</field></record>
+<record><field name="login">mHerrera</field><field name="id_nv">366</field><field name="acceso">True</field></record>
+</Negocios_usuario>

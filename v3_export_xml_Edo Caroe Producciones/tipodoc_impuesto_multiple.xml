@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tipodoc_impuesto_multiple>
+<record><field name="id_doc">33</field><field name="id_imp">4</field></record>
+<record><field name="id_doc">33</field><field name="id_imp">46</field></record>
+<record><field name="id_doc">33</field><field name="id_imp">8</field></record>
+<record><field name="id_doc">33</field><field name="id_imp">11</field></record>
+</tipodoc_impuesto_multiple>

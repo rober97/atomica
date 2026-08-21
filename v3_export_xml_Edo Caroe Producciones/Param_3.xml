@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Param_3>
+<record><field name="ID_Param3">8</field><field name="Param3">TEATRO</field><field name="Activo">True</field><field name="v3_porcentaje">0</field></record>
+<record><field name="ID_Param3">7</field><field name="Param3">VODCAST</field><field name="Activo">True</field><field name="v3_porcentaje">0</field></record>
+<record><field name="ID_Param3">6</field><field name="Param3">STREAM</field><field name="Activo">True</field><field name="v3_porcentaje">0</field></record>
+<record><field name="ID_Param3">9</field><field name="Param3">PROGRAMA</field><field name="Activo">True</field><field name="v3_porcentaje">0</field></record>
+<record><field name="ID_Param3">10</field><field name="Param3">MERCH</field><field name="Activo">True</field><field name="v3_porcentaje">0</field></record>
+<record><field name="ID_Param3">11</field><field name="Param3">SPOT</field><field name="Activo">True</field><field name="v3_porcentaje">0</field></record>
+<record><field name="ID_Param3">12</field><field name="Param3">OTRO</field><field name="Activo">True</field><field name="v3_porcentaje">0</field></record>
+<record><field name="ID_Param3">13</field><field name="Param3">COBERTURA</field><field name="Activo">True</field><field name="v3_porcentaje">0</field></record>
+<record><field name="ID_Param3">14</field><field name="Param3">BAR</field><field name="Activo">True</field><field name="v3_porcentaje">0</field></record>
+</Param_3>

@@ -1,0 +1,36 @@
+<table id="myTable2" width="100%" border="0" cellspacing="0" cellspadding="0" >
+    <thead>
+        <tr class="table-header">
+            <th class="center">Nro</th>
+            <th class="left">Proyecto</th>
+			<th class="left">Cliente</th>
+            <th class="left">Items</th>
+            <th class="center">F.Entrega</th>                        
+            <th class="center">Cant.Hrs</th>
+            <th class="center">OC</th>
+            <th class="center">OT</th>                 
+        </tr>        
+    </thead>
+    <tbody>
+    <!--#4dif Size of array(aIdNVPDetNv)>0-->
+        <!--#4DLOOP aIdNVPDetNv-->        
+        <tr class="table-items2" data-id="<!--#4DVAR aIdNVPDetNv{aIdNVPDetNv}-->">
+            <td class="center color-negrita"><!--#4DVAR aNroPDetNv{aIdNVPDetNv}--></td>
+            <td class="left"><!--#4DVAR Lowercase(aProyDetNv{aIdNVPDetNv};*)--></td>
+			<td class="left"><!--#4DVAR Lowercase(aClienteDetNv{aIdNVPDetNv};*)--></td>
+			<td class="left"><!--#4DVAR Lowercase(aDesDetNv{aIdNVPDetNv};*)--></td>
+            <td class="center">
+               <input name="<!--#4DVAR aIdNVPDetNv{aIdNVPDetNv}-->:<!--#4DVAR aLlaveDetNv{aIdNVPDetNv}-->" class="input-date-pend datepicker cj-put-pend" type="text" value="<!--#4DVAR aFechEntDetNv{aIdNVPDetNv}-->">
+            </td>     
+            <td class="center">
+                <input name="<!--#4DVAR aIdNVPDetNv{aIdNVPDetNv}-->:<!--#4DVAR aLlaveDetNv{aIdNVPDetNv}-->" class="input-hours-pend cj-put-pend2" type="text" value="<!--#4DVAR aCHADetNv{aIdNVPDetNv}-->">
+            </td>    
+            <td class="center">0</td>
+            <td class="center">0</td>                                 
+        </tr>       
+        <!--#4DENDLOOP-->
+    <!--#4DELSE-->
+         <tr><td colspan="10"><span class="not-result">No se encontraron resultados!</span></td>
+    <!--#4DENDIF-->
+    </tbody>
+</table>

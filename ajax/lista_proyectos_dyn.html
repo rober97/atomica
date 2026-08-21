@@ -1,0 +1,18 @@
+<!--#4dif Size of array(aIdNvOt)>0-->
+<ol>
+	<!--#4dloop aIdNvOt-->
+	<li >
+		<a href="#" onClick="fn_select_proyecto('<!--#4DVAR aIdNvOt{aIdNvOt}-->','<!--#4DVAR aRefNvOt{aIdNvOt}-->')";>
+			<div>
+				<span><!--#4DVAR aIdNegOt{aIdNvOt}--></span><span> / </span><span><!--#4DVAR Lowercase(aRefNvOt{aIdNvOt})--></span>			
+				<span>
+					<span><!--#4DVAR Lowercase(aEstadoNvOt{aIdNvOt})--></span> <span><!--#4DVAR Lowercase(aRazonNvOt{aIdNvOt})--></span>					
+				</span>
+			</div>
+		</a>
+	</li>
+	<!--#4dendloop-->	
+</ol>
+<!--#4delse-->
+0	
+<!--#4dendif-->

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tipo_doc_impuesto>
+<record><field name="id_doc_imp">1</field><field name="id_tipo_doc">30</field><field name="id_impuesto">1</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">2</field><field name="id_tipo_doc">30</field><field name="id_impuesto">3</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">3</field><field name="id_tipo_doc">33</field><field name="id_impuesto">1</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">33</field><field name="id_tipo_doc">33</field><field name="id_impuesto">3</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">90</field><field name="id_tipo_doc">66</field><field name="id_impuesto">13</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">89</field><field name="id_tipo_doc">66</field><field name="id_impuesto">14</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">7</field><field name="id_tipo_doc">35</field><field name="id_impuesto">3</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">27</field><field name="id_tipo_doc">1002</field><field name="id_impuesto">3</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">9</field><field name="id_tipo_doc">98</field><field name="id_impuesto">3</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">10</field><field name="id_tipo_doc">97</field><field name="id_impuesto">3</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">11</field><field name="id_tipo_doc">110</field><field name="id_impuesto">6</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">12</field><field name="id_tipo_doc">112</field><field name="id_impuesto">6</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">13</field><field name="id_tipo_doc">32</field><field name="id_impuesto">3</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">14</field><field name="id_tipo_doc">34</field><field name="id_impuesto">3</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">15</field><field name="id_tipo_doc">200</field><field name="id_impuesto">3</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">34</field><field name="id_tipo_doc">113</field><field name="id_impuesto">7</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">35</field><field name="id_tipo_doc">114</field><field name="id_impuesto">7</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">92</field><field name="id_tipo_doc">30</field><field name="id_impuesto">46</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">95</field><field name="id_tipo_doc">33</field><field name="id_impuesto">5</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">96</field><field name="id_tipo_doc">30</field><field name="id_impuesto">4</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">97</field><field name="id_tipo_doc">30</field><field name="id_impuesto">5</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">112</field><field name="id_tipo_doc">30</field><field name="id_impuesto">8</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">31</field><field name="id_tipo_doc">99</field><field name="id_impuesto">3</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">32</field><field name="id_tipo_doc">99</field><field name="id_impuesto">6</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">28</field><field name="id_tipo_doc">1003</field><field name="id_impuesto">3</field><field name="default_doc_imp">True</field></record>
+<record><field name="id_doc_imp">29</field><field name="id_tipo_doc">66</field><field name="id_impuesto">3</field><field name="default_doc_imp">False</field></record>
+<record><field name="id_doc_imp">30</field><field name="id_tipo_doc">1004</field><field name="id_impuesto">15</field><field name="default_doc_imp">True</field></record>
+</tipo_doc_impuesto>

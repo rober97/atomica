@@ -1,0 +1,39 @@
+{
+	"records": {
+		"total_records": <!--#4DIF Undefined(totalRecordsTxt_)-->0<!--#4DELSE--><!--#4DHTML totalRecordsTxt_--><!--#4DENDIF-->
+	},
+	"saldos": {
+		"tiene_ancla": <!--#4DIF Undefined(tieneAncla_)-->false<!--#4DELSE--><!--#4DIF tieneAncla_-->true<!--#4DELSE-->false<!--#4DENDIF--><!--#4DENDIF-->,
+		"anio_ancla": <!--#4DIF Undefined(anioAnclaTxt_)-->""<!--#4DELSE--><!--#4DHTML anioAnclaTxt_--><!--#4DENDIF-->,
+		"saldo_inicial": <!--#4DIF Undefined(saldoInicialTxt_)-->""<!--#4DELSE--><!--#4DHTML saldoInicialTxt_--><!--#4DENDIF-->,
+		"saldo_final": <!--#4DIF Undefined(saldoFinalTxt_)-->""<!--#4DELSE--><!--#4DHTML saldoFinalTxt_--><!--#4DENDIF-->,
+		"total_cargos": <!--#4DIF Undefined(totalCargosTxt_)-->""<!--#4DELSE--><!--#4DHTML totalCargosTxt_--><!--#4DENDIF-->,
+		"total_abonos": <!--#4DIF Undefined(totalAbonosTxt_)-->""<!--#4DELSE--><!--#4DHTML totalAbonosTxt_--><!--#4DENDIF-->
+	},
+	"data": {
+		"rows": [
+			<!--#4DIF lastIndex_ > 0-->
+			<!--#4DLOOP aIdMov-->
+			{
+				"id": <!--#4DHTML aIdMov{aIdMov}-->,
+				"folio": "<!--#4DHTML _V3_escapeString(aFolio{aIdMov})-->",
+				"total": <!--#4DHTML aTotalTxt{aIdMov}-->,
+				"saldo": <!--#4DHTML aSaldoTxt{aIdMov}-->,
+				"fecha": "<!--#4DHTML _V3_escapeString(aFecha{aIdMov})-->",
+				"description": "<!--#4DHTML _V3_escapeString(aDesc{aIdMov})-->",
+				"abono": <!--#4DIF aAbono{aIdMov}-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+				"banco": "<!--#4DHTML _V3_escapeString(aBanco{aIdMov})-->",
+				"contraparte": "<!--#4DHTML _V3_escapeString(aContraparte{aIdMov})-->",
+				"rut": "<!--#4DHTML _V3_escapeString(aRut{aIdMov})-->",
+				"dv": "<!--#4DHTML _V3_escapeString(aDv{aIdMov})-->",
+				"numero_cuenta": "<!--#4DHTML _V3_escapeString(aNumeroCuenta{aIdMov})-->",
+				"status": <!--#4DIF aStatus{aIdMov}-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+				"conciliado": <!--#4DIF aConciliado{aIdMov}-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+				"recordsMatchAbonos": <!--#4DHTML recordsMatchAbonos{aIdMov}-->,
+				"recordsMatchCargos": <!--#4DHTML recordsMatchCargos{aIdMov}-->
+			}<!--#4DIF aIdMov#lastIndex_-->,<!--#4DENDIF-->
+			<!--#4DENDLOOP-->
+			<!--#4DENDIF-->
+		]
+	}
+}

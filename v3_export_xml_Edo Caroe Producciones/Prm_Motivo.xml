@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Prm_Motivo>
+<record><field name="Id_Motivo">1</field><field name="Nom_Motivo">CORRECCION DE TEXTO</field><field name="Descrip_Motivo">SE PUEDEN MODIFICAR EL RUT, GIRO Y DIRECCION DEL CLIENTE.</field><field name="Tipo_Motivo">NC</field></record>
+<record><field name="Id_Motivo">2</field><field name="Nom_Motivo">CORRECCION DE MONTO</field><field name="Descrip_Motivo">SE PUEDE CAMBIAR EL PRECIO DE UN ITEM,  AGREGAR DESCUENTOS AL MONTO TOTAL O DESCONTAR UN ITEM.</field><field name="Tipo_Motivo">NC</field></record>
+<record><field name="Id_Motivo">3</field><field name="Nom_Motivo">ANULAR FACTURA</field><field name="Descrip_Motivo">LA FACTURA ES ANULADA.</field><field name="Tipo_Motivo">NC</field></record>
+<record><field name="Id_Motivo">11</field><field name="Nom_Motivo">CORRECCION DE MONTO</field><field name="Descrip_Motivo">SE PUEDE AGREGAR UN ITEM.</field><field name="Tipo_Motivo">ND</field></record>
+<record><field name="Id_Motivo">12</field><field name="Nom_Motivo">ANULAR NOTA DE CREDITO</field><field name="Descrip_Motivo">ANULAR NOTA DE CREDITO.</field><field name="Tipo_Motivo">ND</field></record>
+</Prm_Motivo>

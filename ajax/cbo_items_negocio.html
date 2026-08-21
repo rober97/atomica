@@ -1,0 +1,18 @@
+<select name="itemsasociado" class="listas-especiales2">
+	<option value="-1" selected>[ Seleccionar ]</option>
+<!--#4Dloop aLlaveTit-->
+	<optgroup label="<!--#4DVAR aNroTit{aLlaveTit}-->.- <!--#4DVAR aNomTit{aLlaveTit}-->">
+		<!--#4Dloop aLlaveItems-->
+			<!--#4Dif aLlaveTitItems{aLlaveItems}=aLlaveTit{aLlaveTit}-->
+
+			<!--#4Dif vUsarCodServicio-->
+<option value="<!--#4DVAR aLlaveItems{aLlaveItems}-->"><!--#4DVAR aNroItems{aLlaveItems}--> / <!--#4DVAR aCodItems{aLlaveItems}--> - <!--#4DVAR aDesItems{aLlaveItems}--></option>
+			<!--#4Delse-->
+<option value="<!--#4DVAR aLlaveItems{aLlaveItems}-->"><!--#4DVAR aLlaveItems{aLlaveItems}--> / <!--#4DVAR aOrdenAlfaItems{aLlaveItems}--> - <!--#4DVAR aDesItems{aLlaveItems}--></option>
+			<!--#4Dendif-->
+
+			<!--#4Dendif-->
+		<!--#4Dendloop-->
+	</optgroup>
+<!--#4Dendloop-->    
+</select>

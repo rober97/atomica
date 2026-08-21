@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ES">
+	<head>
+		<!--#4DSCRIPT/_V3_serverInfo-->
+		<meta charset="utf-8">
+		<meta name="robots" content="noindex">
+		<title><!--#4DTEXT _V3_nombre_empresa--> - UnaBase</title>
+		<!-- <link rel="icon" href="/favicon.png"> -->
+		<link rel="icon" href="/faviconNew.png">
+		<link rel="stylesheet" href="/v3/design/master_modal.css?<!--#4DTEXT _V3_version-->">
+		<link rel="stylesheet" href="/v3/design/dialog_confirm.css?<!--#4DTEXT _V3_version-->">
+		<link rel="stylesheet" href="/css/welcome.css?<!--#4DTEXT _V3_version-->">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Last-Modified" content="0">
+		<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+		<meta http-equiv="Pragma" content="no-cache">
+
+		<script>
+			
+		</script>
+
+		<link rel="stylesheet" href="/v3/design/icons/fontawesome-free-6.4.0/css/all.min.css">
+		<link rel="stylesheet" href="/v3/styles/dialogModalCustom.css?<!--#4DTEXT _V3_version-->">
+		<script type="text/javascript" src="/v3/script/dialogModalCustom.js?<!--#4DTEXT _V3_version-->" defer></script>
+		<script type="text/javascript" src="/v3/script/emitirFacturaGeneral.js?<!--#4DTEXT _V3_version-->" defer></script>
+		<!-- Modal Money -->
+
+		<link rel="stylesheet" href="/v3/styles/dialogMoney.css?<!--#4DTEXT _V3_version-->">
+		<script type="text/javascript" src="/v3/script/dialogMoney.js?<!--#4DTEXT _V3_version-->" defer></script>
+		<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css?<!--#4DTEXT _V3_version-->" rel="stylesheet" />
+		<link rel="preconnect" href="https://fonts.googleapis.com?<!--#4DTEXT _V3_version-->">
+		<link rel="preconnect" href="https://fonts.gstatic.com?<!--#4DTEXT _V3_version-->" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+		<!-- Modal BSale -->
+		<link rel="stylesheet" href="/v3/styles/dialogBsale.css?<!--#4DTEXT _V3_version-->">
+		<script type="text/javascript" src="/v3/script/dialogBsale.js?<!--#4DTEXT _V3_version-->" defer></script>
+
+		<!-- Header -->
+		<link rel="stylesheet" href="/v3/styles/header.css?<!--#4DTEXT _V3_version-->">
+		<script type="text/javascript" src="/v3/script/header.js?<!--#4DTEXT _V3_version-->" defer></script>
+
+
+		<!-- DISEÑO PARA NUEVO MENU -->
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="/v3/design/sidebar/fonts/icomoon/style.css">
+		<link rel="stylesheet" href="/v3/design/sidebar/owl.carousel.min.css">
+		<link rel="stylesheet" href="/v3/design/sidebar/bootstrap.min.css">
+
+		<script src="https://jsuites.net/v4/jsuites.js"></script>
+		<link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css?<!--#4DTEXT _V3_version-->" type="text/css" />
+		<link rel="stylesheet" href="/v3/design/sidebar/style.css?<!--#4DTEXT _V3_version-->">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.4.1/axios.min.js" integrity="sha512-Fh/JL4KFgbH0OFN4EMEOvk90MTCjVuTVGFRDc+Kh5PyUFOzSzn/KA6PTOSNywfm5Ruppr40Uj09oGuj5tn6jiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		
+		<script>				
+			var uVar = {};
+			var current_username = "<!--#4DHTML vLogin-->";
+			var v3_data_username = "<!--#4DHTML vLogin-->";
+			var v3_data_username_name = "<!--#4DTEXT vNomUsr2-->";
+			var v3_data_username_email = "<!--#4DTEXT vEmail-->";
+
+
+			// function initFreshChat() {
+			// window.fcWidget.init({
+			// 	token: "0d89cc94-7aee-4a03-9778-43d89f978b63",
+			// 	host: "https://unabase-help.freshchat.com",
+			// 	widgetUuid: `f492708b-6685-47ae-92e6-9302a2e81127`,
+			// 	externalId: v3_data_username_email != "" ? v3_data_username_email : v3_data_username,     // user’s id unique to your system
+			// 	firstName: v3_data_username,              // user’s first name
+			// 	lastName: " "
+			// });
+			//   // Copy the below lines under window.fcWidget.init inside initFreshChat function in the above snippet
+
+			// // To set unique user id in your system when it is available
+			// // window.fcWidget.setExternalId('prueba');
+
+			// // // To set user name
+			// // window.fcWidget.user.setFirstName('prueba');
+
+			// // To set user email
+			// window.fcWidget.user.setEmail(v3_data_username_email != "" ? v3_data_username_email : v3_data_username);
+
+			// // To set user properties
+			// window.fcWidget.user.setProperties({
+			// plan: "Pro",                 // meta property 1
+			// status: "Active"                // meta property 2
+			// });
+
+			// }
+			// function initialize(i,t){var e;i.getElementById(t)?
+			// initFreshChat():((e=i.createElement("script")).id=t,e.async=!0,
+			// e.src="https://unabase-help.freshchat.com/js/widget.js",e.onload=initFreshChat,i.head.appendChild(e))}
+			// function initiateCall(){initialize(document,"Freshchat-js-sdk")}
+			// window.addEventListener?window.addEventListener("load",initiateCall,!1):
+			// window.attachEvent("load",initiateCall,!1);
+			
+
+			// var unaBase = {};
+			uVar.ableToDownload = false;
+			uVar.notAskChangePass = <!--#4DIF notAskChangePass -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			uVar.emailMs = <!--#4DIF emailMs -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			uVar.urlEmailMs = "<!--#4DTEXT urlEmailMs-->";
+			uVar.unableChatOnline = <!--#4DIF chatOnline -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			uVar.unableSocket = <!--#4DIF unableSocket -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			uVar.enableChatOnline = <!--#4DIF chatOnline -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			uVar.enableSocket = <!--#4DIF unableSocket -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			uVar.nativePrint = <!--#4DIF nativePrint -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			uVar.experimental = <!--#4DIF experimental -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			uVar.serviceNode = <!--#4DIF serviceNode -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			uVar.serviceNodeUrl = "<!--#4DTEXT serviceNodeUrl-->";
+			var serviceNode = <!--#4DIF serviceNode -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			var serviceNodeUrl = "<!--#4DTEXT serviceNodeUrl-->";
+
+			let mostrarInfoContableDTC = <!--#4DIF param_IngresoInfoContable-->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+			// uVar.checkIsLogin = <!--#4DIF checkIsLogin -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			// uVar.timeToCheckLogin = <!--#4DTEXT timeToCheckLogin-->;
+
+			const changeUrl = (url)=>{
+				window.location.replace(url)
+			}
+			
+			var base_url = "<!--#4DTEXT _V3_base_url-->";
+			var idleTime = "<!--#4DTEXT idleTime-->" * 60000;
+			var SourceWeb = "<!--#4DTEXT SourceWeb-->";
+			var vSearchOff = <!--#4DIF vSearchOff -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			var calculoSubcategoria = <!--#4DIF calculoSubcategoria -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			var vResults = <!--#4DTEXT vResults-->;
+			let executeSearch;
+			let stopAutoSearch = vSearchOff;
+			let firstSearch = false;
+			let pdf = {}
+			var nodeRestartTimer  = {
+				date:  new Date(),
+				first: true
+			}
+			pdf.microservice = <!--#4DIF pdfMicroservice -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+			pdf.url = "<!--#4DTEXT pdfUrl-->"
+			pdf.apiKey = "<!--#4DTEXT pdfApiKey-->"
+
+
+					
+ 		accountingMode = <!--#4DIF Not(Undefined(accountingMode))--><!--#4DIF accountingMode-->true<!--#4DELSE-->false<!--#4DENDIF--><!--#4DENDIF-->;
+ 				  
+ 		envioCorreoAutomatico = <!--#4DIF Not(Undefined(envioCorreoAutomatico))--><!--#4DIF envioCorreoAutomatico-->true<!--#4DELSE-->false<!--#4DENDIF--><!--#4DENDIF-->;
+ 		
+		let nombreEmpresa = "<!--#4DTEXT _V3_nombre_empresa-->";
+
+
+
+		var habilitarCorrelativoNegEnGASTOS = <!--#4DIF habilitarCorrelativoNegEnGASTOS -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		var notRequestRightNow = <!--#4DIF v3_noShowRequestIni-->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		var enabledBankCards = <!--#4DIF enabledBankCards-->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		var formato_impresion_cotizacion = "<!--4DTEXT formato_impresion_cotizacion-->";
+
+		var ocs_con_valor_cero = <!--#4DIF ocs_con_valor_cero -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		var g_uso_tareas_easy = <!--#4DIF g_uso_tareas_easy -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		// datos usuarios
+		var currentUser = {
+			username: "<!--#4DVAR vLogin-->",
+			name: "<!--#4DVAR vNomUsr-->",
+			email: "<!--#4DVAR vEmail-->"
+		}
+		var companyName = "<!--#4DTEXT _V3_nombre_empresa-->";
+		var companyRut = <!--#4DIF Not(Undefined(_V3_rut_empresa))-->"<!--#4DVAR _V3_rut_empresa-->"<!--#4DELSE-->null<!--#4DENDIF-->;
+		//_V3_rut_empresa:=[Parametros]Rut
+		localStorage.setItem('idNumber', companyRut)
+		// Nombres de cotización y negocio
+		var etiqueta_cotizacion = "<!--#4DTEXT etiqueta_cotizacion-->";
+		var etiqueta_cotizaciones = "<!--#4DTEXT etiqueta_cotizaciones-->";
+		var etiqueta_negocio = "<!--#4DTEXT etiqueta_negocio-->";
+		var etiqueta_negocios = "<!--#4DTEXT etiqueta_negocios-->";
+		var etiqueta_rendiciones = "<!--#4DTEXT etiqueta_rendiciones-->";
+
+		var modoOfflineRemember = false;
+		var modoOfflineGlobal = false;
+
+		var hash = '<!--#4DHTML _V3_hash-->';
+		var nodejs_port = <!--#4DHTML _V3_nodejs_port-->;
+		var nodejs_public_ipaddr = "<!--#4DHTML _V3_nodejs_public_ipaddr-->";
+		var nodeUrl_prm= "<!--#4DHTML nodeUrl-->";
+		var webUrl_prm= "<!--#4DHTML webUrl-->";
+		var is_demo = <!--#4DIF _V3_demo -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		var version_Actual = "<!--#4DTEXT _V3_version_system-->";
+
+		var doc_electronico = <!--#4DIF doc_electronico -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+		// var validar_codigo_al_convertir_a_negocio = <!--#4DIF validar_codigo_al_convertir_a_negocio -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		// modo touch perú
+		var campos_personalizados_abajo = <!--#4DIF _V3_campos_peronalizados_abajo -->true<!--#4DELSE-->false<!--#4DENDIF-->;
+
+		// ajuste según pais
+		var country = {
+			label_rut: '<!--#4DTEXT country_label_rut-->',
+			codigo_moneda: '<!--#4DTEXT country_label_rut-->'
+		};
+
+
+		// files names cot, oc , fxr
+		var file_name_internal_cot = '<!--#4DTEXT file_name_internal_cot-->';
+		var file_name_oficial_cot = '<!--#4DTEXT file_name_oficial_cot-->';
+		var file_name_oficial_oc = '<!--#4DTEXT file_name_oficial_oc-->';
+		var file_name_oficial_fxr = '<!--#4DTEXT file_name_oficial_fxr-->';
+
+		// var current_tab = 0;
+		var parametros = {
+			btn_sica : <!--#4DIF btn_sica-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			night_mode : <!--#4DIF night_mode-->true<!--#4DELSE-->false<!--#4DENDIF-->
+		}
+
+
+		</script>
+
+
+		<script src="/v3/script/jquery/jquery.js" ></script>
+
+		
+		<!-- <script src="/v3/script/socket-0.9.16.js"></script> -->
+		<!-- <script src="/v3/script/mainSuper.js"></script> -->
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script> -->
+
+		<script src="/v3/script/strings.js" ></script>
+
+		<script src="/v3/script/sprintf.js" ></script>
+
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="/v3/design/home.css?<!--#4DTEXT _V3_version-->">
+		<link rel="stylesheet" href="/v3/design/testing.css?<!--#4DTEXT _V3_version-->">
+
+		<script src="/v3/script/jquery/plugins/json.fn/jsonfn.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery-cookie/jquery.cookie.js"></script>
+		<script  src="/v3/script/jquery/plugins/jquery-ui/js/jquery-ui.js"></script>
+
+		<script src="/v3/script/jquery/plugins/highcharts/highcharts.js"></script>
+		<script src="/v3/script/jquery/plugins/highcharts/exporting.js"></script>
+		<script src="/v3/script/jquery/plugins/highcharts/highcharts-3d.js"></script>
+
+		<script src="/v3/script/jquery/plugins/offline/offline.js"></script>
+		<script src="/script/mobileCheck.js"></script>
+		<link rel="stylesheet" href="/v3/script/jquery/plugins/offline/offline-theme-chrome.css">
+		<link rel="stylesheet" href="/v3/script/jquery/plugins/offline/offline-language-spanish.mod.css">
+
+	
+		<!-- comment to check if is necesary -->
+		<script  src="/v3/script/jquery/plugins/jquery-migrate/jquery-migrate.js"></script>
+
+		<!-- comment to check if is necesary -->
+		<script src="/v3/script/jquery/plugins/toastr/toastr.js"></script>
+		<script src="/v3/script/jquery/plugins/tooltipster/js/jquery.tooltipster.js"></script>
+		<!-- prueba con tooltips nueva version -->
+	
+		<script src="/v3/script/jquery/plugins/format-currency/jquery.formatCurrency.js"></script>
+		<script src="/v3/script/jquery/plugins/bindWithDelay/bindWithDelay.js"></script>
+		<script src="/v3/script/jquery/plugins/delayed/jquery.delayed.js"></script>
+
+		<script src="/v3/script/jquery/plugins/emulatetab/emulatetab.joelpurra.js"></script>
+		<script src="/v3/script/jquery/plugins/serializeanything/jquery.serializeanything.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery.qtip/jquery.qtip.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery-number/jquery.number.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery-dropdown/jquery.dropdown.js"></script>
+
+		<script src="/v3/script/jquery/plugins/jquery.fancybox/jquery.fancybox.js"></script>
+		<script src="/v3/script/jquery/plugins/jquery-ui-monthpicker/jquery.ui.monthpicker.js"></script>
+		<script src="/v3/script/jquery/plugins/metrojs.LiveTiles/MetroJs.lt.js"></script>
+
+		<script src="/v3/script/jquery/plugins/Fixed-Header-Table/jquery.fixedheadertable.min.js"></script>
+		<link rel="stylesheet" href="/v3/script/jquery/plugins/Fixed-Header-Table/defaultTheme.css">
+
+		<script src="/v3/script/jquery/plugins/jquery.scrollTo/jquery.scrollTo.js"></script>
+		<script src="/v3/script/jquery/plugins/jQuery-File-Upload/jquery.fileupload.js"></script>
+		<script src="/v3/script/jquery/plugins/toasty/toasty-min.js"></script>
+		<script src="/v3/script/jquery/plugins/enjoyhint/enjoyhint.min.js"></script>
+
+		<script src="/v3/script/chat.js?<!--#4DTEXT _V3_version-->"></script>
+		<script src="/v3/script/currency/index.js?<!--#4DTEXT _V3_version-->"></script>
+
+
+	
+		<script type="text/javascript">
+			// var reqUrl = <!--#4DIF Not(Undefined(reqUrl))-->"<!--#4DVAR reqUrl-->"<!--#4DELSE-->null<!--#4DENDIF-->;
+			
+			// var currency = {
+			// 	code: '<!--#4DVAR _V3_defaultCurrencyCode-->',
+			// 	name: '<!--#4DVAR _V3_escapeString(_V3_defaultCurrencyName)-->',
+			// 	symbol: '<!--#4DHTML _V3_escapeString(_V3_defaultCurrencySymbol)-->',
+			// 	is_right: <!--#4DIF _V3_defaultCurrencyRight-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			// 	decimals: <!--#4DHTML String(_V3_defaultCurrencyDecimals;"&xml")-->,
+			// 	thousands_sep: '<!--#4DTEXT _V3_defaultCurrencyThousandSep-->',
+			// 	decimals_sep: '<!--#4DTEXT _V3_defaultCurrencyDecimalSep-->',
+			// 	ufValue: '<!--#4DTEXT ufValue-->',
+			// 	ufUpdate: "<!--#4DHTML ufUpdate-->"
+			// };	
+			
+			currency.code = '<!--#4DVAR _V3_defaultCurrencyCode-->',
+			currency.name = '<!--#4DVAR _V3_escapeString(_V3_defaultCurrencyName)-->',
+			currency.symbol = '<!--#4DHTML _V3_escapeString(_V3_defaultCurrencySymbol)-->',
+			currency.is_right = <!--#4DIF _V3_defaultCurrencyRight-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			currency.decimals = <!--#4DHTML String(_V3_defaultCurrencyDecimals;"&xml")-->,
+			currency.thousands_sep = '<!--#4DTEXT _V3_defaultCurrencyThousandSep-->',
+			currency.decimals_sep = '<!--#4DTEXT _V3_defaultCurrencyDecimalSep-->',
+			currency.ufValue = '<!--#4DTEXT ufValue-->',
+			currency.ufUpdate = "<!--#4DHTML ufUpdate-->"
+
+
+
+			//NODE UNIFICADO
+
+
+			// var nodeUrl = uVar.serviceNode ? uVar.serviceNodeUrl : `http://${nodejs_public_ipaddr}:${nodejs_port}`;
+
+
+
+			//var nodeUrl = `http://${nodejs_public_ipaddr}:${nodejs_port}`;
+
+			var nodeUrl = nodeUrl_prm;
+			var webUrl = webUrl_prm;
+
+			
+			// if(!uVar.unableSocket){
+			// 	// socket start
+			// 	var socketNew
+			// 	const socketUrl = `http://${nodejs_public_ipaddr}:${nodejs_port}/socket.io/socket.io.js`;
+			// 	let nodeAlert = document.querySelector('.nodeAlert');
+
+			// 	let socketScript = document.createElement('script');
+			// 	socketScript.src = socketUrl;
+
+			// 	document.head.append(socketScript);
+
+			// 	// const loadHomeScript  = cb => {
+			// 	// 	let homeUrl = "/v3/script/home.js?<!--#4DTEXT _V3_version-->";
+			// 	// 	let homeScript = document.createElement('script');
+			// 	// 	homeScript.src = homeUrl;
+			// 	// 	document.head.append(homeScript);
+
+
+			// 	// }
+			// 	// const loadChatScript  = cb => {
+			// 	// 	let chatUrl = "/v3/script/chat.js?<!--#4DTEXT _V3_version-->"
+			// 	// 	let chatScript = document.createElement('script');
+			// 	// 	chatScript.src = chatUrl;
+			// 	// 	document.head.append(chatScript);
+
+			// 	// 	chatScript.onload = function(){
+			// 	// 		cb();
+			// 	// 	}
+			// 	// }
+			// 	socketScript.onload = function() {
+
+			// 		console.log('load node success');
+
+			// 		socketNew = io.connect(nodeUrl);
+
+
+			// 		// 
+
+
+			// 		// loadChatScript(function(){
+			// 		// })
+			// 		// Chat.initialize(nodeUrl);
+			// 		if(typeof nodeAlert !== 'undefined' && nodeAlert !== null){
+			// 			nodeAlert.classList.add('nodeAlertHide');
+			// 		}
+
+			// 		// let blockUrl = "/v3/script/block_by_use.js?<!--#4DTEXT _V3_version-->";
+			// 		// let blockScript = document.createElement('script');
+			// 		// blockScript.src = blockUrl;
+			// 		// document.head.append(blockScript);
+
+			// 	};
+			// 	socketScript.onerror = function() {
+			// 		console.log('load node error');
+			// 		if(typeof nodeAlert !== 'undefined' && nodeAlert !== null){
+			// 			nodeAlert.classList.remove('nodeAlertHide');
+			// 		}
+
+
+
+
+			// 	};
+
+			// 	//socket end
+
+			// }
+
+		</script>
+
+
+	<!-- 	<script type="text/javascript">
+			$.get(`${nodejs_public_ipaddr}:${nodejs_port}/socket.io/socket.io.js`, function(data) {
+			    try {
+			       eval(data); //Run the JavaScript, which is equivalent to adding it
+			    }
+			    catch (err) {
+			    	console.log('node file offline ')
+			       //handle errors
+			    }
+			});
+		</script> -->
+
+		<link rel="stylesheet" href="/v3/script/jquery/jquery-plugins.css">
+
+
+		<script src="/v3/script/unabase.js?<!--#4DTEXT _V3_version-->"></script>
+		
+		<script src="/v3/script/unabase/toolbox-menu-init.js?<!--#4DTEXT _V3_version-->"></script>
+
+		<!-- old place for block by use script -->
+		<!-- old place for home script -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css" integrity="sha512-gp+RQIipEa1X7Sq1vYXnuOW96C4704yI1n0YB9T/KqdvqaEgL6nAuTSrKufUX3VBONq/TPuKiXGLVgBKicZ0KA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+		
+
+		<script  src="/v3/script/access.js?<!--#4DTEXT _V3_version-->"></script>
+		<script  src="/v3/script/home.js?<!--#4DTEXT _V3_version-->"></script>
+
+
+		<script src="/v3/script/hashref.js?<!--#4DTEXT _V3_version-->"></script>
+		<script  src="/v3/script/help.js?<!--#4DTEXT _V3_version-->"></script>
+
+		<link rel="stylesheet" href="/v3/design/tooltip.css?<!--#4DTEXT _V3_version-->">
+		<link rel="stylesheet" href="/v3/script/jquery/plugins/tooltipster/css/themes/tooltipster-sideTip-borderless.min.css?<!--#4DTEXT _V3_version-->">
+
+		<script src="/v3/script/camelWord.js?<!--#4DTEXT _V3_version-->"></script>
+		<script  src="/v3/script/helpers.js?<!--#4DTEXT _V3_version-->"></script>
+		<script  src="/v3/script/statusCheck.js?<!--#4DTEXT _V3_version-->"></script>
+		<script async src="/v3/script/fixedVar.js?<!--#4DTEXT _V3_version-->"></script>
+		<script src="/v3/script/checkType.js?<!--#4DTEXT _V3_version-->"></script>
+		<script src="/v3/script/parseStrToInt.js?<!--#4DTEXT _V3_version-->"></script>
+			
+		<script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+		<link rel="stylesheet" href="/v3/design/print_from_browser.css?<!--#4DTEXT _V3_version-->" media="print">
+
+		<!--#4DIF ((_V3_demo) | (_V3_data_isNewUser))-->
+		<script>
+			$(document).ready(function() {
+				$('html > body > header > button.help').click();
+				unaBase.getParams();
+
+
+				currency.update();
+				// Función para reiniciar el juego
+				
+			});
+		</script>
+		<!--#4DENDIF-->
+
+		<script type="text/javascript">
+			
+			let url = new URL(window.location.href);
+			let fromUrl = url.searchParams.get("fromUrl");
+	        let expensesUrl = `${nodeUrl}/expenses/tovalidate?sid=${unaBase.sid.encoded()}`;
+			if(typeof fromUrl != undefined && fromUrl === "validar"){
+				
+	          window.location.href = expensesUrl;
+			}else if(fromUrl == null){
+
+				let state = decodeURIComponent(url.searchParams.toString());
+				if(state.substring(0,8) == "fromUrl=" && state.substring(8,15) == "validar" ){
+	          		window.location.href = expensesUrl;
+
+				}
+			}
+			// verifica si es mobile lo redirecciona a la version mobile
+
+			// 
+			// if(mobileCheck() && SourceWeb != "web"){
+			// // 	// window.location.replace(nodeUrl+'/agentControl/false');
+			// // 	//
+			// 	window.location.replace(nodeUrl+reqUrl);
+			// }
+			// else{
+			// 	window.location.replace(nodeUrl+'/agentControl/true');
+			// }
+
+		// -- ini -- agregado el 16-11-17 por simon para ocupar socket
+		// 
+		// 	try{
+		// 		 = io.connect(nodeUrl);
+		// 	}catch(err){
+
+		// 		console.log('node offline');
+		// 		console.log(err)
+		// 	}
+		// -- fin -- agregado el 16-11-17 por simon para ocupar socket
+
+		var checklogin = {
+			alert: true,
+			check : <!--#4DIF checkIsLogin -->true<!--#4DELSE-->false<!--#4DENDIF-->,
+			time: <!--#4DTEXT timeToCheckLogin--> || 30,
+			interval: null,
+		  func: () => {
+		  	
+		  	console.log("checking sesion");
+		    return new Promise((resolve, reject) => {
+		      $.ajax({
+		        url: "/4DACTION/_v3_checkLogin",
+		        data: {
+		        	nodeUrl
+		        },
+		        async: false,
+		        dataType: "json",
+		        success: function(data) {
+		        	if (data.nodeUrl != nodeUrl) {
+		        		//REAPER --> en caso de actualizar el puerto node, cada dispositivo se actualiza automaticamente, evitando problemas de descarga y tener que recargar la pagina 22-12-2021
+		        		nodeUrl = data.nodeUrl;
+						nodejs_port = data.nodejs_port;
+						nodejs_public_ipaddr = data.nodejs_public_ipaddr;
+						console.log("****************************** PORT NODE UPDATED ******************************");
+						console.log(`****************************** PORT : ${data.nodejs_port} ******************************`);
+
+		        	}
+		          resolve(data);
+		        },
+		        error: function(err) {
+		          reject(err);
+		        }
+		      });
+		    });
+		  },
+
+		  set: (func, time = 60, alert, unblock= false) => {
+		    checklogin.interval = setInterval(() => {
+		      func()
+		        .then(data => {
+		        	
+		          if (!data.isLogin) {
+		            unaBase.ui.block();
+		            
+		            if (checklogin.alert) {
+		 				
+	                  window.open(`${window.location.origin + window.location.pathname}?fromLogout=true`
+	                    ,
+	                    "_blank"
+	                  );
+	                  // window.open(`http://${window.location.host}/login/logout.shtml`
+	                  //   ,
+	                  //   "_blank"
+	                  // );
+		            	checklogin.clearInterval();
+		            	checklogin.alert = false;
+		            }
+	            	if(!checklogin.interval){
+	            		checklogin.set(checklogin.func, 30, false, true);
+	            	}
+		          }else{
+		          	if(unblock){
+		          		
+		            	checklogin.clearInterval();
+		          		unaBase.ui.unblock();
+						checklogin.set(checklogin.func, checklogin.time, true);
+
+		            	checklogin.alert = true;
+		          	}
+		          }
+		        })
+		        .catch(err => {
+		          console.log(err);
+		        });
+		    }, time * 1000);
+		  },
+
+		  clearInterval: () => {
+		    clearInterval(checklogin.interval);
+		    checklogin.interval = null;
+		  }
+		};
+	
+		$(document).ready(function() {
+
+
+
+			$('button.settings').button({icons: { primary: 'ui-icon ui-icon-gear'}, text: false }).click(function() {
+				if ($('.sidebar li.active').attr('data-name') == "negocios") {
+					unaBase.loadInto.dialog('/v3/views/negocios/settings.shtml', 'AJUSTES PARA NEGOCIOS', 'large');
+				}
+			});
+
+			$(`li[data-name="rendir"] a`).click( function(){
+				window.onbeforeunload = null;
+				window.location.href = "/rendir/index.shtml";
+			});
+			// $(`li[data-name="light"] a`).click( function(){
+			// 	window.onbeforeunload = null;
+			// 	window.location.href = "/light/business_list.shtml";
+			// });
+
+			// var companyName = "<!--#4DTEXT _V3_nombre_empresa-->";
+			// window.intercomSettings = {
+			// 		company: {
+			// 			id: companyRut,
+			// 			name: companyName,
+			// 			website: base_url,
+			// 		},
+			// 		website_url: base_url,
+			// 		version: version_Actual,
+			// 		company_name: companyName,
+			// 		app_id: "dtk9r8ip",
+			// 		name: `${currentUser.name} / ${companyName} /`, // Full name
+			// 		email: currentUser.email, // Email address
+			// 		created_at: new Date() // Signup date as a Unix timestamp,
+			// 	};
+			// (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/dtk9r8ip';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+
+
+			// $('.vernovedades').click(function(){
+			// 	window.open("https://sites.google.com/una.cl/novedades/novedades-v3-214?authuser=0");
+			// });
+
+
+
+		
+
+		
+
+
+
+			try{				
+				checklogin.set(checklogin.func, checklogin.time, true);
+			}catch(err){
+				console.log(err);
+			}
+
+			let isHome = document.querySelectorAll('.sidebar li.active').length;
+
+			if(!isHome && !is_demo && !uVar.notAskChangePass){
+					$.ajax({
+					url: '/4DACTION/_V3_random_access',
+					data: {
+					},
+					async:false,
+					dataType: 'json',
+					success: function(data) {
+						
+						$('div.nav-menu li[data-name="home"] a').click()
+
+						if(data.rand || data.pass_too_old){
+
+							// unaBase.loadInto.dialog('/v3/views/user-profile/passwordChange.shtml?pass_too_old=true', 'Mi Perfil', 'small');
+							//unaBase.loadInto.viewport('/v3/views/user-profile/passwordChange.shtml?pass_too_old=true');
+
+						}
+					}
+				});
+			}
+
+
+			unaBase.ui.unblock();
+
+			$('html > body > header > button.info').click(function(){
+				let modulo = $('.sidebar li.active').attr('data-name');
+				switch(modulo) {
+					case "cotizaciones":
+						window.open("https://intercom.help/unabase/cotizacion-y-negocio");
+						break;
+					case "negocios":
+						window.open("https://intercom.help/unabase/cotizacion-y-negocio");
+						break;
+					case "gastos":
+						window.open("https://intercom.help/unabase/gastos-ordenes-de-compra-y-rendiciones");
+						break;
+					case "rendiciones":
+						window.open("https://intercom.help/unabase/gastos-ordenes-de-compra-y-rendiciones");
+						break;
+					case "dtv":
+						window.open("https://intercom.help/unabase/documentos-de-venta-facturas-de-venta");
+						break;
+					case "dtc":
+						window.open("https://intercom.help/unabase/documento-de-compra-facturas-de-compra");
+						break;
+					case "usuarios":
+						window.open("https://intercom.help/unabase/cuenta-de-usuario-y-permisos");
+						break;
+					case "presupuestos":
+						window.open("https://intercom.help/unabase/presupuesto-de-gastos");
+						break;
+					default:
+					window.open("https://intercom.help/unabase");
+				}
+			});
+
+			$('.goto-tareas > a').click(function(){
+				window.open('http://'+nodejs_public_ipaddr + ':' + nodejs_port + '/tasks/list/pending');
+			});
+
+			/*$('.goto-banco > a').click(function(){
+				window.open('http://'+nodejs_public_ipaddr + ':' + nodejs_port + '/bankcards/list');
+			});*/
+
+			$('.goto-project > a').click(function(){
+				window.open('http://'+nodejs_public_ipaddr + ':' + nodejs_port + '/projects/list');
+			});
+
+			// registra log de ingreso a modulos y acciones - by gin 04-08-16
+			$('.tosavelogs').click(function(){
+				var modulo = $(this).data("logsmodulo");
+				var descripcion = $(this).data("logsdes");
+				unaBase.log.save(descripcion, modulo, 0);
+			});
+
+			// ini --- offline
+			Offline.options = {
+			  // Should we check the connection status immediatly on page load.
+			  checkOnLoad: false,
+
+			  // Should we monitor AJAX requests to help decide if we have a connection.
+			  interceptRequests: false,
+
+			  // Should we automatically retest periodically when the connection is down (set to false to disable).
+			  reconnect: {
+				// How many seconds should we wait before rechecking.
+				initialDelay: 30,
+
+				// How long should we wait between retries.
+				delay: (30)
+			  },
+			  // Should we store and attempt to remake requests which fail while the connection is down.
+				requests: false,
+			  // Should we show a snake game while the connection is down to keep the user entertained?
+			  // It's not included in the normal build, you should bring in js/snake.js in addition to
+			  // offline.min.js.
+				game: false,
+				checks: {
+				  xhr: {
+					url: function() {
+					  return "/favicon.png?_=" + ((new Date()).getTime());
+					},
+					timeout: 2000,
+					type: 'HEAD'
+				  },
+				 //  image: {
+					// url: function() {
+					//   return "/favicon.png?_=" + ((new Date()).getTime());
+					// }
+				 //  },
+				  active: 'xhr'
+				}
+			}		
+			Offline.on("up", unaBase.ui.unblock);
+			Offline.on("down", unaBase.ui.block);
+			setInterval(Offline.check, 30000);
+
+			// end --- offline
+
+			
+
+
+		});
+		</script>
+		
+		<style>
+			body {
+				height: 100vh !important;
+			}
+		</style>
+
+		<link rel="stylesheet" href="/v3/styles/creative.css?<!--#4DTEXT _V3_version-->">
+		<link rel="stylesheet" href="/v3/styles/presense.css?<!--#4DTEXT _V3_version-->">
+	</head>
+
+	<body class="menu home show-sidebar snippet-body" data-ipaddr="<!--#4DHTML <>ipAddr-->" data-username="<!--#4DHTML vLogin-->" id="body-pd">
+		<iframe
+			id="snow-layer"
+			src="https://dev-panel.herokuapp.com/creative?mode=snow&controls=0"
+			style="
+				position: fixed;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				border: none;
+				z-index: 9999;
+				pointer-events: none;      /* clics pasan a Unabase */
+				background: transparent;
+			"
+			allowtransparency="true"
+			></iframe>
+		<div id="loading-screen" class="loading-screen" style="display: none;">
+			<img src="/v3/views/cotizaciones/css/image4.gif" alt="" id="img-loading" class="crab">
+		</div>
+
+		<div id="modalJuego" class="modal-game">
+			<div class="modal-content-game">
+				<span class="close">&times;</span>
+				<button id="btnPelota" class="btn-game">Juego de la Pelota</button>
+				<button id="btnSnake" class="btn-game">Juego de la Serpiente</button>
+				<div id="juegoPelota" class="juego">
+					<div id="pelota"><img src="https://getonbrd-prod.s3.amazonaws.com/uploads/users/logo/8952/LOGO.jpg" alt="" class="headerUnabase__settings-logo"></div>
+					<div id="barra"></div>
+				</div>
+				<div id="juegoSnake" class="juego" style="display:none;">
+					<canvas id="canvasSnake"></canvas>
+				</div>
+				<p>Puntos: <span id="puntos">0</span></p>
+			</div>
+		</div>
+
+		<div id="unique-alert" class="unique-alert">
+			<button class="unique-close-btn" onclick="toggleUniqueAlert()">×</button>
+			<div class="unique-alert-content">
+				<div class="unique-loading-circle"></div>
+				<p id="unique-alert-text">Processing... Please wait.</p>
+			</div>
+		</div>
+
+		<div id="ubx-alert-root" class="ubx-alert-root" aria-live="assertive" aria-atomic="true" hidden>
+			<div class="ubx-alert">
+			  <div class="ubx-alert-left">
+				<div class="ubx-spinner" aria-hidden="true"></div>
+				<div class="ubx-status-icon ubx-hidden" aria-hidden="true">✔</div>
+				<div class="ubx-error-icon ubx-hidden" aria-hidden="true">✖</div>
+			  </div>
+		  
+			  <div class="ubx-alert-main">
+				<div class="ubx-title">Procesando…</div>
+				<div class="ubx-message">Preparando todo para tu reporte</div>
+		  
+				<div class="ubx-progressbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5">
+				  <div class="ubx-progressbar-fill" style="width:5%"></div>
+				</div>
+		  
+				<ul class="ubx-tips"></ul>
+		  
+				<div class="ubx-actions">
+				  <button type="button" class="ubx-cancel-btn">Cancelar</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+
+
+		<!-- Modal para la configuracion de las monedas -->
+		<div class="spaceModal" id="modalConfigMoney">
+			<div class="containerModal" id="containerModal">
+			  <div class="headerModal">
+				  <span class="titleModal">Monedas</span>
+				  <button class="btn btnCloseModal" id="closedModal" onclick="closedModal()">
+					  <span class="mdi mdi-close"></span>
+				  </button>
+			  </div>
+			  <div class="bodyModal">
+				  <div class="bodyModal__table">
+					  <div class="row row__header">
+						  <div class="bodyModal__table_label" style="text-align: left !important;">Moneda</div>
+						  <div class="bodyModal__table_label">Valor Hoy</div>
+						  <div class="bodyModal__table_label">Valor Asignado</div>
+					  </div>
+				  </div>
+				  <div class="bodyModal__actions">
+					  <div class="group_actions">
+						  <div class="label_action">Moneda Trabajo</div>
+						  <div class="select_action">
+							  <select id="defaultMoney" class="closed"></select>
+						  </div>
+					  </div>
+					  <div class="group_actions">
+						  <div class="label_action">Moneda Impresión</div>
+						  <div class="select_action">
+							  <select id="printMoney" class="closed"></select>
+						  </div>
+					  </div>
+				  </div>
+				  <div class="bodyModal__message">
+					  <div class="bodyModal__message_icon">
+						  <span class="mdi mdi-information-outline"></span>
+					  </div>
+					  <p>Esto permite definir la moneda y el tipo de cambio base del documento y con que moneda se imprimirá.</p>
+				  </div>
+			  </div>
+			  <div class="actionsModal">
+				  <button class="btn btnOutline" onclick="closedModal()">Cancelar</button>
+				  <button class="btn btnMain" onclick="postMoney()">Confirmar</button>
+			  </div> 
+			</div>
+			<button onclick="closedModal()" class="closedModalSpace"></button>
+		</div>
+
+		<!-- Modal BSALE -->
+		<div class="spaceModalBsale" id="modalBsale">
+			<div class="containerModalBsale" id="containerModalBsale">
+				<div class="row">
+					<div class="col-12">
+
+						<span class="label-title-bsale">Emitir a bSale</span>
+
+					</div>
+
+				</div>
+				
+				<div class="row">
+					<div class="col-12" id="formas-pago-dtv">
+
+						<div class="form-group">
+							<span class="label-bsale">Forma de pago:</span>
+							<select id="select_forma_pago" class="form-control mt-2">
+							  <option value="" selected>Seleccione una forma de pago</option>
+							</select>
+						</div>
+
+
+					</div>
+
+					<div class="col-12" style="display: none;" id="confirm-alert-nc">
+
+						<h5 class="label-title-bsale">¿Estás seguro que deseas emitir la nota de credito?</h5>
+
+
+					</div>
+
+				</div>
+
+
+				<div class="row mt-5 d-flex justify-content-between">
+					<div class="auto">
+						<button onclick="closedModalBsale()" class="btn btnOutlineBsale">Cancelar</button>
+					</div>
+
+					<div class="auto">
+						<button onclick="emitirFacturabSale()" class="btn btnMainBsale">Emitir</button>
+					</div>
+
+				</div>
+				
+			</div>
+			<button onclick="closedModalBsale()" class="closedModalSpaceBsale"></button>
+		</div>
+
+		
+		<!-- MODAL CUSTOM -->
+		<div id="modalCustom">
+			<div id="modal-content">
+				<div id="modal-body">
+					<div class="row" style="margin-top: -10px">
+						<div class="col-12">
+							<span id="gray-bar" class="modal-title">&nbsp;Importador de pagos</span>
+						</div>
+					</div>
+	
+					
+	
+					<div class="row">
+						<div class="col-12 mt-5 modal-content-body" >
+							
+	
+						</div>
+	
+					</div>
+	
+					<div class="row">
+						<div class="col-12 mt-5 warning-modal" >
+							
+	
+						</div>
+	
+					</div>
+					
+	
+					
+	
+				</div>
+
+				<div class="row mt-4">
+					<div class="col-6">
+						<button id="modal-custom-cancel" class="hoverBtn">Cancelar</button>
+
+					</div>
+					<div class="col-6">
+						<button type="submit" id="modal-custom-accept" class="hoverBtn">Descargar</button>
+
+					</div>
+
+				</div>
+	
+			</div>
+		</div>
+		
+		
+		<!-- MODAL CUSTOM PAGOS -->
+		<div id="modalImportadorPagos">
+			<div id="modal-content">
+				<div id="modal-body">
+					<div class="row" style="margin-top: -10px">
+						<div class="col-12">
+							<span id="gray-bar" class="title-modal">&nbsp;Importador de pagos</span>
+						</div>
+					</div>
+
+					<div class="row mt-4">
+						<div class="col-12">
+							<span id="green-bar">&nbsp;&nbsp;&nbsp;Paso 1 - Descargar plantilla Excel</span>
+						</div>
+					</div>
+	
+					<div class="row" style="background-color: #F4FDFA;">
+						<div class="col-12 mt-4" style="background-color: #F4FDFA;">
+							<p class="mt-1">Una vez descargada la plantilla Excel, puede reemplazar los datos de prueba con los definitivos.</p>
+							<p>Para cargar y justificar masivo, vuelve aquí y cargue el archivo Excel utilizando el siguiente formulario (paso 2).</p>
+							<button id="download-template-btn" style="float: left;" title="Click para descargar plantilla" class="hoverBtn">Descargar plantilla<i class="fas fa-download ml-1"></i></button>
+	
+						</div>
+	
+					</div>
+	
+	
+					<div class="row mt-2">
+						<div class="col-12">
+							<span id="green-bar">&nbsp;&nbsp;&nbsp;Paso 2 - Subir plantilla</span>
+						</div>
+					</div>
+	
+					<div class="row" style="background-color: #F4FDFA;">
+						<div class="col-12 mt-4" style="background-color: #F4FDFA;display: flex">
+							<input type="file" id="excel-file" accept=".xlsx" style="float: left;">
+
+							<button type="submit" id="upload-btn" class="hoverBtn">Subir archivo</button>
+						</div>
+	
+					</div>
+
+					<div class="row error-div" id="warning-modal">
+						<span class="badge bg-warning text-dark mt-2" id="warning-modal" style="display: none; font-size: 12px;"></span>
+					</div>
+	
+					
+
+				</div>
+
+			</div>
+		</div>
+
+		<!-- UNIQUE MODAL -->
+		<div id="uniqueModal" class="unique-modal">
+			<div class="unique-modal-content">
+				<span class="unique-close-button" id="closeUniqueModalBtn">&times;</span>
+				<iframe frameborder="0" id="dynamicIframe" class="unique-iframe"></iframe>
+			</div>
+		</div>
+	
+		<div class="master-modal-container">
+			<div class="master-modal-actions">
+				<a class="btn" type="button">
+					<span class="master-modal-close-button" onclick="document.querySelector('.master-modal-container').style.display='none'"><i style="color: red;" class="fa-solid fa-rectangle-xmark"></i></span>
+				</a>
+
+				<a class="btn" type="button" id="mm-actions-save" target="_blank" title="Guardar" style="display: none;">
+					<span><i style="opacity: 0.1;" class="far fa-save fa-2x"></i></span>
+				</a>
+				<a class="btn" type="button" id="mm-actions-csv"  href="" target="_blank">
+					<span><i class="fa-solid fa-file-csv fa-2x"></i></span>
+				</a>
+				<a class="btn" type="button" id="mm-actions-excel" disabled  target="_blank">
+					<span><i style="opacity: 0.1;"class="far fa-file-excel fa-2x"></i></span>
+				</a>
+				<a class="btn" type="button" id="mm-actions-pdf" disabled  target="_blank">
+					<span><i  style="opacity: 0.1;" class="fa-solid fa-file-pdf fa-2x"></i></span>
+				</a>
+				<a class="btn" type="button" id="mm-actions-mail" disabled  target="_blank">
+					<span><i style="opacity: 0.1;" class="far fa-paper-plane fa-2x"></i></span>
+				</a>
+			</div>
+			<div class="master-modal-box">
+				<div class="container">
+					<div class="row div-reparto mb-2" style="display: none;">
+						<div class="col-12">
+							<span style="font-size: 10px; ">Monto a repartir: </span>
+							<input type="text" id="monto_reparto" class="form-control" style="height: 28px; width: 150px; margin-top: 5px;" readonly>
+
+						</div>
+					</div>
+					<div class="row">
+						
+						<div class="col body">
+						
+							
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+		<!-- Dialogo confirmacion -->
+		<div class="custom-modal-overlay" id="customConfirmationDialog">
+			<div class="custom-modal">
+			  <div class="custom-modal-header">
+				<span class="custom-modal-title">Confirmación</span>
+			  </div>
+			  <div class="custom-modal-body"><img src="" max-height="30" max-width="30" class="icon icon-card mt-2" style="
+				height: 50px;
+			">
+		<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path fill-rule="evenodd" clip-rule="evenodd" d="M33.184 11.36C32.696 10.384 31.304 10.384 30.817 11.36L10.775 51.456C10.335 52.336 10.975 53.372 11.958 53.372H52.042C53.026 53.372 53.665 52.336 53.225 51.456L33.184 11.36ZM26.082 8.992C28.52 4.114 35.48 4.114 37.918 8.992L57.96 49.088C60.159 53.489 56.96 58.667 52.042 58.667H11.958C7.04001 58.667 3.84101 53.489 6.04001 49.089L26.082 8.992Z" fill="#2C3F4D"/>
+			<path fill-rule="evenodd" clip-rule="evenodd" d="M28.747 24.989C28.625 23.523 29.781 22.266 31.252 22.266H32.748C34.219 22.266 35.376 23.523 35.254 24.989L34.506 33.968C34.25 37.043 29.751 37.043 29.495 33.968L28.747 24.989Z" fill="#F47975"/>
+			<path d="M35.176 42.783C35.176 44.537 33.754 45.959 32 45.959C30.246 45.959 28.824 44.537 28.824 42.783C28.824 41.028 30.246 39.606 32 39.606C33.754 39.606 35.176 41.028 35.176 42.783Z" fill="#F47975"/>
+			</svg>
+				
+		</div>
+			  <div class="custom-modal-body custom-modal-body-p">
+				<p></p>
+			  </div>
+			  <div class="custom-modal-footer">
+				<button class="custom-btn custom-cancel">Cancelar</button>
+				<button class="custom-btn custom-accept">Aceptar</button>
+			  </div>
+			</div>
+		</div>
+		  
+		<div class="loader">
+			<div class="super-unique-spinner">
+				<div class="super-unique-spinner-content">
+					<img src="/v3/images/logo_transparente_ub.png" alt="">
+				</div>
+			</div>
+		</div>
+		
+		<!-- Header -->
+		<header class="headerUnabase newheader" id="newheader">
+			<div style="display: none;">
+				<div class="container">
+				<!-- Icono de Notificaciones -->
+				<button id="notification-btn" class="notification-button">
+					<i class="fas fa-bell"></i>
+					<span id="notification-count" class="badge bg-danger">0</span>
+				</button>
+
+				<!-- Panel de Notificaciones -->
+				<div id="notification-panel" class="card notification-panel">
+					<div class="card-header">
+						<h5 class="mb-0">Notificaciones</h5>
+					</div>
+					<ul id="notification-list" class="list-group list-group-flush">
+						<!-- Las notificaciones se agregarán aquí -->
+					</ul>
+					<div class="card-footer text-end">
+						<button id="clear-all" class="btn btn-sm btn-danger">Borrar Todas</button>
+					</div>
+				</div>
+			</div>
+			</div>
+			<div class="headerUnabase__company">
+				<img src='<!--#4DTEXT vUrlImagenLogo-->'
+					alt="" class="headerUnabase__company-logo" onclick="iniciarJuego()">
+				<p class="headerUnabase__company-name">
+					<!--#4DTEXT _V3_nombre_empresa-->
+				</p>
+			</div>
+			<button class="headerUnabase__settings">
+				<img src="https://getonbrd-prod.s3.amazonaws.com/uploads/users/logo/8952/LOGO.jpg" alt=""
+					class="headerUnabase__settings-logo" />
+				<span class="headerUnabase__settings-text"><!--#4DVAR vLogin--></span>
+				<span id="icon-down" class="mdi mdi-menu-down headerUnabase__settings-icon"></span>
+			</button>
+			<div class="headerUnabase__modal">
+				<ul>
+					<li>
+						<button class="headerUnabase__modal-btn" id="icon-profile">
+							<span class="mdi mdi-account"></span>
+							<span>Perfil</span>
+						</button>
+					</li>
+					<li id="night_mode" style="display: none;">
+						<button class="headerUnabase__modal-btn">
+							<span class="mdi mdi-account"></span>
+							<span>Perfil</span>
+						</button>
+					</li>
+					<li>
+						<button class="headerUnabase__modal-btn" id="icon-notifications">
+							<span class="mdi mdi-bell"></span>
+							<span>Notificaciones</span>
+						</button>
+					</li>
+					<li>
+						<button class="headerUnabase__modal-btn" id="icon-nodeServer">
+							<span class="mdi mdi-wifi"></span>
+							<span>Conexion</span>
+						</button>
+					</li>
+					<li>
+						<button class="headerUnabase__modal-btn" id="icon-intercom">
+							<span class="mdi mdi-chat"></span>
+							<span>Chat de Soporte</span>
+						</button>
+					</li>
+					<li>
+						<button class="headerUnabase__modal-btn" id="icon-permisos">
+							<span class="mdi mdi-book"></span>
+							<span>Permisos</span>
+						</button>
+					</li>
+					<!-- <li>
+						<button class="headerUnabase__modal-btn">
+							<span class="mdi mdi-compare"></span>
+							<span>Tema</span>
+						</button>
+					</li> -->
+					<li>
+						<a  class="headerUnabase__modal-a" href="/4DACTION/W_CERRAR_SESION/<!--#4DVAR vSesion-->">
+							<span class="mdi mdi-power"></span>
+							<span>Cerrar Sesión</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</header>
+
+
+		<aside class="sidebar l-navbar show" id="nav-bar" style="max-width: 190px; z-index:50;">
+			<div class="side-inner">
+				<div class="nav_logo">
+					<div class="btn_collapse">
+						<button class="header_toggle" id="header-toggle"><i class="fas fa-bars fa-2x"></i></button>
+					</div>
+					<div class="img_logo">
+						<a href="#" onclick="window.location.href = window.location.href"><img src="/v3/design/sidebar/logo.png" alt="" id="header-toggle" width="90" height="15" style="cursor: pointer;"></a>
+					</div>
+				</div>
+
+
+			   <div class="profile">
+				  <h1 style="text-decoration:underline;cursor:pointer; display: none;" class="u-user-profile" data-sid="<!--#4DVAR vSesion-->" data-username="<!--#4DVAR vLogin-->" data-email="<!--#4DVAR vEmail-->" data-tratamiento="<!--#4DVAR vTratamiento-->" data-organizacion="<!--#4DVAR vOrganizacion-->">
+					 <a class="show user-profile" title="Perfil de usuario">
+						<!--#4DVAR Lowercase(vNomUsr2)-->
+					 </a>
+				  </h1>
+				  <!--<a class="show user-profile" title="Perfil de usuario"><span>Perfil</span></a>-->
+			   </div>
+			   <hr class="new1" style="height: 0.1px;">
+			   <div class="nav-menu">
+
+				<ul>
+   
+					  <!--
+							<!- -#4DIF vLogin="gin"- ->
+							<li data-name="novedades" class="standalone"><a target="_blank" title="Ver novedades de esta versión haciendo click en el enlace" class="tosavelogs vernovedades" data-logsmodulo="novedades" data-logsdes="Ha ingresado al módulo de novedades" href="#">Novedades</a></li>
+							<!- -#4DENDIF- ->  
+						-->
+				
+					<!--#4DIF _V3_verifica_permisos_web (vLogin;472)-->
+						<li class="home standalone" data-name="home" ><a class="unblock-menu tosavelogs" data-logsmodulo="home"  data-logsdes="Ha ingresado al módulo HOME" href="/v3/views/home/index.html"><i  title="Negocios" class="fas fa-home"></i><span style="cursor: pointer !important; margin: 15px;">Home</span></a></li>
+					<!--#4DENDIF-->
+				
+					 
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;438)-->
+
+				   		<li style="cursor:pointer;" data-name="inbox"><a class="unblock-menu tosavelogs" data-logsmodulo="inbox" data-logsdes="Ha ingresado al módulo Inbox" href="/v3/views/inbox/list.shtml"><i class="fas fa-tachometer-alt"></i><span style="cursor: pointer !important; margin: 15px;">Inbox</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;580)-->
+				   <!--<li data-name="proyectos" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="proyectos" data-logsdes="Ha ingresado al módulo proyectos" href="/v3/views/proyectos/index.shtml">Proyectos</a></li>-->
+				   <!-- <li  class="goto-project" data-name="proyectos"><a class="unblock-menu tosavelogs" data-logsmodulo="proyectos" data-logsdes="Ha ingresado al módulo proyectos" href="#"><i class="far fa-calendar-check"></i><span style="cursor: pointer !important; margin: 15px;">Proyectos</span></a></li> -->
+				   <!--#4DENDIF-->
+   
+				   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;466)-->
+				   <li data-name="cotizaciones" ><a class="unblock-menu tosavelogs"  data-logsmodulo="cotizaciones" data-logsdes="Ha ingresado al módulo cotizaciones" href="/v3/views/cotizaciones/list.shtml"><i  title="Cotizaciones" class="fas fa-comments-dollar"></i><span style="cursor: pointer !important; margin: 15px;"><!--#4DTEXT _V3_capitalizeString(etiqueta_cotizaciones)--></span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;1)-->
+				   <li  data-name="negocios"><a class="unblock-menu tosavelogs" data-logsmodulo="negocios"  data-logsdes="Ha ingresado al módulo negocios" href="/v3/views/negocios/list.shtml"><i  title="Negocios" class="fas fa-donate"></i><span style="cursor: pointer !important; margin: 15px;"><!--#4DTEXT _V3_capitalizeString(etiqueta_negocios)--></span></a></li>
+				   <!--#4DENDIF-->
+
+					<!--#4DIF _V3_verifica_permisos_web (vLogin;684)-->
+					<li class="negocios-c standalone" data-name="negocios-c" ><a class="unblock-menu tosavelogs" data-logsmodulo="negocios-c"  data-logsdes="Ha ingresado al módulo HOME" href="/v3/views/negocios_consolidated/businessConsolidated.html"><i  title="NegociosC" class="fas fa-donate"></i><span style="cursor: pointer !important; margin: 15px;">Consolidated</span></a></li>
+					<!--#4DENDIF-->
+
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;667)-->
+					   <li class="iframe" data-name="light"><a class="unblock-menu tosavelogs" data-logsmodulo="light" data-logsdes="Ha ingresado al módulo de light" href="/light/business_list.shtml?r=<!--#4DTEXT Random-->"><i class="fas fa-mobile-alt"></i><span style="cursor: pointer !important; margin: 15px;">Negocios Movil</span></a></li>
+				   <!--#4DENDIF-->
+				   <!--#4DIF vLogin="dsfdsfd"-->
+				   <!--<li data-name="negocios"><a href="/v3/views/negocios/list2.shtml">Negocios new</a></li>-->
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF ((vLogin="soporte") | (vLogin="zvilca") | (vLogin="gin"))-->
+				   <!--<li data-name="preorden"><a class="unblock-menu tosavelogs" data-logsmodulo="preorden" data-logsdes="Ha ingresado al módulo de pre orden" href="/v3/views/preorden/list.shtml"><span style="cursor: pointer !important; margin: 15px;">Pre orden</span></a></li>-->
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;4)-->
+				   <!--<li data-name="gastos"><a href="/v3/views/compras/list_compras.shtml">Órdenes de compra</a></li>-->
+				   <li data-name="gastos"><a class="unblock-menu tosavelogs" data-logsmodulo="gastos"  data-logsdes="Ha ingresado al módulo orden de compras" href="/v3/views/compras/list_compras.shtml"><i title="OC" class="fas fa-search"></i><span style="cursor: pointer !important; margin: 15px;">Órdenes de compra</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF vLogin="gin"-->
+				   <!--<li data-name="gastos" class="standalone"><a href="/v3/views/compras/index_pro.shtml">OC2</a></li>-->
+				   <!--#4DENDIF-->
+
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;508)-->
+				   <li data-name="rendiciones"  class=""><a class="unblock-menu tosavelogs" data-logsmodulo="rendiciones" data-logsdes="Ha ingresado al módulo de rendiciones" href="/v3/views/compras/list_rendiciones.shtml"><i  title="FXR" class="fas fa-file-contract"></i><span style="cursor: pointer !important; margin: 15px;"><!--#4DTEXT etiqueta_rendiciones--></span></a></li>
+				   <!-- <li data-name="rendiciones" class="standalone"><a href="/v3/views/compras/index_rend.shtml">Rendiciones</a></li>-->
+				   <!--#4DENDIF-->
+				   
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;666)-->
+					   <li data-name="rendir"><a class="unblock-menu tosavelogs" data-logsmodulo="rendir" data-logsdes="Ha ingresado al módulo de rendir" href="#">Rendir</a></li>
+				   <!--#4DENDIF-->
+   
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;640)-->
+				   <!-- <li data-name="validate" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="validate" data-logsdes="Ha ingresado al módulo validar gastos" href="#"><span style="cursor: pointer !important; margin: 15px;">Validar Gastos</span></a></li> -->
+				   <!--#4DENDIF-->
+   
+ 
+
+
+				   <!--PARTE DEL MENU LATERAL-->
+				   <li style="display:none" id="ajuste_sobrecargos" class="iframe" data-name="ajuste_sobrecargos"><a class="unblock-menu tosavelogs" data-logsmodulo="bandeja_dtc" data-logsdes="Ha ingresado al módulo de ajustes de sobrecargos" 
+				   href="/v3/views/ajustes/sobrecargos/index.shtml">Ajustes sobrecargos</a></li>
+   
+				   
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;467)-->
+				   <li data-name="dtc"><a class="unblock-menu tosavelogs" data-logsmodulo="dtc" data-logsdes="Ha ingresado al módulo docs. de compra" href="/v3/views/dtc/list.shtml"><i title="DTC" class="fas fa-file-contract"></i><span style="cursor: pointer !important; margin: 15px;">Docs. de compra</span></a></li>
+				   <!--#4DENDIF-->
+   
+			   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;526)-->
+				   <li style="display:none" data-name="modulo_pagos"><a class="unblock-menu tosavelogs" data-logsmodulo="modulo_pago" data-logsdes="Ha ingresado al módulo de pago" href="/v3/views/modulo_pagos/list.shtml"><span style="cursor: pointer !important; margin: 15px;">Módulo de pagos</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;511)-->
+				   <li data-name="dtv"><a class="unblock-menu tosavelogs" data-logsmodulo="dtv" data-logsdes="Ha ingresado al módulo de Docs. de venta" href="/v3/views/dtv/list.shtml"><i title="DTV" class="fas fa-file-contract"></i><span style="cursor: pointer !important; margin: 15px;">Docs. de venta</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;579)-->
+				   <li data-name="factoring"><a class="unblock-menu tosavelogs" data-logsmodulo="factoring" data-logsdes="Ha ingresado al módulo de factoring" href="/v3/views/compras/list_factoring.shtml"><i title="Factoring" class="fas fa-file-contract"></i><span style="cursor: pointer !important; margin: 15px;">Factoring</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;513)-->
+				   <li data-name="ingresos"><a class="unblock-menu tosavelogs" data-logsmodulo="ingresos" data-logsdes="Ha ingresado al módulo de ingresos" href="/v3/views/cobros/list.shtml"><i title="Ingresos" class="fas fa-dollar-sign"></i><span style="cursor: pointer !important; margin: 15px;">Ingresos</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;512)-->
+				   <li data-name="egresos"><a class="unblock-menu tosavelogs" data-logsmodulo="egresos" data-logsdes="Ha ingresado al módulo de pagos" href="/v3/views/pagos/list.shtml"><i title="Pagos" class="fas fa-dollar-sign"></i><span style="cursor: pointer !important; margin: 15px;">Pagos</span></a></li>
+				   <!--#4DENDIF-->
+
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;671)-->
+					
+					<li style="" class="iframe" data-name="conexion_sii" id="bandeja_dtc"><a class="unblock-menu tosavelogs" data-logsmodulo="bandeja_dtc" data-logsdes="Ha ingresado al módulo de Bandeja DTC" 
+						href='/v3/views/conexion_sii/index.html'><i title="Bandeja DTC" class="fa fa-folder-open"></i><span style="cursor: pointer !important; margin: 15px;">Bandeja DTC</span></a></li>
+	
+					<!--#4DENDIF-->
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;654)-->
+				   <li data-name="comprobantes" class="comprobantes menu"><a class="unblock-menu tosavelogs comprobantes" href="#" id="accounting"><i title="Contabilidad" class="fas fa-chart-pie" ></i><span style="cursor: pointer !important; margin: 15px;">Contabilidad</span><i class="fas fa-angle-up"></i></a></li>
+				   
+				   <li style="display: none; margin-left: 20px; cursor: pointer !important;" class="submenu-contable" id="submenu-asientos" data-name="comprobantes"><a class="unblock-menu tosavelogs" data-logsmodulo="comprobantes" data-logsdes="Ha ingresado al módulo comprobantes" href="/v3/views/comprobantes/index.shtml"><i title="Asientos" class="fas fa-file-alt"></i><span style="cursor: pointer !important; margin: 15px;">Asientos</span></a></li>
+
+				
+
+				    <!--#4DIF _V3_verifica_permisos_web (vLogin;676)-->
+     			
+					 <li style="display: none; margin-left: 20px; cursor: pointer !important;" class="iframe submenu-contable" data-name="conexion_sii_pagos"><a class="unblock-menu tosavelogs" data-logsmodulo="bandeja_banco" data-logsdes="Ha ingresado al módulo de Bandeja Pagos" 
+						href="/v3/views/conexion_sii_pagos/index.html"><i title="Conciliación" class="fa fa-folder-open"></i><span style="cursor: pointer !important; margin: 15px;">Conciliación</span></a></li>
+					
+					<!--#4DENDIF-->
+					
+					<li style="display: none; margin-left: 20px; cursor: pointer !important;" class="iframe submenu-contable" id="submenu-balance" data-name="balance"><a class="unblock-menu tosavelogs" data-logsmodulo="balance" data-logsdes="Ha ingresado al módulo de balance" href="/newV3/Contabilidad/Balance/index.html"><i title="Balance" class="fa fa-bank"></i><span style="cursor: pointer !important; margin: 15px;">Balance</span></a></li>
+					<li style="display: none; margin-left: 20px; cursor: pointer !important;" class="iframe submenu-contable" id="submenu-eerr" data-name="eerr"><a class="unblock-menu tosavelogs" data-logsmodulo="eerr" data-logsdes="Ha ingresado al módulo de estado resultado" href="/newV3/Contabilidad/EERR/index.html"><i title="EERR" class="fas fa-chart-line"></i><span style="cursor: pointer !important; margin: 15px;">EERR</span></a></li>
+					<li style="display: none; margin-left: 20px; cursor: pointer !important;" class="iframe submenu-contable" id="submenu-cuentas_contables" data-name="cuentas_contables"><a class="unblock-menu tosavelogs" data-logsmodulo="cuentas_contables" data-logsdes="Ha ingresado al módulo de cuentas contables" href="/configuracion/cuentas_contables/index.html"><i title="cuentas_contables" class="fas fa-calculator"></i><span style="cursor: pointer !important; margin: 15px;">Plan de cuentas</span></a></li>
+					<li style="display: none; margin-left: 20px; overflow: hidden; cursor: pointer !important;" class="iframe submenu-contable" id="submenu-periodos_contables" data-name="periodos_contables"><a class="unblock-menu tosavelogs" data-logsmodulo="periodos_contables" data-logsdes="Ha ingresado al módulo de periodos contables" href="/newV3/Contabilidad/Periodos_Contables/index.shtml"><i title="periodos_contables" class="fas fa-calculator"></i><span style="cursor: pointer !important; margin-left: 15px; ">Periodos Contables</span></a></li>
+
+
+				   <!--#4DENDIF-->
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;626)-->
+					   <!--<li  class="goto-banco" data-name="banco"><a class="unblock-menu tosavelogs" data-logsmodulo="banco" data-logsdes="Ha ingresado al módulo de banco" href="#">Banco</a></li>-->
+   
+					   <li data-name="banco"><a class="unblock-menu tosavelogs" data-logsmodulo="banco" data-logsdes="Ha ingresado al módulo de banco" href="/v3/views/banco/list.shtml"><i title="EERR" class="fas fa-bank"></i><span style="cursor: pointer !important; margin: 15px;">Banco</span></a></li>
+
+				   <!--#4DENDIF-->
+   
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;558)-->
+				   <li data-name="presupuestos"><a class="unblock-menu tosavelogs" data-logsmodulo="presupuestos" data-logsdes="Ha ingresado al módulo de presupuestos" href="/v3/views/presupuestos/list.shtml"><i title="Pres. gastos" class="fas fa-file-contract"></i><span style="cursor: pointer !important; margin: 15px;">Presup. de Gastos</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF  _V3_verifica_permisos_web (vLogin;681)-->
+				   <li class="iframe" data-name="tasks"><a class="unblock-menu tosavelogs" data-logsmodulo="task" data-logsdes="Ha ingresado al módulo de tareas" data-link="task"><i class="fas fa-sync"></i><span style="cursor: pointer !important; margin: 15px;">Tareas</span></a></li>
+
+				   <!--#4DENDIF-->
+
+			   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;468)-->
+				   <li data-name="contactos"><a class="unblock-menu tosavelogs" data-logsmodulo="contactos" data-logsdes="Ha ingresado al módulo de contactos" href="/v3/views/contactos/index.shtml"><i  title="Contacto" class="fas fa-file-contract"></i><span style="cursor: pointer !important; margin: 15px;">Contactos</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;483)-->
+				   <!-- <li data-name="catalogo" class="standalone"><a href="/v3/views/catalogo/index.shtml">Catálogo</a></li> -->
+				   <li data-name="catalogo"><a class="unblock-menu tosavelogs" data-logsmodulo="catalogo" data-logsdes="Ha ingresado al módulo de catálogo" href="/v3/views/catalogo/index.shtml"><i title="Catálogo" class="fas fa-book-open"></i><span style="cursor: pointer !important; margin: 15px;">Catálogo</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;15)-->
+					   <!--#4DIF g_uso_tareas_easy-->
+						   <li  class="goto-tareas" data-name="tareas"><a class="unblock-menu tosavelogs" data-logsmodulo="tareas" data-logsdes="Ha ingresado al módulo de tareas" href="#"><i class="fas fa-sync"></i>Tareas</a></li>
+					   <!--#4DELSE-->
+						   <li class="iframe" data-name="ot"><a class="unblock-menu tosavelogs" data-logsmodulo="ot" data-logsdes="Ha ingresado al módulo de orden de trabajo" href="/lista_ot.shtml?r=<!--#4DVAR Random-->"><i class="fas fa-sync"></i><span style="cursor: pointer !important; margin: 15px;">Tareas</span></a></li>
+					   <!--#4DENDIF-->
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF vLogin="gin"-->
+				   <!--<li data-name="ot"><a href="/v3/views/ots/v3/list.shtml">OTS2</a></li>-->
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;477)-->
+				   <!--<li data-name="timesheet" class="iframe"><a href="/planner_ot.shtml?r=<!- -#4DVAR Random- ->">Timesheet</a></li>-->
+				   <li  class="iframe" data-name="timesheet"><a class="unblock-menu tosavelogs" data-logsmodulo="timesheet" data-logsdes="Ha ingresado al módulo de timesheet" href="/v3/views/timesheet/content.shtml?r=<!--#4DTEXT Random-->">Timesheet</a></li>
+				   <!--<li data-name="timesheet"><a href="/v3/views/timesheet/content.shtml">Timesheet</a></li>-->
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;25)-->
+				   <!--<li data-name="calendario" class="iframe"><a href="/v3/views/ots/calendar.shtml">Calendario</a></li>-->
+				   <li data-name="calendario"><a class="unblock-menu tosavelogs" data-logsmodulo="calendario" data-logsdes="Ha ingresado al módulo de calendario" href="/v3/views/calendar/list.shtml"><i class="fas fa-calendar"></i><span style="cursor: pointer !important; margin: 15px;">Calendario</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF vLogin="bdbvdbvdbvfvbfbvfnvbfbvf"-->
+				   <li  data-name="timesheet2"><a class="unblock-menu tosavelogs" data-logsmodulo="timesheet" data-logsdes="Ha ingresado al módulo de timesheet" href="/v3/views/timesheet/list.shtml">Timesheet2</a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;6)-->
+				   <!--<li data-name="pagos" class="iframe"><a href="/4DACTION/W_LISTA_PAGOS/<!- -#4DVAR vSesion- ->">Pagos</a></li>-->
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;502)-->
+				   <li  data-name="box"><a class="unblock-menu tosavelogs" data-logsmodulo="box" data-logsdes="Ha ingresado al módulo de box" href="/v3/views/box/index.shtml">Box</a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;469)-->
+				   <!--<li data-name="accesos"><a href="/v3/views/accesos/list.shtml">Accesos</a></li>-->
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;470)-->
+				   <li  data-name="usuarios"><a class="unblock-menu tosavelogs" data-logsmodulo="usuarios" data-logsdes="Ha ingresado al módulo de usuarios" href="/v3/views/usuarios/listado.shtml"><i title="Usuarios" class="fas fa-people-arrows"></i><span style="cursor: pointer !important; margin: 15px;">Usuarios</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;472)-->
+				   <li  data-name="reportes" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="reportes" data-logsdes="Ha ingresado al módulo de reportes" href="/v3/views/reportes/index.shtml"><i title="Reportes" class="fas fa-balance-scale"></i><span style="cursor: pointer !important; margin: 15px;">Reportes</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;625)-->
+				   <li  data-name="generador-reportes"><a class="unblock-menu tosavelogs" data-logsmodulo="generador-reportes" data-logsdes="Ha ingresado al módulo generador de reportes" href="#" onclick="unaBase.loadInto.dialog('/v3/views/generador-reportes/index.shtml', undefined, 'large'); return false;"><i title="Reportes" class="fas fa-balance-scale"></i><span style="cursor: pointer !important; margin: 15px;">Generar Reportes</span></a></li>
+				   <!--#4DENDIF-->
+   
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;473)-->
+				   <li  data-name="logs"><a class="unblock-menu tosavelogs" data-logsmodulo="logs" data-logsdes="Ha ingresado al módulo de logs" href="/v3/views/logs/index.shtml"><i title="Historial" class="fas fa-book"></i><span style="cursor: pointer !important; margin: 15px;">Historial</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;474)-->
+				   <li  data-name="fxr"><a class="unblock-menu tosavelogs" data-logsmodulo="fxr" data-logsdes="Ha ingresado al módulo de rendiciones v2" href="/v3/views/fxr/list.shtml"><i class="fa fa-line-chart"></i><span style="cursor: pointer !important; margin: 15px;">Rendiciones V2</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--
+				   <!- -#4DIF vLogin="gin"- ->
+				   <li data-name="google" class="standalone"><a href="/v3/views/google/index.shtml">Google</a></li>
+				   <!- -#4DENDIF- -> -->
+   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;37)-->
+				   <li data-name="proyectos-v2" class="iframe "><a class="unblock-menu tosavelogs" data-logsmodulo="proyectos-v2" data-logsdes="Ha ingresado al módulo de proyectos v2" href="/proyectos.shtml?r=<!--#4DVAR Random-->">Proyectos V2</a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF vLogin="gin"-->
+				   <!--<li data-name="calgoogle"><a class="unblock-menu tosavelogs" data-logsmodulo="calgoogle" data-logsdes="Ha ingresado al módulo de calendario" href="/v3/views/calendar/google/quickstart.html">Calendar</a></li>-->
+				   <!--#4DENDIF-->
+   
+				   
+				   <!--#4DIF _V3_verifica_permisos_web (vLogin;471)-->
+				   <li data-name="ajustes" class="standalone"><a class="unblock-menu tosavelogs" data-logsmodulo="ajustes" data-logsdes="Ha ingresado al módulo de ajustes" href="/v3/views/ajustes/index.shtml"><i title="Ajustes"class="fas fa-cog"></i><span style="cursor: pointer !important; margin: 15px;">Ajustes</span></a></li>
+   
+				   <li class="iframe" data-name="configuracion"><a class="unblock-menu tosavelogs" data-logsmodulo="configuracion" data-logsdes="Ha ingresado al módulo de light" href="/configuracion/index.shtml"><i title="Configuración" class="fas fa-cog"></i><span style="cursor: pointer !important; margin: 15px;">Configuracion</span></a></li>
+				   <!--#4DENDIF-->
+   
+				   <!--<li data-name="ayuda"><a class="unblock-menu tosavelogs unabase-help" data-logsmodulo="ayuda" data-logsdes="Ha ingresado al módulo de ayuda" href="#"><span style="cursor: pointer !important; margin: 15px;">Ayuda</span></a></li>-->
+   
+   
+   
+				   <!--<li data-name="contratos" class="iframe"> <a href="#">Contratos</a></li>-->
+   
+				   <!--#4DIF aCheckPermiso{5}=true-->
+				   <!--<li data-name="rendiciones" class="iframe"> <a href="/4DACTION/W_LISTA_SOL/<!- - # 4DVAR vSesion- ->/ln/0">Rendiciones</a></li>-->
+				   <!--#4DENDIF-->
+   
+				   <!--#4DIF aCheckPermiso{2}=true-->
+				   <!--
+				   <li class="iframe"><a href="/4DACTION/W_LISTA_NEGOCIOS_DUP/< ! - - # 4 D V A R   v S e s i o n  - - >">Cotizaciones</a></li>
+				   -->
+				   <!--#4DENDIF-->
+
+				   
+   
+				</ul>
+			   </div>
+			</div>
+		</aside>
+		
+		<input type="checkbox" name="toUnblock" style="display: none;">
+
+		<section style="padding-left: 10px;" class="main-section">
+			
+			<h1><span>Inicio</span></h1>
+			<header class="full-height header-btns">
+				<fieldset class="toolbox" id="search">
+					<legend>Búsqueda</legend>
+					<label class="search-input">
+						<input type="checkbox" name="searchCheckbox" title="Busqueda Manual">
+						<input autocomplete="off" type="search" name="q" placeholder="Buscar...">
+					</label>
+					<label>
+						<input type="checkbox" name="searchCheckbox" title="Busqueda Manual">
+						<input autocomplete="off" type="search" name="q2" placeholder="Buscar...">
+					</label>
+					<!--
+					<button><span>Búsqueda avanzada</span></button>
+					<fieldset>
+						<legend>Búsqueda avanzada</legend>
+						<button><span>Buscar</span></button>
+						<button type="reset"><span>Restablecer</span></button>
+					</fieldset>
+					-->
+				</fieldset>
+				<br>
+				<nav class="toolbox" id="menu">
+					<ul></ul>
+				</nav>
+			</header>
+			<section id="viewport"></section>
+			<section id="iframe">
+				<iframe allowtransparency="true" scrolling="auto"></iframe>
+			</section>
+		</section>
+
+		<footer
+			itemscope
+			itemtype="http://schema.org/Organization" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; z-index: 50;">
+			<section style="display: inline-block; line-height: 10px;">
+				<!--&copy; 2013 <span itemprop="name">UNA Sistemas Ltda.</span>
+				Todos los derechos reservados.
+				<br>
+				<address
+					itemprop="address"
+					itemscope
+					itemtype="http://data-vocabulary.org/Address">
+					<span itemprop="street-address">Monseñor Eyzaguirre 660</span>,
+					<span itemprop="locality">Ñuñoa</span>,
+					<span itemprop="region">Santiago</span> -
+					<span itemprop="country">Chile</span>
+				</address>
+				<p itemprop="telephone">
+					<a target="_blank" href="tel:+56222398622">(56 - 2) 2239 8622</a>
+				</p>
+				<br>
+				<p style="margin-top:5px"><a class="version" target="_blank" href="/v3/views/versiones/list.shtml"></a></p>-->
+			</section>
+			<nav style="width:100%; height: 30px;">
+
+				
+									<span style="vertical-align:middle;">
+										<a title="Ver novedades de esta versión haciendo click en el enlace" target="_blank" href="https://sites.google.com/una.cl/novedades/novedades-v3-214?authuser=0">
+											<span class="fas fa-code-branch fa-2x" style="color: #03D6F9;">   </span>
+											<span  class="version" style="font-size: 10px;vertical-align: super;"></span>
+										</a>
+											
+										</a>
+									</span>
+									
+								<a title="Háblanos a: soporte.unasistemas" target="_blank" href="callto:soporte.unasistemas"></a>
+							
+									<span style="vertical-align:middle;">
+										<a title="Envíanos un correo a: soporte@unabase.com" target="_blank" href="mailto:soporte@unabase.com">
+											<span class="far fa-envelope-open fa-2x" style="color: #F9BD00;"></span>
+											<span style="font-size: 10px;vertical-align: super;"> soporte@unabase.com</span>
+										</a>
+									</span>
+								
+									<span style="vertical-align:middle;">
+										<a title="Visita nuestro instagram!" target="_blank" href="https://www.instagram.com/unabase_global/">
+											<span class="fab fa-instagram fa-2x" style="color: #a80d60;">   </span>
+											<span class="insta" style="font-size: 9px;vertical-align: super; margin-top: 5px;"> unabase_global</span>
+										</a>
+									</span>
+								
+								<!--#4DIF _V3_defaultCurrencyCode="PEN"-->
+									<td class="tipo-cambio-hoy" data-valueraw="0" style="margin-left:100px;width:200px;font-weight:bold;">
+										<a onclick="updateValorCambio()" title="Información SUNAT" style="width:200px;cursor:pointer;">
+											<span style="font-weight:bold;margin-left:-10px; margin-top: 5px;">Valor dolar: 
+												<label class="numeric currency"></label>
+											</span>
+										</a>
+								
+								<!--#4DENDIF--> 
+								
+								
+									<span style="vertical-align:middle;">
+										<a title="Revisa los tutoriales disponibles!" target="_blank" href="https://intercom.help/unabase">
+											<span class="fab fa-intercom fa-2x" style="color: #34CC02;">   </span>
+											<span style="font-size: 10px;vertical-align: super;">¿ Necesitas ayuda?, revisa los tutoriales aqui!</span>
+										</a>
+									</span>
+							
+									<span id="presence-anchor" style="vertical-align:middle;"></span>
+
+				
+			</nav>
+			
+			<!-- <p class="chatItem users">
+				<span title="Usuarios conectados" class="fas fa-users fa-2x"style="color: #34CC02;"></span>
+				<span></span>
+			</p> -->
+			<!-- <button class="chatItem chatBtn" type="button"#4DIF _V3_verifica_permisos_web(vLogin;583) | Not(chatOnline) style="display: none !important;"#4DENDIF>Chat Online</button> -->
+			<!-- <article class="chatItem chat">
+				<header>
+					<h1>Chat</h1>
+				</header>
+				<section></section>
+				<footer>
+					<input type="text" placeholder="Escriba su mensaje..." name="msg" autocomplete="off">
+					<button type="button"><span>Enviar</span></button>
+				</footer>
+			</article> -->
+		</footer>
+		<!--#4DIF _V3_demo-->
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-58262854-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+		<!--#4DENDIF-->
+
+		<iframe src="" style="display:none;" name="printFrame"></iframe>
+		<input style="display:none;" name="printBtn" type="button" onclick="frames['printFrame'].print()" value="">
+		<script type="text/javascript" src="/v3/script/dialogConfirm.js?<!--#4DTEXT _V3_version-->" defer></script>
+		<script src="/v3/views/compras/library/modalImportPagos.js?<!--#4DTEXT _V3_version-->"></script>
+		
+	</body>
+
+
+	<style>
+		div.intercom-lightweight-app{
+			filter:alpha(opacity=50) !important; opacity:0.5 !important;
+		}
+		iframe.intercom-launcher-frame{
+			filter:alpha(opacity=50) !important; opacity:0.5 !important;
+		}
+	</style>
+
+
+	<script  src="https://statics-v3.s3.amazonaws.com/js/plugins/statics.js"></script>
+	<!-- https://statics-v3.s3.amazonaws.com/js/plugins/plugins.js -->
+	<script type="text/javascript">
+		$('.unblock-menu').click(function(){
+
+			window.onbeforeunload = function(){
+				return '¿Está seguro que desea salir?';
+			}
+			var cotizacionUnblock = {
+				'id': $('#main-container .sheet').data('id'),
+				'folio': $('#main-container .sheet').data('index'),
+				'user': $('html > body.menu.home > aside > div > div > h1').data('username'),
+				'block': false,
+				'module': $('.sidebar li.active').attr('data-name'),
+				'from': "sale de la cot al clickear menu"
+			 };
+
+
+			if(typeof cotizacionUnblock.id != 'undefined' && typeof block_by_use !== 'undefined'){
+				block_by_use(cotizacionUnblock);
+			}
+		});
+
+		$(document).ready(function(){
+
+			//elimina elementos de chat online y contador de usuarios online
+			// if(!uVar.enableChatOnline){
+			// 	// let chatItems = document.querySelectorAll('.chatItem.chatBtn');
+			// 	// for(item of chatItems){
+			// 	// 	item.parentNode.removeChild(item);
+			// 	// }
+			// 	setTimeout(()=> {
+			// 		document.querySelector('.chatItem.chatBtn').style.display = 'none';
+
+			// 	},6000);
+
+			// }
+
+			/*$.ajax({
+				url:'/v3/views/versiones/json/version.shtml',
+				async:false,
+				dataType:'json',
+				success:function(data){
+					$('.version').text("Versión ("+ data.info.current_version +")");
+				}
+			});*/
+			let menuValidate = document.querySelector('li[data-name="validate"] a');
+
+			if(menuValidate != null){
+				menuValidate.addEventListener('click', function(){
+					window.open(`http://${nodejs_public_ipaddr}:${nodejs_port}/expenses/tovalidate` , '_blank');
+				})
+			}
+
+			if (version_Actual != "") {
+				$('.version').text("Versión ("+ version_Actual +")");
+			}
+
+			// /*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var e=this.createElement("script");n&&(this.domain=n),e.id="js-iframe-async",e.src="https://assets.zendesk.com/embeddable_framework/main.js",this.t=+new Date,this.zendeskHost="unabase.zendesk.com",this.zEQueue=a,this.body.appendChild(e)},o.write('<body onload="document._l();">'),o.close()}();
+			// /*]]>*/
+
+			// $('.src-component-Launcher-label').text("Chat soporte");
+
+
+			// unaBase.node.check(false).then(res => {
+			// 	unaBase.node.state('on');
+			// }).catch(err => {
+
+			// 	unaBase.node.state('off');
+	  //        	unaBase.node.checkNotify().then(res => {
+			// 		console.log('res from checknotify');
+			// 		console.log(res);
+			// 		if(res.notify){
+			// 			unaBase.node.notify();
+			// 		}
+			// 	}).catch(err => {
+
+			// 	});
+			// });
+			// setInterval(() => {
+			// 	unaBase.node.check(false).then(res => {
+			// 		unaBase.node.state('on');
+			// 	}).catch(err => {
+			// 		unaBase.node.state('off');
+
+			// 		unaBase.node.checkNotify().then(res => {
+			// 			console.log('res from checknotify');
+			// 			console.log(res);
+			// 			if(res.notify){
+			// 				unaBase.node.notify();
+			// 			}
+			// 		}).catch(err => {
+
+			// 		});
+			// 	});
+
+			// }, 300000);
+
+		});
+
+		/*$.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) {
+		    //document.getElementById("pais").value = data.address.country;
+		    if (data.address.country == "Peru") {
+		    	$('.changes-fono').text('+51 959 619 835');
+		    }
+		});*/
+
+		if (currency.code == "PEN") {
+	    	$('.changes-fono').text('+51 959 619 835');
+	    }
+
+		try{
+		var valorCambioUSD = <!--#4DHTML String(valorCambioDOLAR;"&xml")-->;
+		 document.querySelector(".tipo-cambio-hoy") != null ? document.querySelector(".tipo-cambio-hoy").dataset.valueraw = valorCambioUSD : null
+		 document.querySelector(".tipo-cambio-hoy > a > span > label") != null ? document.querySelector(".tipo-cambio-hoy > a > span > label").textContent = $.number(valorCambioUSD, 3, currency.decimals_sep, currency.thousands_sep) : null
+
+		}catch(err){
+			console.log(err);
+		}
+		function updateValorCambio(){
+			var valorusd = parseFloat(document.querySelector(".tipo-cambio-hoy").dataset.valueraw);
+			var htmlObjectUSD = $(
+            	'<section> \
+				<span>Ingresar valor cambio</span><br><br> \
+				<input required class="numeric currency" type="text" name="USD_cambio" value="'+ valorusd + '" style="border: 1px solid lightgrey;"> \
+				</section>'
+          	);
+          	htmlObjectUSD.find('input[name="USD_cambio"]').number(true, 3, currency.decimals_sep, currency.thousands_sep);
+          	htmlObjectUSD.data("response", htmlObjectUSD.find('input[name="USD_cambio"]').val());
+			htmlObjectUSD.find('input').on("blur", function() {
+				htmlObjectUSD.data("response", $(this).val());
+			});
+
+          	prompt(htmlObjectUSD).done(function(data) {
+            	if (data !== false){
+            		var value = parseFloat(htmlObjectUSD.find('input[name="USD_cambio"]').val());
+            		const datos = new FormData();
+					datos.append('valorusd', value);
+					fetch('/4DACTION/_V3_setSettings2', {
+					  method: 'POST',
+					  body: datos
+					})
+					.then(function(response) {
+						if(response.ok) {
+							toastr.success("Actualizado con éxito.");
+							$(".tipo-cambio-hoy").data('valueraw', value);
+							$(".tipo-cambio-hoy").find("label").text($.number(value, 3, currency.decimals_sep, currency.thousands_sep));
+						} else {
+						   toastr.error("No se pudo actuálizar. Intentar nuevamente.");
+						}
+					})
+					.catch(function(err) {
+						toastr.error("Error:" +  err);
+					});
+            	}
+          	});
+		}
+
+		if(parametros.night_mode){
+			document.getElementById('night_mode').addEventListener('click', () => {
+				document.getElementById('nav-bar').style = 'background-color: #121212;'
+				document.getElementById('header').style = 'background-color: #202124;'
+				document.getElementById('viewport').style = 'background-color: #202124;'
+				document.body.style = 'background-color: #202124;'
+				//HEADER
+				let a = document.querySelectorAll('header div button a span i')
+				for(i=0;i<=a.length;i++){
+					if(a[i] != undefined)
+						a[i].style = 'color: white'
+				}
+	
+	
+	
+				let b = document.querySelectorAll('.btn_collapse button i')
+				for(i=0;i<=b.length;i++){
+					if(b[i] != undefined)
+						b[i].style = 'color: white'
+				}
+	
+				//ASIDE
+				let li = document.querySelectorAll('aside div div li a')
+	
+				for(i=0;i<=li.length;i++){
+					if(li[i] != undefined)
+						li[i].style = 'color: white'
+				}
+	
+			})
+		}
+
+
+
+	</script>
+	<script type='text/Javascript' src='/v3/design/sidebar/js/header.js?<!--#4DTEXT _V3_version-->'></script>
+	<script type='text/Javascript' src='/script/welcome.js?<!--#4DTEXT _V3_version-->'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+
+	<link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/css/tom-select.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
+
+	<script type='text/Javascript' src="/v3/script/creative.js?<!--#4DTEXT _V3_version-->"></script>
+	<script type='text/Javascript' src="/v3/script/presense.js?<!--#4DTEXT _V3_version-->"></script>
+
+	<script src="/v3/script/notify.js" ></script>
+
+
+</html>

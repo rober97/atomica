@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dtv_general_params>
+<record><field name="id_dtv">1</field><field name="codigo">CLP</field><field name="currency">True</field><field name="default">True</field><field name="value">1</field></record>
+<record><field name="id_dtv">1</field><field name="codigo">USD</field><field name="currency">True</field><field name="default">False</field><field name="value">889,19</field></record>
+<record><field name="id_dtv">1</field><field name="codigo">PEN</field><field name="currency">True</field><field name="default">False</field><field name="value">228,02</field></record>
+<record><field name="id_dtv">1</field><field name="codigo">EUR</field><field name="currency">True</field><field name="default">False</field><field name="value">1040,96</field></record>
+<record><field name="id_dtv">1</field><field name="codigo">CLF</field><field name="currency">True</field><field name="default">False</field><field name="value">40324,06</field></record>
+</dtv_general_params>

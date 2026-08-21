@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Param_2>
+<record><field name="ID_Param2">8</field><field name="Param2">MONTICELLO</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">7</field><field name="Param2">MOVISTAR</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">6</field><field name="Param2">TEATRO NESCAFE</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">0</field><field name="Param2">TEATRO ORIENTE</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">9</field><field name="Param2">COMEDY</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">10</field><field name="Param2">NEVERLAND</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">11</field><field name="Param2">CLARO ARENA</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">12</field><field name="Param2">OTRO</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">13</field><field name="Param2">CORPORACION CULTURAL DE ANTOFAGASTA</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">14</field><field name="Param2">FESTIVAL DE CINE DE NUBLE</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">15</field><field name="Param2">PALERMO</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">16</field><field name="Param2">TEATRO MUNICIPAL ANTOFAGASTA</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">17</field><field name="Param2">TEATRO MUNICIPAL VIÑA DEL MAR</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">18</field><field name="Param2">TEATRO MORI BELLAVISTA</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">19</field><field name="Param2">TEATRO MORI RECOLETA</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">20</field><field name="Param2">TEATRO MORI PARQUE ARAUCO</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">21</field><field name="Param2">TEATRO REGIONAL LUCHO GATICA</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">22</field><field name="Param2">TEATRO PROVINCIAL DE CURICO</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">23</field><field name="Param2">TEATRO REGIONAL DEL MAULE</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">24</field><field name="Param2">TEATRO MUNICIPAL DE CHILLAN</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">25</field><field name="Param2">TEATRO UDEC</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">26</field><field name="Param2">TEATRO MUNICIPAL DE LOS ANGELES</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">27</field><field name="Param2">TEATRO MUNICIPAL DE TEMUCO</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">28</field><field name="Param2">TEATRO REGIONAL CERVANTES</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">29</field><field name="Param2">TEATRO MUNICIPAL PUNTA ARENAS</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">30</field><field name="Param2">ENJOY CHILOE</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">31</field><field name="Param2">ENJOY COQUIMBO</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">32</field><field name="Param2">ENJOY PUERTO VARAS</field><field name="Activo">True</field></record>
+<record><field name="ID_Param2">33</field><field name="Param2">TEATRO AULA MAGNA</field><field name="Activo">True</field></record>
+</Param_2>

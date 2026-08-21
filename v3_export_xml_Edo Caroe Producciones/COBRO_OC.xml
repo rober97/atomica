@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<COBRO_OC>
+<record><field name="ID_OC">2471</field><field name="ID_COBRO">2</field><field name="MONTO">89500</field><field name="id">2</field></record>
+<record><field name="ID_OC">2054</field><field name="ID_COBRO">4</field><field name="MONTO">165014</field><field name="id">4</field></record>
+<record><field name="ID_OC">2075</field><field name="ID_COBRO">5</field><field name="MONTO">217222</field><field name="id">5</field></record>
+<record><field name="ID_OC">2108</field><field name="ID_COBRO">7</field><field name="MONTO">4350</field><field name="id">7</field></record>
+<record><field name="ID_OC">2110</field><field name="ID_COBRO">8</field><field name="MONTO">28261</field><field name="id">8</field></record>
+<record><field name="ID_OC">2557</field><field name="ID_COBRO">9</field><field name="MONTO">146850</field><field name="id">9</field></record>
+<record><field name="ID_OC">2778</field><field name="ID_COBRO">10</field><field name="MONTO">48345</field><field name="id">10</field></record>
+<record><field name="ID_OC">2058</field><field name="ID_COBRO">11</field><field name="MONTO">100000</field><field name="id">11</field></record>
+<record><field name="ID_OC">2052</field><field name="ID_COBRO">12</field><field name="MONTO">85000</field><field name="id">12</field></record>
+</COBRO_OC>

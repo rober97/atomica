@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Estados_Documento>
+<record><field name="Id_Estado_documento">02</field><field name="Desc_estado_doc">Protestado</field><field name="Observaciones">Cuando un cheque es rechazado por algun motivo, el portador del cheque puede Protestarlo</field></record>
+<record><field name="Id_Estado_documento">01</field><field name="Desc_estado_doc">Aceptado</field><field name="Observaciones">El documento esta aceptado</field></record>
+<record><field name="Id_Estado_documento">03</field><field name="Desc_estado_doc">Depositado</field><field name="Observaciones">El documento ha sido correctamente depositado y se ha cargado el total de este a la cuenta a la cual se deposito</field></record>
+<record><field name="Id_Estado_documento">21</field><field name="Desc_estado_doc">rferf</field><field name="Observaciones">deded</field></record>
+</Estados_Documento>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		
+			let url = new URL(decodeURIComponent(window.location.href));
+			let fromUrl = url.searchParams.get("fromUrl");
+			let ck = url.searchParams.get("ck");
+			document.cookie = ck;
+			let homeUrl = "/4DACTION/wbienvenidos";
+			
+			switch(fromUrl){
+				case "rendir":
+					homeUrl = "/rendir/index.shtml"
+					break;
+				case "validar":
+					homeUrl = "/4DACTION/wbienvenidos?fromUrl=validar"
+					break;
+				default:
+					homeUrl = "/4DACTION/wbienvenidos"
+					break;
+			}
+			window.location.href = homeUrl
+			// If (Undefined(fromUrl))
+
+			// $homeUrl:="http://dev1.unabase.cl/4DACTION/wbienvenidos"
+			// Else 
+
+			// Case of 
+			// : (fromUrl="rendir")
+
+			// $homeUrl:="http://dev1.unabase.cl/rendir/index.shtml"
+			// : (fromUrl="home")
+
+			// $homeUrl:="http://dev1.unabase.cl/4DACTION/wbienvenidos"
+			// : (fromUrl="validar")
+
+
+			// $homeUrl:="http://dev1.unabase.cl/4DACTION/wbienvenidos?fromUrl=validar"
+			// End case 
+
+			// End if 
+	</script>
+</head>
+<body>
+
+</body>
+</html>

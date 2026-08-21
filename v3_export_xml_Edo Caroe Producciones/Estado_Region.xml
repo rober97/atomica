@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Estado_Region>
+<record><field name="Id_Region">1</field><field name="Des_Region">REGION DE TARAPACA</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">2</field><field name="Des_Region">REGION DE ANTOFAGASTA</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">3</field><field name="Des_Region">REGION DE ATACAMA</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">4</field><field name="Des_Region">REGION DE COQUIMBO </field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">5</field><field name="Des_Region">REGION DE VALPARAISO</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">6</field><field name="Des_Region">REGION DEL LIBERTADOR GRAL.BERNARDO O'HIGGINS</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">7</field><field name="Des_Region">REGION  DEL MAULE</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">8</field><field name="Des_Region">REGION DEL BIO BÍO</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">9</field><field name="Des_Region">REGION DE LA ARAUCANÍA </field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">10</field><field name="Des_Region">REGION DE LOS LAGOS</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">11</field><field name="Des_Region">REGION DE AISEN DEL GRAL. CAMPOS IBAÑEZ DEL CAMPO</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">12</field><field name="Des_Region">REGION DE MAGALLANES Y LA ANTARTICA CHILENA</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">13</field><field name="Des_Region">REGION METROPOLITANA DE SANTIAGO</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">21</field><field name="Des_Region">METROPOLITANA</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">15</field><field name="Des_Region">REGION DE ARICA Y PARINACOTA</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">16</field><field name="Des_Region">REGION DE LOS RIOS</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">23</field><field name="Des_Region">TALCA</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">20</field><field name="Des_Region"></field><field name="Id_Pais">55</field></record>
+<record><field name="Id_Region">22</field><field name="Des_Region">CONCEPCION</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">24</field><field name="Des_Region">PUERTO MONTT</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">25</field><field name="Des_Region">OSORNO</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">26</field><field name="Des_Region">ABEL REYES 8833 SAN BERNANDO - LO HERRERA</field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">27</field><field name="Des_Region">SHANDONG PROVINCE</field><field name="Id_Pais">24</field></record>
+<record><field name="Id_Region">28</field><field name="Des_Region">BAOAN DISTRIC.</field><field name="Id_Pais">24</field></record>
+<record><field name="Id_Region">29</field><field name="Des_Region">KOWLOON</field><field name="Id_Pais">24</field></record>
+<record><field name="Id_Region">30</field><field name="Des_Region">COQUIMBO </field><field name="Id_Pais">23</field></record>
+<record><field name="Id_Region">31</field><field name="Des_Region">SICHUAN</field><field name="Id_Pais">24</field></record>
+<record><field name="Id_Region">32</field><field name="Des_Region">REGIÓN METROPOLITANA</field><field name="Id_Pais">23</field></record>
+</Estado_Region>

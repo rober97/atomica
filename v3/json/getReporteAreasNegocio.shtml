@@ -1,0 +1,59 @@
+{
+	"moneda" : "<!--#4DTEXT vTIPOMONEDA-->",
+	"valor_cambio" : <!--#4DTEXT String(vVALORCAMBIO;"&xml")-->,
+	"ventas": {
+		"areas_negocio": [
+			<!--#4DLOOP aVentaAreaId-->
+			{
+				"id": <!--#4DTEXT String(aVentaAreaId{aVentaAreaId};"&xml")-->,
+				"name": "<!--#4DHTML _V3_escapeString(aVentaAreaName{aVentaAreaId})-->",
+				"folios_acum": "<!--#4DTEXT aVentaAreaFoliosAcum{aVentaAreaId}-->",
+				"nv_ids_acum": "<!--#4DTEXT aVentaAreaNVIdsAcum{aVentaAreaId}-->",
+				"months": [
+					{ "value": <!--#4DTEXT String(aVentaAreaValueJan{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentJan{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+1}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+1}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueFeb{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentFeb{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+2}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+2}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueMar{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentMar{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+3}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+3}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueApr{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentApr{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+4}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+4}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueMay{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentMay{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+5}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+5}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueJun{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentJun{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+6}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+6}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueJul{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentJul{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+7}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+7}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueAug{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentAug{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+8}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+8}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueSep{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentSep{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+9}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+9}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueOct{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentOct{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+10}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+10}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueNov{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentNov{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+11}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+11}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueDec{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentDec{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFolios{(aVentaAreaId-1)*12+12}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIds{(aVentaAreaId-1)*12+12}-->" },
+					{ "value": <!--#4DTEXT String(aVentaAreaValueAcum{aVentaAreaId};"&xml")-->, "percent": <!--#4DTEXT String(aVentaAreaPercentAcum{aVentaAreaId};"&xml")-->, "folios": "<!--#4DTEXT aVentaAreaFoliosAcum{aVentaAreaId}-->", "nv_ids": "<!--#4DTEXT aVentaAreaNVIdsAcum{aVentaAreaId}-->" }
+				]
+			}<!--#4DIF NOT(aVentaAreaId{aVentaAreaId} = aVentaAreaId{Size of array(aVentaAreaId)})-->,<!--#4DENDIF-->
+			<!--#4DENDLOOP-->
+		],
+		"suma": {
+			"months": [
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueJan;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueFeb;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueMar;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueApr;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueMay;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueJun;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueJul;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueAug;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueSep;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueOct;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueNov;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueDec;"&xml")-->, "percent": 1 },
+				{ "value": <!--#4DTEXT String(totalVentaAreaValueAcum;"&xml")-->, "percent": 1 }
+			]
+		}
+	},
+	"currency": {
+		"code": "<!--#4DTEXT _V3_defaultCurrencyCode-->",
+		"name": "<!--#4DTEXT _V3_defaultCurrencyName-->",
+		"symbol": "<!--#4DTEXT _V3_defaultCurrencySymbol-->",
+		"right": <!--#4DIF _V3_defaultCurrencyRight-->true<!--#4DELSE-->false<!--#4DENDIF-->,
+		"decimal": <!--#4DTEXT _V3_defaultCurrencyDecimals-->,
+		"decimal_sep": "<!--#4DTEXT _V3_defaultCurrencyDecimalSep-->",
+		"thousand_sep": "<!--#4DTEXT _V3_defaultCurrencyThousandSep-->",
+		"decimal_text_excel": "<!--#4DTEXT _V3_defaultCurrencyDecimalsText-->",
+		"format_code_excel": "<!--#4DTEXT _V3_defaultCurrencyFormatCode-->"
+	}
+}

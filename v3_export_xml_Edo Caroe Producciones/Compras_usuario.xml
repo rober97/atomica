@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Compras_usuario>
+<record><field name="login">hGrunert</field><field name="id_oc">2786</field><field name="acceso">True</field></record>
+<record><field name="login">PNALEGACH</field><field name="id_oc">2857</field><field name="acceso">True</field></record>
+</Compras_usuario>

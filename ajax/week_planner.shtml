@@ -1,0 +1,79 @@
+<!--#4DSCRIPT/_V3_proxy_getInfoTimeSheet-->
+<nav class="change-weeks">
+    <a href="#" data-week="previous"  data-date="<!--#4DTEXT vMonday-->" >Anterior</a>
+    <a href="#" data-week="current" data-date="<!--#4DTEXT today-->" >Actual</a>
+    <a href="#" data-week="next" data-date="<!--#4DTEXT vFriday-->">Siguiente</a>
+</nav>
+<div class="infografia">
+    <span title="Prioridad" class="alta">Alta</span><span title="Prioridad" class="media">Media</span><span title="Prioridad" class="baja">Baja</span><span class="vcto">Vencimiento</span>
+    <span style="font-size:12px;font-weight:bold">Semana del <!--#4DTEXT vMonday--> <!--(<strong></strong>/50 hrs.)--></span>
+</div>
+
+<div class="content-planner">
+    <table data-today="<!--#4DTEXT today-->" data-startweek="<!--#4DTEXT startWeeks-->" data-endweek="<!--#4DTEXT endWeeks-->">
+        <thead>
+            <tr>               
+                <th>Nro. Ot</th>
+                <th>Referencia</th>
+                <th>Estado</th>
+                <th>Vencimiento</th>                
+                <th>Resp.</th>
+                <th style="display:none">C. Unit.</th>
+                <th>H.A.</th>
+                <th style="display:none">T. Presup</th>              
+                <th>H.R</th>
+                <th style="display:none">T. Real</th>          
+                <th data-days="1" data-date="<!--#4DTEXT vMonday-->"><div>Lunes</div><div><!--#4DTEXT vMonday--></div><!--<div>(<strong></strong>/#4DTEXT totalHoursDaily hrs.)</div>--></th>
+                <th data-days="2" data-date="<!--#4DTEXT vTuesday-->"><div>Martes</div><div><!--#4DTEXT vTuesday--></div><!--<div>(<strong></strong>/#4DTEXT totalHoursDaily hrs.)</div>--></th>
+                <th data-days="3" data-date="<!--#4DTEXT vWednesday-->"><div>Miércoles</div><div><!--#4DTEXT vWednesday--></div><!--<div>(<strong></strong>/#4DTEXT totalHoursDaily hrs.)</div>--></th>
+                <th data-days="4" data-date="<!--#4DTEXT vThursday-->"><div>Jueves</div><div><!--#4DTEXT vThursday--></div><!--<div>(<strong></strong>/#4DTEXT totalHoursDaily hrs.)</div>--></th>
+                <th data-days="5" data-date="<!--#4DTEXT vFriday-->"><div>Viernes</div><div><!--#4DTEXT vFriday--></div><!--<div>(<strong></strong>/#4DTEXT totalHoursDaily hrs.)</div>--></th>
+                <th data-days="6" data-date="<!--#4DTEXT vSaturday-->"><div>Sábado</div><div><!--#4DTEXT vSaturday--></div><!--<div>(<strong></strong>/#4DTEXT totalHoursDaily hrs.)</div>--></th>
+                <th data-days="7" data-date="<!--#4DTEXT vSunday-->"><div>Domingo</div><div><!--#4DTEXT vSunday--></div><!--<div>(<strong></strong>/#4DTEXT totalHoursDaily hrs.)</div>--></th>        
+            </tr>        
+        </thead>
+        <tbody>                
+            <!--#4DLOOP aIdOT-->                  
+            <tr data-id="<!--#4DTEXT aIdOT{aIdOT}-->">                
+                <td><a title="Ir a ot" style="color:gray" target="_blank" href="/ot.shtml?i=<!--#4DTEXT aIdOT{aIdOT}-->"><!--#4DTEXT Num(aFolioOT{aIdOT})--></a></td>                             
+                <td class="left"><!--#4DTEXT aReferenciaOT{aIdOT}--></td>
+                <td class="center"><!--#4DTEXT aEstadoOT{aIdOT}--></td>
+                <td class="center"><!--#4DTEXT aFechaVctoOT{aIdOT}--> <!--#4DTEXT aHoraVctoOT2{aIdOT}--></td>                
+                <td><!--#4DTEXT aNombreResponsableOT{aIdOT}--></td>
+                <td style="display:none"><!--#4DTEXT String(aCostoUnitOT{aIdOT};"$ ###.###.###.##0")--></td>
+                <td><!--#4DTEXT aHrsAsignadasOT{aIdOT}--></td>
+                <td style="display:none"><!--#4DTEXT String(aTotalPresupOT{aIdOT};"$ ###.###.###.##0")--></td>          
+                <td data-trabajadas=""><!--#4DTEXT aRegistered{aIdOT}--></td>
+                <td style="display:none"><!--#4DTEXT String(aTotalRealOT{aIdOT};"$ ###.###.###.##0")--></td>             
+                <td class="days" data-days="1" data-fecha="<!--#4DTEXT vMonday-->"><!--#4DIF aFechaVctoOT{aIdOT}=String(vMonday))--><span data-idplan="0" class="vc"><!--#4DTEXT aHoraVctoOT2{aIdOT}--></span><!--#4DENDIF--></td>
+                <td class="days" data-days="2" data-fecha="<!--#4DTEXT vTuesday-->"><!--#4DIF aFechaVctoOT{aIdOT}=String(vTuesday))--><span data-idplan="0" class="vc"><!--#4DTEXT aHoraVctoOT2{aIdOT}--></span><!--#4DENDIF--></td>
+                <td class="days" data-days="3" data-fecha="<!--#4DTEXT vWednesday-->"><!--#4DIF aFechaVctoOT{aIdOT}=String(vWednesday))--><span data-idplan="0" class="vc"><!--#4DTEXT aHoraVctoOT2{aIdOT}--></span><!--#4DENDIF--></td>
+                <td class="days" data-days="4" data-fecha="<!--#4DTEXT vThursday-->"><!--#4DIF aFechaVctoOT{aIdOT}=String(vThursday))--><span data-idplan="0" class="vc"><!--#4DTEXT aHoraVctoOT2{aIdOT}--></span><!--#4DENDIF--></td>
+                <td class="days" data-days="5" data-fecha="<!--#4DTEXT vFriday-->"><!--#4DIF aFechaVctoOT{aIdOT}=String(vFriday))--><span data-idplan="0" class="vc"><!--#4DTEXT aHoraVctoOT2{aIdOT}--></span><!--#4DENDIF--></td>
+                <td class="days" data-days="6" data-fecha="<!--#4DTEXT vSaturday-->"><!--#4DIF aFechaVctoOT{aIdOT}=String(vSaturday))--><span data-idplan="0" class="vc"><!--#4DTEXT aHoraVctoOT2{aIdOT}--></span><!--#4DENDIF--></td>
+                <td class="days" data-days="7" data-fecha="<!--#4DTEXT vSunday-->"><!--#4DIF aFechaVctoOT{aIdOT}=String(vSunday))--><span data-idplan="0" class="vc"><!--#4DTEXT aHoraVctoOT2{aIdOT}--></span><!--#4DENDIF--></td>
+            </tr>       
+            <!--#4DENDLOOP-->                
+        </tbody> 
+    </table>
+    <section class="resumen-timesheet">
+        <article data-info="timesheet">
+            <ul>
+                <li><label>Horas trabajadas esta semana: </label><span></span></li>
+                <li><label>Horas transcurridas esta semana: </label><span></span></li>
+            </ul>
+            <ul>
+                <li><label>Horas trabajadas este mes: </label><span></span></li>
+                <li><label>Horas transcurridas este mes: </label><span></span></li>
+            </ul>
+        </article>
+        <article data-info="ot">
+            <h2>Sobre tus OT:</h2>
+            <ul>
+                <li><label>OT por cerrar: </label><span><!--#4DTEXT otsPorCerrar--></span></li>
+                <li><label>Horas Asignadas este mes: </label><span><!--#4DTEXT horasAsignadasEsteMes--> hrs.</span></li> 
+            </ul>          
+        </article>
+    </section>
+</div>
+

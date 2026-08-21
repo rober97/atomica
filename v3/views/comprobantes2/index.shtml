@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Comprobantes</title>
+	<meta charset="utf-8">
+	<!-- <link rel="stylesheet" type="text/css" href="/css/maestros/list.css"> -->
+
+	<!-- <script type="text/javascript" src="/v3/script/list.js"></script> -->
+	<style type="text/css">
+		.alignLeft {
+			text-align: left;
+		}
+	</style>
+	
+</head>
+
+<body>
+
+
+	<!-- Maqueta de la tabla que contendrá los resultados de búsqueda -->
+	<table class="results">
+		<thead>
+			<tr>
+				<th>Folio</th>
+				<th>Fecha registro</th>
+				<th>Fecha Comprobante</th>
+				<th>Glosa</th>
+				<th>Tipo</th>
+				<th>Conciliado</th>
+				<!-- <th>Documento</th>			 -->
+			</tr>
+		</thead>
+		<tbody></tbody>
+		<tfoot></tfoot>
+	</table>
+
+	
+
+
+	<script>
+
+		$(document).ready(function () {
+			document.title = nombreEmpresa + ' / Contabilidad';
+			unaBase.toolbox.init();
+
+
+			// Inicializamos un buscador
+			var params = {
+				searchOff: true,
+				// Función que genera una URL de listado JSON
+				url: function () { return '/4DACTION/_v3_getComprobantes' },
+				entity: 'comprobantes',
+				callback: function () {
+					//$('table').fixedHeaderTable({ footer: true, cloneHeadToFoot: false, fixedColumn: false });
+				},
+				// Función que genera cada fila de la tabla, dado el valor de i (índice de posición)
+				// y el valor de rows (array con todos los resultados)
+				// El contenido de rows corresponde al objeto de mismo nombre generado mediante la llamada
+				// a la api JSON. Ver /v3/json/get_cotizacion.shtml para conocer el formato.
+				row: {
+					html: function (i, rows) {
+						let htmlData = `<tr data-id="${rows[i].id}">
+								<td>${rows[i].id}</td>
+								<td>${rows[i].registryDate}</td>
+								<td>${rows[i].docDate}</td>
+								<td class="alignLeft">${rows[i].description}</td>
+								<td>${rows[i].docType}</td>
+								<td style="min-width: 100px;">${rows[i].docType.toUpperCase()!='TRASPASO' ? rows[i].conciliado ? 'SI' : 'NO': '--'}</td>
+							</tr>`
+						return htmlData;
+					}
+				},
+				// <td><a  
+				//  href="${window.location.host}/4DACTION/wbienvenidos#dtc/content.shtml?id=${rows[i].idDoc}" 
+				//  target="_blank" style="cursor:pointer" >Documento</a></td>
+
+
+				detail: {
+					url: function (id) { return '/v3/views/comprobantes/content.shtml?id=' + id },
+					iframe: false
+				},
+				// Inflexiones
+				inflection: {
+					singular: 'comprobante',
+					plural: 'comprobante',
+					none: 'ninguno'
+				},
+				// Filtros
+				filters: [
+
+					/*	{ name: 'created_at', type: 'month', caption: 'Fecha de creación', range: true },*/
+					//{ name: 'updated_at', type: 'month', caption: 'Fecha últ. modificación', range: true },
+					// Pendiente: agregar datasource remoto y convertir a checkbox
+					// con jquery ui autocomplete
+					/*{ name: 'area_negocio', type: 'autocomplete', caption: 'Área de negocio', dataSource: 'getAreaNegocio' },
+					{ name: 'ejecutivo_responsable', type: 'autocomplete', caption: 'Ejecutivo responsable', dataSource: 'getUsuario' },*/
+
+					{ name: 'docDate', type: 'month', caption: 'Fecha de comprobante', range: true, currentMonth: true },
+					{ name: 'registryDate', type: 'month', caption: 'Fecha de registro', range: true, currentMonth: false },
+					{
+						name: 'docType', type: 'autocomplete', caption: 'Tipo comprobante', dataObject: [
+							{ id: 'egreso', text: 'Egreso' },
+							{ id: 'traspaso', text: 'Traspaso' },
+							{ id: 'ingreso', text: 'Ingreso' },
+						]
+					},
+					{
+						name: 'estado', type: 'checkbox', caption: 'Estado', options: [
+							{ caption: 'activo', name: 'activo', value: true },
+							{ caption: 'inactivo', name: 'inactivo', value: false }
+						]
+					},
+					{
+						name: 'automatico', type: 'checkbox', caption: 'Automático', options: [
+							{ caption: 'auto', name: 'auto_', value: true },
+							{ caption: 'manual', name: 'manual_', value: false }
+						]
+					},
+					{
+						name: 'descuadrado', type: 'checkbox', caption: 'Automático', options: [
+							{ caption: 'descuadrado', name: 'desc_', value: false }
+						]
+					}
+
+
+				]
+			};
+
+			unaBase.toolbox.search.init(params);
+			unaBase.toolbox.menu.init({
+				entity: 'comprobantes',
+				buttons: ['searchOff', "new", "accounting_libro_diario", "accounting_libro_mayor", "export_list", 'accounting_balance','accounting_create_opening', "close_accounting_period", "open_accounting_period", "create_accounting_period", "status_accounting_period", "import_remunerations", "import_seats","accounting_lib_cont", "analysis_by_account","accounting_crete_opening",'export_diot', 'auxiliar_report', 'accounting_provision', 'foliador_hojas'],
+				buttonsList: [
+					{
+						'accounting_libro_diario':
+						{
+							name: "Libro diario",
+							icon: "ui-icon-document-b",
+							caption: "Libro diario",
+							action: function () {
+
+								let url = nodeUrl + "/libro-diario/?download=true&ids=" + ids.join("|") + "=&sid=" + encodeURIComponent(sid) + "&" + filters + "&hostname=" + window.location.origin;
+								let download = window.open(url);
+								download.blur();
+								window.focus();
+
+							}
+						}
+					}
+
+				],
+
+
+			});
+
+
+
+			if (!access._663) {
+
+				$('#menu [data-name="create_accounting_period"]').remove();
+				$('#menu [data-name="status_accounting_period"]').remove();
+				$('#menu [data-name="close_accounting_period"]').remove();
+				$('#menu [data-name="open_accounting_period"]').remove();
+
+			}
+		});
+
+
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,670 @@
+
+var roundTwo= function(num){    
+    return +(Math.round(num + "e+2")  + "e-2");
+}
+
+var afterEditEmpresa = function(element) {
+  var target = $(element).parentTo('ul');
+  target.find('input[name="contacto[info][alias]"]').attr('type', 'search').autocomplete('enable');
+  target.find('input[name="contacto[info][alias]"]').attr('placeholder', 'Buscar por alias, RUT, razón social...'); 
+  target.find('input[name="contacto[info][razon_social]"]').attr('readonly', true);
+  target.find('input[name="contacto[info][rut]"]').attr('readonly', true);
+  target.find('input[name="contacto[info][giro]"]').attr('readonly', true);  
+  target.find('input[name="contacto[info][alias]"]').focus();
+  target.find('button.empresa.edit').hide();
+  if ($('input[name="contacto[info][id]"]').val() != '' || $('input[name="contacto[info][razon_social]"]').val() != '')
+    target.find('button.empresa.unlock, button.empresa.profile').show();
+};
+
+var afterEditContacto = function(element) {
+  var target = $(element).parentTo('ul');
+  target.find('input[name="relacionado[info][nombre]"]').attr('type', 'search').autocomplete('enable');
+  target.find('input[name="relacionado[info][nombre]"]').attr('placeholder', 'Buscar por Nombre y/o Apellidos');
+  target.find('input[name="relacionado[info][cargo]"], input[name="relacionado[info][email]"]').attr('readonly', true);
+  target.find('input[name="contacto[info][alias]"]').focus();
+  target.find('button.contacto.edit').hide(); 
+  target.find('button.unlock.contacto, button.show.contacto, button.profile.contacto').show();
+};
+
+var set_dtc_proveedor = function(param){
+ if (parseInt(param.prov)>0 && parseInt(param.dtc)>0 && parseInt(param.old)!=parseInt(param.dtc)){
+    confirm("¿Desea asignar el nuevo documento por defecto para este Proveedor?").done(function(data) {
+      if (data) {
+        $.ajax({
+          url: '/4DACTION/_V3_setContacto',
+          dataType: 'json',
+          data: {
+            'contact[id]':param.prov,
+            'contact[id_dtc_defecto]':param.dtc
+          },
+          success: function(data) {
+            if (data.success){
+              toastr.success('Documento fue asignado correctamente.');
+            }else{
+              if (data.readonly) {               
+                toastr.error(NOTIFY.get('ERROR_RECORD_READONLY', 'Error'));
+              }else{
+                toastr.error(NOTIFY.get('ERROR_INTERNAL', 'Error'));
+              }             
+            }
+          },
+          error: function(xhr, text, error) {
+            toastr.error('Falló conexión al servidor.');                
+          }
+        });          
+      }
+    });
+  }
+}
+
+var set_fpago_proveedor = function(param){
+ if (parseInt(param.prov)>0 && parseInt(param.fpago)>0 && parseInt(param.old)!=parseInt(param.dtc)){
+    confirm("¿Desea asignar la forma de pago por defecto para este Proveedor?").done(function(data) {
+      if (data) {
+        $.ajax({
+          url: '/4DACTION/_V3_setContacto',
+          dataType: 'json',
+          data: {
+            'contact[id]':param.prov,
+            'contact[id_fpago_defecto]':param.fpago
+          },
+          success: function(data) {
+            if (data.success){
+              toastr.success('La forma de pago fue asignado correctamente.');
+            }else{
+              if (data.readonly) {               
+                toastr.error(NOTIFY.get('ERROR_RECORD_READONLY', 'Error'));
+              }else{
+                toastr.error(NOTIFY.get('ERROR_INTERNAL', 'Error'));
+              }             
+            }
+          },
+          error: function(xhr, text, error) {
+            toastr.error('Falló conexión al servidor.');                
+          }
+        });          
+      }
+    });
+  }
+}
+
+var dtc_change = function(data){
+  if (data.tipo=="FXR") {
+    $('input[name="tipo_doc[descripcion]"]').val("RENDICION");
+    $('input[name="tipo_doc[id]"]').val("200");
+    $('table.items > tbody > tr[data-tipo="ITEM"] > td > input[name="oc[detalle_item][imp][id]"]').val("3");
+    $('table.items > tbody > tr[data-tipo="ITEM"] > td > input[name="oc[detalle_item][imp][id]"]').data('valorimp',"0");
+    $('table.items > tbody > tr[data-tipo="ITEM"] > td > input[name="oc[detalle_item][imp][id]"]').data('tipoimp',"EXENTO");
+    $('table.items > tbody > tr[data-tipo="ITEM"] > td > input[name="oc[detalle_item][imp][des]"]').val("EXENTO");
+  }else{
+    $('input[name="tipo_doc[id]"]').val(data.id);
+    $('input[name="tipo_doc[descripcion]"]').val(data.des);   
+    $.each(get_impuesto_by_doc(data.id).rows, function(key, item){     
+      if (item.estado) {
+        $('table.items > tbody > tr[data-tipo="ITEM"] > td > input[name="oc[detalle_item][imp][id]"]').val(item.id);
+        $('table.items > tbody > tr[data-tipo="ITEM"] > td > input[name="oc[detalle_item][imp][id]"]').data('valorimp', item.valor);
+        $('table.items > tbody > tr[data-tipo="ITEM"] > td > input[name="oc[detalle_item][imp][id]"]').data('tipoimp', item.tipo);
+        $('table.items > tbody > tr[data-tipo="ITEM"] > td > input[name="oc[detalle_item][imp][des]"]').val(item.des);
+      }
+    });    
+  }
+  $('span[name="resumen[oc][dtc]"]').text(((data.des)? data.des : '').toUpperCase());
+  update_subtotal_items();
+}
+
+$(document).ready(function() {
+	unaBase.ui.expandable.init();
+  var container = $('.sheet');
+  container.find('button.unlock.empresa, button.profile.empresa, button.show.contacto, button.unlock.contacto, button.profile.contacto').hide();    
+  
+  var empresa = $('input[name="contacto[info][alias]"]').val();
+  var contacto = $('input[name="relacionado[info][nombre]"]').val();
+  if (empresa!="") {
+    container.find('button.unlock.empresa, button.profile.empresa, button.show.contacto').show();      
+    if (contacto!="") {
+      container.find('button.unlock.contacto, button.profile.contacto').show();
+    }
+  }
+  
+  $('span[data-name="resumen-neto"]').number(true, 2, ',', '.');
+
+	$('button.show').button({icons: {primary: 'ui-icon-carat-1-s'},text: false});
+	//$('button.profile').button({icons: {primary: 'ui-icon-gear'},text: false});
+  $('button.profile').button({icons: {primary: 'ui-icon-pencil'},text: false});
+	$('button.unlock').button({icons: {primary: 'ui-icon-unlocked'},text: false});
+	$('button.edit.save').button({icons: {primary: 'ui-icon-disk'},text: false});
+	$('button.edit.discard').button({icons: {primary: 'ui-icon-close'},text: false});	
+	$('.edit.save.empresa, .edit.discard.empresa, .edit.save.contacto, .edit.discard.contacto').hide();
+
+ 	// Open profile proveedor
+	$('button.profile.empresa').click(function() {		
+	   unaBase.loadInto.dialog('/v3/views/contactos/content.shtml?id=' + $('[name="contacto[info][id]"]').val(), 'Perfil de Contacto ', 'large');
+  });
+
+	// Open profile contacto
+	$('button.profile.contacto').click(function() {
+		unaBase.loadInto.dialog('/v3/views/contactos/content.shtml?id=' + $('[name="relacionado[info][id]"]').val(), 'Perfil de Contacto', 'large');
+	});
+
+	// ver lista de contactos asociados
+	$('button.show.contacto').click(function() {
+		var target = $(this).parentTo('ul');
+		target.find('input[name="relacionado[info][nombre]"][type="search"]').autocomplete('search', '@').focus();
+	});
+
+  // FORMA DE PAGO
+  if($('input[name="forma_pago[descripcion]"]').length > 0){
+    $('button.show.forma-pago').click(function() {
+      id_fpago_default_old = $('input[name="forma_pago[id]"]').val();
+      $('input[name="forma_pago[descripcion]"]').autocomplete('search', '@').focus();  
+    });
+    $('input[name="forma_pago[descripcion]"]').autocomplete({          
+      source: function(request, response) {
+        $.ajax({
+          url: '/4DACTION/_V3_' + 'getFormaPagos',
+          dataType: 'json',
+          data: {
+            q: request.term                
+          },
+          success: function(data) {
+            response($.map(data.rows, function(item) {
+              return item;
+            }));
+          }
+        });
+      },
+      minLength: 0,
+      autoFocus: true,
+      open: function() {
+        $(this).removeClass('ui-corner-all').addClass('ui-corner-top');
+      },
+      close: function() {
+        $(this).removeClass('ui-corner-top').addClass('ui-corner-all');
+      },
+      focus: function(event, ui) {         
+        return false;
+      },
+      response: function(event, ui) {
+      },
+      select: function(event, ui) {
+        $('input[name="forma_pago[descripcion]"]').val(ui.item.des);
+        $('input[name="forma_pago[id]"]').val(ui.item.id);
+        var fecha = calcula_fecha_vcto_pago_oc(ui.item.id);
+        $('input[name="oc[fecha_vcto]"]').val(fecha);       
+        set_fpago_proveedor({
+          fpago: ui.item.id,
+          prov:$('input[name="contacto[info][id]"]').val(), 
+          old: id_fpago_default_old
+        });
+        return false;
+      }
+
+    }).data('ui-autocomplete')._renderItem = function(ul, item) {
+      return $('<li><a><strong class="highlight">' +  item.des + '</strong></a></li>').appendTo(ul);
+    };
+  }
+
+  var resumen_proveedor = function(data){
+    $('strong[name="resumen[oc][alias]"]').text(((data.alias)? data.alias : 'Sin Alias').toUpperCase());
+    $('span[name="resumen[oc][razon]"]').text(((data.razon)? data.razon : '').toUpperCase());
+  }
+
+  // Buscar proveedor por alias
+  unaBase.toolbox.form.autocomplete({
+    fields: [
+      { local: 'contacto[info][alias]', remote: 'alias', type: 'search', default: true }, // el primero es default    
+      { local: 'contacto[info][razon_social]', remote: 'razon_social', type: 'text' },     
+      { local: 'contacto[info][giro]', remote: 'giro', type: 'text' },
+      { local: 'contacto[info][direccion]', remote: 'direccion', type: 'text' },
+      { local: 'contacto[info][telefono1]', remote: 'telefonos', type: 'text' }
+    ],
+    data: {
+      entity: 'Empresa'
+    },
+    //restrict: false,
+    restrict: true, // test
+    response: function(event, ui) {
+      var target = $(this).parentTo('ul');     
+      target.find('input[name^="contacto[info]"]').not(this).val('');
+    },
+    change: function(event, ui) {
+      var target = $(this).parentTo('ul');      
+      if ($(this).val() == '') {
+        $('button.empresa').hide();
+        target.find('input').not(this).val('');
+      }
+
+      if ($('[name="contacto[info][id]"]').val() == '' && $(this).val() != '') {
+        var element = this;
+        confirm('El cliente "' + $(this).val() + '" no está registrado.' + "\n\n" + '¿Desea crearlo?').done(function(data) {
+          if (data) {
+            $('[name="contacto[info][id]"]').val('');            
+            target.parent().find('input[name^="relacionado[info]"]').val('');
+            //$('button.unlock.empresa').click();          
+            unaBase.loadInto.dialog('/v3/views/contactos/content.shtml?id=0', 'Perfil de Contacto', 'large');
+
+          } else {
+            $(element).val('');
+            setTimeout(
+              function() { $(element).focus(); }
+            , 500);
+          }
+        });
+      }
+
+    },
+    select: function(event, ui) {
+      var target = $(this).parentTo('ul');
+      target.find('button.unlock.empresa').show();
+      target.find('button.profile.empresa').show();
+      target.find('button.edit.empresa').hide();
+
+      $('input[type="search"][name="contacto[info][alias]"]').val((ui.item.text)? ui.item.text : 'Sin Alias');
+      $('input[type="hidden"][name="contacto[info][id]"]').val(ui.item.id);
+
+      target.find('input[name="contacto[info][razon_social]"]').val(ui.item.razon_social);
+      target.find('input[name="contacto[info][rut]"]').val((ui.item.rut_validar)? unaBase.data.rut.format(ui.item.rut) : ui.item.rut);
+      target.find('input[name="contacto[info][giro]"]').val(ui.item.giro);
+      target.find('input[name="contacto[info][direccion]"]').val(ui.item.direccion);
+      target.find('input[name="contacto[info][telefono1]"]').val(ui.item.telefonos);
+
+      // dtc según proveedor
+      var tipo_gasto = $('input[name="oc[tipo_gastos][id]"]').val();
+      var data = {'tipo':tipo_gasto ,'id':ui.item.id_dtc_default, 'des':ui.item.des_dtc_default};
+      dtc_change(data);
+
+      // forma de pago según proveedor
+      if (ui.item.id_forma_default != "") {         
+          $('input[name="forma_pago[id]"]').val(ui.item.id_forma_default);
+          $('input[name="forma_pago[descripcion]"]').val(ui.item.des_forma_default);
+          var fechaVcto = calcula_fecha_vcto_pago_oc(ui.item.id_forma_default);
+          $('input[name="oc[fecha_vcto]').val(fechaVcto);       
+      }
+
+      resumen_proveedor({'alias' : ui.item.text,'razon': ui.item.razon_social});
+      
+      $('span[name="resumen[oc][dtc]"]').text(((ui.item.des_dtc_default)? ui.item.des_dtc_default : '').toUpperCase());
+     
+      $.ajax({
+        url: '/4DACTION/_V3_' + 'getContactoByEmpresa',
+        dataType: 'json',
+        async: false,
+        data: {
+          id: ui.item.id,
+          default: true,
+          strict: true
+        },
+        success: function(data) {
+
+          //clean 
+          var target = $('input[type="search"][name="relacionado[info][nombre]"]').parentTo('ul');
+          target.find('input[name="relacionado[info][nombre]"]').val('');
+          target.find('input[name="relacionado[info][id]"]').val('');
+          target.find('input[name="relacionado[info][cargo]"]').val('');
+          target.find('input[name="relacionado[info][email]"]').val('');         
+          $('span[name="resumen[oc][contacto]"]').text("");
+
+          // set
+          $.map(data.rows, function(item) {
+            //target.find('input[name="relacionado[info][nombre]"]').data('id', item.id);
+            target.find('input[name="relacionado[info][nombre]"]').val(item.nombre_completo);
+            target.find('input[name="relacionado[info][cargo]"]').val(item.cargo);
+            target.find('input[name="relacionado[info][email]"]').val(item.email);
+            target.find('input[name="relacionado[info][id]"]').val(item.id);
+            $('span[name="resumen[oc][contacto]"]').text(item.nombre_completo.toUpperCase());
+          });
+          target.find('button.unlock.contacto, button.profile.contacto, button.show.contacto').show();      
+          target.find('button.edit.contacto').hide();
+        }
+      });
+
+      return false;
+    },
+    renderItem: function(ul, item) {
+      return $('<li><a><strong class="highlight">' + ((item.text)? item.text : '[Sin Alias]') + '</strong><em>' + ((item.rut_validar)? unaBase.data.rut.format(item.rut) : item.rut) + '</em><span>' + item.razon_social + '</span></a></li>').appendTo(ul);
+    }
+  });
+ 
+ // Desbloquea cajones para editar empresa
+  $('button.unlock.empresa').button({
+    icon: {
+      primary: 'ui-icon-unlocked'
+    },
+    text: false
+  }).click(function() {
+    var target = $(this).parentTo('ul');    
+    target.find('input[type="search"][name^="contacto[info]"]').each(function(key, item) {
+      try {
+        $(item).autocomplete('disable');
+      } catch(e) { }
+    });
+    target.find('input').removeClass("invalid");
+    target.find('input').not('[type="search"][name^="contacto[info]"]').not('[type="checkbox"]').removeAttr('readonly');
+    target.find('input').not('[type="search"][name^="contacto[info]"]').not('[type="checkbox"]').removeAttr('readonly');
+    target.find('input[type="search"][name^="contacto[info]"]').removeAttr('placeholder').attr('type', 'text');
+    target.find('input[name="contacto[info][rut]"]').parentTo('span').addClass('main');
+    target.find('input[name="contacto[info][rut][validate]"]').parentTo('span').addClass('secondary').removeClass('hidden');
+    target.find('button.empresa').hide();
+    target.find('button.edit.empresa').show();
+    target.find('input[name="contacto[info][id]"]').focus();
+  });
+
+  // Guarda datos editados de la empresa
+  $('button.edit.save.empresa').click(function(event) { 
+    var validate = true;
+
+    var text = "";
+    var localValidate = true;
+    var rut = $('input[name="contacto[info][rut]"]').val();
+    var giro = $('input[name="contacto[info][giro]"]').val();
+
+    if (giro==""){
+      text = text + "- Giro.<br>";
+      localValidate = false;
+    }    
+
+    if (rut!="") {
+      if (!unaBase.data.rut.validate(rut)) {
+        text = text + "- Rut ingresado es incorrecto.<br>";
+        localValidate = false;
+      }        
+    }else{
+      text = text + "- Rut.<br>";
+      localValidate = false;
+    }
+    
+    if (!localValidate)
+        $(this).invalid();
+
+    var element = this;   
+
+    // se guardan los datos
+    if (localValidate){
+      $.ajax({
+        url: '/4DACTION/_V3_setContacto',
+        dataType: 'json',
+        data: {
+          'contact[id]' : $('input[name="contacto[info][id]').val(),
+          'contact[alias]' : $('input[name="contacto[info][alias]').val(),
+          'contact[estado]' : true,
+          'contact[razon]' : $('input[name="contacto[info][razon_social]').val(),
+          'contact[rut]' : $('input[name="contacto[info][rut]').val(),
+          'contact[giro]' : $('input[name="contacto[info][giro]').val()
+        },
+        success: function(data) {         
+          if (data.success) {
+            if (data.new){
+              toastr.info('Contacto ha sido creado correctamente.');
+             
+              // dtc según proveedor
+              var tipo_gasto = $('input[name="oc[tipo_gastos][id]"]').val();
+              var data = {'tipo':tipo_gasto ,'id': '30', 'des': 'FACTURA'};
+              dtc_change(data);
+
+            }else{
+              toastr.info('Contacto ha sido modificado correctamente.');              
+            }
+            $('input[name="contacto[info][id]"]').val(data.id);
+
+            // resumen
+            var alias = $('input[name="contacto[info][alias]"]').val();
+            var razon = $('input[name="contacto[info][razon_social]"]').val();
+            resumen_proveedor({'alias' : $('input[name="contacto[info][alias]"]').val(),'razon': razon});
+
+            afterEditEmpresa(element);
+          } else {
+            if (data.opened) {
+              if (data.readonly)
+                toastr.error('No fue posible guardar los datos del contacto. Otro usuario está bloqueando el registro.');
+            } else {
+              if (!data.unique)
+                toastr.error('El contacto que intenta ingresar ya se almacenó previamente en la base de datos.');
+              else
+                toastr.error('El id del contacto no existe (error desconocido).');
+            }           
+          }
+        },
+        error: function(xhr, text, error) {
+          toastr.error('Falló conexión al servidor.');       
+        }
+      });
+    }else {
+      // mensaje validación
+      toastr.error('Hay datos faltantes o incorrectos:<br>'+text);
+      event.stopImmediatePropagation();
+    }
+  });
+  
+  // Descarta cambios al editar la empresa
+  $('button.edit.discard.empresa').click(function(event) {
+    var element = this;
+    confirm('¿Desea descartar los cambios?').done(function(data) {
+      if (data) {      
+        $('input[name^="contacto[info]"').not('input[name^="relacionado[info]"]').removeClass('invalid');
+        var target = $(element).parentTo('ul');
+        var id = target.find('input[name="contacto[info][id]"]').val();
+        target.find('input[name^="contacto[info]"]').val('');
+        $.ajax({
+          url: '/4DACTION/_V3_getEmpresa',
+          dataType: 'json',
+          data: {
+            q: id,
+            filter: 'id'
+          },
+          success: function(data) {            
+            $.map(data.rows, function(item) {            
+              target.find('input[name="contacto[info][id]"]').val(item.id);
+              target.find('input[name="contacto[info][alias]"]').val(item.text);
+              target.find('input[name="contacto[info][razon_social]"]').val(item.razon_social);
+              target.find('input[name="contacto[info][rut]"]').val((item.rut_validar)? unaBase.data.rut.format(item.rut) : item.rut);
+              target.find('input[name="contacto[info][giro]"]').val(item.giro);
+              target.find('input[name="contacto[info][direccion]"]').val(item.direccion);
+              target.find('input[name="contacto[info][telefono1]"]').val(item.telefonos);
+            });
+            afterEditEmpresa(element);
+          }
+        });
+      }
+    });
+    event.stopImmediatePropagation();
+  });  
+
+  // Lista de contactos
+  unaBase.toolbox.form.autocomplete({
+    fields: [
+      { local: 'relacionado[info][id]', remote: 'nombre_completo', type: 'search', default: true },
+      { local: 'relacionado[info][cargo]', remote: 'cargo', type: 'text' },
+      { local: 'relacionado[info][email]', remote: 'razon_social', type: 'email' }
+    ],
+    data: {
+      entity: 'Contacto',
+      filter: 'nombre_completo',
+      relationship: function() {
+        return {
+          key: 'Empresa',
+          id: $('input[name="Contacto[info][id]"]').val()
+        }
+      }
+    },
+    restrict: false,
+    response: function(event, ui) {
+      var target = $(this).parentTo('ul');
+      $('[name="relacionado[info][id]"]').val('');
+      target.find('input[name^="relacionado[info]"]').not(this).val('');
+    },
+    change: function(event, ui) {
+      var target = $(this).parentTo('ul');
+      if ($(this).val() == '')
+        target.find('button.contacto').hide();
+
+      if ($('[name="relacionado[info][id]"]').val() != "" && $(this).val() != '') {
+        var element = this;
+        confirm('El contacto "' + $(this).val() + '" no está registrado.' + "\n\n" + '¿Desea crearlo?').done(function(data) {
+          if (data) {
+            $('[name="relacionado[info][id]"]').val('');
+            $('button.unlock.contacto').click();
+          } else {
+            target.find('input[type="search"][name^="relacionado[info]"]').val('');
+            setTimeout(
+              function() { $(element).focus(); }
+            , 500);
+          }
+        });
+      }
+
+    },
+    select: function(event, ui) {
+      var target = $('input[type="search"][name="relacionado[info][nombre]"]').parentTo('ul');
+      target.find('button.unlock.contacto, button.profile.contacto ').show();
+      target.find('button.edit.contacto').hide();
+      $('input[type="search"][name="relacionado[info][nombre]"]').val(ui.item.nombre_completo);
+      //$('input[type="search"][name="relacionado[info][nombre]"]').data('id', ui.item.id);
+      target.find('input[name="relacionado[info][id]"]').val(ui.item.id);
+      target.find('input[name="relacionado[info][cargo]"]').val(ui.item.cargo);
+      target.find('input[name="relacionado[info][email]"]').val(ui.item.email);
+
+      var old_empresa = $('input[name="contacto[info][id]"]').val();
+      var new_empresa = ui.item.empresa.id;
+
+      $('span[name="resumen[oc][contacto]"]').text(ui.item.nombre_completo.toUpperCase());
+      
+      if (!old_empresa) {
+        //target.find('input[name="contacto[info][alias]"]').data('id', undefined);
+        target.find('input[name="contacto[info][id]"]').val('');
+        target.find('input[name="contacto[info][razon_social]"]').val('');
+        target.find('input[name="contacto[info][rut]"]').val('');
+        $.ajax({
+          url: '/4DACTION/_V3_' + 'getEmpresa',
+          dataType: 'json',
+          async: false,
+          data: {
+            q: new_empresa,
+            filter: 'id'
+          },
+          success: function(data) {
+            var target = $('input[type="search"][name="contacto[info][alias]"]').parentTo('ul');
+            
+            $.map(data.rows, function(item) {
+              //target.find('input[name="contacto[info][alias]"]').data('id', item.id);
+              target.find('input[name="contacto[info][alias]"]').val(item.text);
+              target.find('input[name="contacto[info][razon_social]"]').val(item.razon_social);
+              target.find('input[name="contacto[info][rut]"]').val(item.rut);
+              target.find('input[name="contacto[info][id]"]').val(item.id);
+            });
+            $('button.empresa').show();
+            $('button.empresa.edit').hide();
+          }
+        });
+      }
+      
+      return false;
+    },
+    renderItem: function(ul, item) {
+      return $('<li><a><strong class="highlight">' + item.nombre_completo + '</strong><em>' + item.cargo + '</em><span>' + item.email + '</span></a></li>').appendTo(ul);
+    }
+  });
+
+  // desbloquear para editar contacto
+  $('button.unlock.contacto').click(function() {
+    var target = $(this).parentTo('ul');
+
+    target.find('input[name^="relacionado[info]"][type="search"]').each(function(key, item) {      
+      try {
+        $(item).autocomplete('disable');
+      } catch(e) {
+        // Si no se puede deshabilitar, se deja pasar la excepción
+      }
+    });
+
+    target.find('input[name^="relacionado[info]"]').not('[type="search"]').removeAttr('readonly');
+    target.find('input[name^="relacionado[info]"][type="search"]').removeAttr('placeholder').attr('type', 'text');
+
+    target.find('button.show.contacto, button.unlock.contacto, button.profile.contacto').hide();
+    target.find('button.edit.contacto').show();
+    target.find('input[name="relacionado[info][nombre]"]').focus();
+  });
+
+  // botones contacto
+  $('button.edit.save.contacto').click(function() {
+    var element = this;
+    var fields = {
+      fk: $('input[name="contacto[info][id]"]').val()
+    };
+    $('input[name^="relacionado[info]"').each(function() {
+      var tuple = {};
+
+      var name = $(this).attr('name');
+      var value = $(this).val();
+      if ($('input[name="relacionado[info][id]"]').val() != "") {       
+        tuple = {
+          'id': $('input[name="relacionado[info][id]"]').val()
+        };
+        $.extend(fields, fields, tuple);
+      }      
+      tuple[name] = value;
+      $.extend(fields, fields, tuple);
+    });
+
+    // se guardan los datos
+    $.ajax({
+      url: '/4DACTION/_V3_setContactoByEmpresa',
+      dataType: 'json',
+      data: fields,
+      success: function(data) {
+        if (data.success) {
+          if (data.new)
+            toastr.info('Contacto creado!');
+          else
+            toastr.info('Contacto modificado!');
+          //$('input[name="relacionado[info][nombre]"]').data('id', data.id);         
+          $('input[name="relacionado[info][id]"]').val(data.id);
+          $('h2 [name="relacionado[info][id]"]').text(fields['relacionado[info][id]']);
+          afterEditContacto(element);
+        } else {
+          if (data.opened) {
+            if (data.readonly)
+              toastr.error('No fue posible guardar los datos del contacto. Otro usuario está bloqueando el registro.');
+          } else {
+            if (!data.unique)
+              toastr.error('El contacto que intenta ingresar ya se almacenó previamente en la base de datos.');
+            else
+              toastr.error('El id del contacto no existe (error desconocido).');
+          }         
+        }
+      },
+      error: function(xhr, text, error) {
+        toastr.error('Falló conexión al servidor.');      
+      }
+    });
+  });
+  
+  $('button.edit.discard.contacto').click(function(event) {
+    var element = this;
+    confirm('¿Desea descartar los cambios?').done(function(data) {
+      if (data) {       
+        var target = $(element).parentTo('ul');
+        var id = target.find('input[name="relacionado[info][id]"]').val();
+        target.find('input[name^="relacionado[info]"]').val('');
+        $.ajax({
+          url: '/4DACTION/_V3_getContacto',
+          dataType: 'json',         
+          data: {
+            q: id,
+            filter: 'id'
+          },
+          success: function(data) {           
+            $.map(data.rows, function(item) {
+              target.find('input[name="relacionado[info][id]"]').val(item.id);
+              target.find('input[name="relacionado[info][nombre]"]').val(item.nombre_completo);              
+              target.find('input[name="relacionado[info][cargo]"]').val(item.cargo);
+              target.find('input[name="relacionado[info][email]"]').val(item.email);
+            });
+            afterEditContacto(element);
+          }
+        });
+      }
+    });
+    event.stopImmediatePropagation();
+  });
+
+});

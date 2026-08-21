@@ -1,0 +1,13 @@
+<!--#4dif Size of array(aIdGuestOt)>0-->
+<ol>
+	<!--#4dloop aIdGuestOt-->
+	<li>
+		<a href="#" class="select-guest select-guest2" rel="<!--#4DVAR aNombresGuestOt{aIdGuestOt}-->:<!--#4DVAR aEmailGuestOt{aIdGuestOt}-->">
+			<!--#4DVAR Lowercase(aNombresGuestOt{aIdGuestOt})-->
+		</a>
+	</li>
+	<!--#4dendloop-->
+</ol>
+<!--#4delse-->
+0	
+<!--#4dendif-->

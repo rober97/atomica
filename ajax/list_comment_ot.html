@@ -1,0 +1,21 @@
+<!--#4dloop aIdComOt-->
+<div class="items-comentario" id="<!--#4DVAR aIdComOt{aIdComOt}-->">
+    <div>
+        <span class="nro"><!--#4DVAR aNroComOt{aIdComOt}--></span>
+        <span class="photo"><img src="<!--#4DVAR aPhotoRespComOt{aIdComOt}-->"></span>
+        <span class="name">
+            <!--#4DVAR aNomRespComOt{aIdComOt}--> / 
+            <span class="especial-span"><!--#4DVAR aEmailRespComOt{aIdComOt}--></span>
+            <!--#4dif aTypeRespComOt{aIdComOt}="guest"-->
+                <span class="guest-tag">( Invitado )</span>
+            <!--#4dendif-->
+        </span>
+    </div>                    
+    <div>                                  
+        <span class="comment"><!--#4DHTMLVAR aDesComOt{aIdComOt}--></span>
+        <span class="date">
+            Comentado el <!--#4DVAR aDateComOt{aIdComOt}--> a las <!--#4DVAR aTimeComOt{aIdComOt}-->
+        </span>
+    </div>             
+</div>
+ <!--#4dendloop-->

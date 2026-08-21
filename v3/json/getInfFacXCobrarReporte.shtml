@@ -1,0 +1,30 @@
+{
+	"total": <!--#4DTEXT String(V_FacTotal;"&xml")-->,
+	"abono": <!--#4DTEXT String(V_FacAbono;"&xml")-->,
+	"saldo": <!--#4DTEXT String(V_FacSaldo;"&xml")-->,
+	"total_registros": <!--#4DTEXT String(v_TotReg;"&xml")-->,
+	"titulo": "<!--#4DHTML _V3_escapeString(v_Tit_Informe)-->",
+	"nodeUrl": "<!--#4DHTML _V3_escapeString(nodeUrl)-->",
+	"facturas": [
+		<!--#4DLOOP aFolioFacx_-->
+		{
+			"nc": "<!--#4DHTML _V3_escapeString(aNCFacx_{aFolioFacx_})-->",
+			"negocio": "<!--#4DHTML _V3_escapeString(aNegocioFacx_{aFolioFacx_})-->",
+			"numero": "<!--#4DHTML _V3_escapeString(aFolioFacx_{aFolioFacx_})-->",
+			"forma_pago": "<!--#4DHTML _V3_escapeString(aFormaPago{aFolioFacx_})-->",
+			"fecha_emision": "<!--#4DHTML aFechaFacx_{aFolioFacx_}-->",
+			"fecha_recepcion": "<!--#4DHTML aFechaRecepcion{aFolioFacx_}-->",
+			"fecha_vcto": "<!--#4DHTML aVenceFacx_{aFolioFacx_}-->",
+			"atraso": "<!--#4DTEXT String(aAtrasoFacx_{aFolioFacx_};"&xml")-->",
+			"cliente": "<!--#4DHTML _V3_escapeString(aClienteFacx_{aFolioFacx_})-->",
+			"contacto": "<!--#4DHTML _V3_escapeString(aContacto{aFolioFacx_})-->",
+			"contacto_mail": "<!--#4DHTML _V3_escapeString(aContactoMail{aFolioFacx_})-->",
+			"contacto_fono": "<!--#4DHTML _V3_escapeString(aContactoFono{aFolioFacx_})-->",
+			"referencia": "<!--#4DHTML _V3_escapeString(aRefNVFacx_{aFolioFacx_})-->",
+			"total": <!--#4DTEXT String(aTotFacx_{aFolioFacx_};"&xml")-->,
+			"abono": <!--#4DTEXT String(aAbonoFacx_{aFolioFacx_};"&xml")-->,
+			"saldo": <!--#4DTEXT String(aSaldoFacx_{aFolioFacx_};"&xml")-->
+		}<!--#4DIF NOT(aFolioFacx_{aFolioFacx_} = aFolioFacx_{Size of array(aFolioFacx_)})-->,<!--#4DENDIF-->
+		<!--#4DENDLOOP-->
+	]
+}

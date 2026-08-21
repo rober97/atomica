@@ -1,0 +1,99 @@
+<!--<h3 class="currentDate">#4DVAR currentDate</h3>-->
+   
+<div class="box-changes-week">
+    <a href="#" rel="<!--#4DVAR vDatePrevious-->" id="link-previous-week">
+        <img class="img-title-calendar" src="/imagenes_green/arrows_prev.png">
+        Anterior
+    </a>
+     <a href="#" rel="" id="link-current-week">              
+        Actual
+    </a>
+    <a href="#"  rel="<!--#4DVAR vDateNext-->" id="link-next-week">                
+        Pr&oacute;xima
+        <img class="img-title-calendar" src="/imagenes_green/arrows_next.png">
+    </a>
+</div>
+
+<div id="content-list-ot" class="content">
+               <table id="table-calendar" class="table-format-2" cellspacing="0" cellspadding="0">
+                    <thead>                                  
+                        <tr>
+                            <th width="<!--#4DVAR vMedUno-->%"><!--#4DVAR currentYear--></th>                                              
+                            <th width="<!--#4DVAR vMedResto-->%" class="<!--#4DVAR aHide{1}-->">
+                                <!--#4DVAR aWorkingDay{1}-->                              
+                            </th>
+                            <th width="<!--#4DVAR vMedResto-->%" class="<!--#4DVAR aHide{2}-->">
+                                <!--#4DVAR aWorkingDay{2}-->                               
+                            </th> 
+                            <th width="<!--#4DVAR vMedResto-->%" class="<!--#4DVAR aHide{3}-->">
+                                <!--#4DVAR aWorkingDay{3}-->                             
+                            </th> 
+                            <th width="<!--#4DVAR vMedResto-->%" class="<!--#4DVAR aHide{4}-->">
+                                <!--#4DVAR aWorkingDay{4}-->                               
+                            </th> 
+                            <th width="<!--#4DVAR vMedResto-->%" class="<!--#4DVAR aHide{5}-->">
+                                <!--#4DVAR aWorkingDay{5}-->                             
+                            </th> 
+                            <th width="<!--#4DVAR vMedResto-->%" class="<!--#4DVAR aHide{6}-->">
+                                <!--#4DVAR aWorkingDay{6}-->                             
+                            </th> 
+                            <th width="<!--#4DVAR vMedResto-->%" class="<!--#4DVAR aHide{7}-->">
+                                <!--#4DVAR aWorkingDay{7}-->                            
+                            </th>                                            
+                        </tr>        
+                    </thead>
+                    <tbody> 
+
+                    <!--#4DLOOP aWorkingTime-->       
+                    <tr>
+                        <td class="chronology"><!--#4DVAR aWorkingTime{aWorkingTime}--></td>                   
+                        
+                        <td class="<!--#4DVAR aHide{1}-->">
+                            <div class="hours-assigned" title="<!--#4DVAR aWorkingDayDate{1}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->">                                
+                            </div>
+
+                            <div class="hours-assigned-vcto" title="<!--#4DVAR aWorkingDayDate{1}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->">                                
+                            </div>
+                        </td>
+
+                        <td class="<!--#4DVAR aHide{2}-->">
+                            <div class="hours-assigned" title="<!--#4DVAR aWorkingDayDate{2}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>
+
+                            <div class="hours-assigned-vcto" title="<!--#4DVAR aWorkingDayDate{2}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>
+                        </td>
+
+                        <td class="<!--#4DVAR aHide{3}-->">
+                            <div class="hours-assigned" title="<!--#4DVAR aWorkingDayDate{3}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>
+                            
+                            <div class="hours-assigned-vcto" title="<!--#4DVAR aWorkingDayDate{3}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>
+                        </td>
+
+                        <td class="<!--#4DVAR aHide{4}-->">
+                            <div class="hours-assigned" title="<!--#4DVAR aWorkingDayDate{4}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>
+
+                            <div class="hours-assigned-vcto" title="<!--#4DVAR aWorkingDayDate{4}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>                            
+                        </td>
+
+                        <td class="<!--#4DVAR aHide{5}-->">
+                            <div class="hours-assigned" title="<!--#4DVAR aWorkingDayDate{5}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>
+
+                            <div class="hours-assigned-vcto" title="<!--#4DVAR aWorkingDayDate{5}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>                           
+                        </td>
+
+                        <td class="<!--#4DVAR aHide{6}-->">                            
+                            <div class="hours-assigned" title="<!--#4DVAR aWorkingDayDate{6}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>
+
+                            <div class="hours-assigned-vcto" title="<!--#4DVAR aWorkingDayDate{6}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>                             
+                        </td>
+
+                        <td class="<!--#4DVAR aHide{7}-->">
+                            <div class="hours-assigned" title="<!--#4DVAR aWorkingDayDate{7}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>
+
+                            <div class="hours-assigned-vcto" title="<!--#4DVAR aWorkingDayDate{7}-->:<!--#4DVAR aWorkingTime{aWorkingTime}-->"></div>                            
+                        </td>
+
+                    </tr>       
+                    <!--#4DENDLOOP-->                  
+                    </tbody> 
+                </table>
+            </div>

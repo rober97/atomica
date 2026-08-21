@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Programador masivo — Negocios con saldo</title>
+    <style>
+      /* ====== Layout / tokens ====== */
+      :root{
+        --bg:#f5f7fb;
+        --card:#fff;
+        --ink:#1f2937;
+        --muted:#667085;
+        --line:#e7ebf0;
+        --primary:#0b5fff;
+        --primary-weak:#eaf0ff;
+        --danger:#dc2626;
+        --chip:#eef2f7;
+        --chip-ink:#475569;
+      }
+      *{box-sizing:border-box}
+      html,body{height:100%}
+      body.programador-masivo{
+        margin:0;
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background:var(--bg);
+        color:var(--ink);
+        
+      }
+      .pm-container{
+        background: var(--card);
+        border-radius: 12px;
+        box-shadow: 0 10px 28px rgba(15,23,42,.10);
+        padding: 24px 20px;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+      }
+
+      .pm-table-wrap{
+        border-radius: 12px;
+        overflow-x: auto;
+        height: 100vh;
+      }
+
+      .pm-table-wrap{
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+      }
+
+    /* ====== Filters ====== */
+    .pm-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      align-items: flex-end;
+      margin-bottom: 14px;
+    }
+
+    .pm-filters label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+
+    .filter-period {
+      position: relative;
+    }
+
+    .pm-filters select,
+    .pm-filters input[type="month"],
+    .pm-filters input[type="number"] {
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      padding: 7px 10px;
+      min-width: 180px;
+      font-size: 13.5px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+    }
+
+    /*  safe point*/
+    /* ====== Inputs inside table ====== */
+    input[type="text"],
+    .notify-cell input[type="email"],
+    .date-cell input[type="date"] {
+      width: 190px;
+      appearance: none;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 12.5px;
+      outline: none;
+      background: #fff;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .date-cell input[type="date"] {
+      width: 160px;
+    }
+
+    .notify-cell input:focus,
+    .date-cell input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-weak);
+    }
+
+    /* Small “status chip” */
+    .status-pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--chip-ink);
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .status-pill--active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    /* Toggle */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 42px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch .slider {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: #e2e6ed;
+      transition: .2s;
+    }
+
+    .switch .slider:before {
+      content: "";
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+      transition: .2s;
+    }
+
+    .switch input:checked+.slider {
+      background: #34d399;
+    }
+
+    .switch input:checked+.slider:before {
+      transform: translateX(20px);
+    }
+
+    /* ====== Loading ====== */
+    .pm-loading {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .pm-loading.visible {
+      display: flex;
+    }
+
+    .pm-loading .spinner {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 4px solid rgba(11, 95, 255, .25);
+      border-top-color: var(--primary);
+      animation: spin .9s linear infinite;
+    }
+
+    /* ========== Tom Initialize ============== */
+    /*  Buscador de Clientes Filas */
+    .pm-table .ts-wrapper.cliente-select{
+      width: 200px;
+      display: inline-block;
+    }
+
+    .pm-table .ts-wrapper.cliente-select .ts-control{
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: #111827;
+      background: #fff;
+      box-shadow: 0 0 4px rgba(0,0,0,0.05);
+    }
+
+    .pm-table .ts-wrapper.cliente-select.single .ts-control > input[type="text"]{
+      width: 2px;
+      min-width: 2px;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .ts-wrapper.cliente-select.single .ts-control > input,
+    .ts-wrapper.cliente-select.single .ts-control > input[type="text"]{
+      width: auto !important;
+      min-width: 60px !important;           /* espacio mínimo para ver letras */
+      flex: 1 1 60px !important;            /* que tome espacio disponible */
+      color: #111827 !important;            /* por si quedaba transparente */
+    }
+
+    .pm-table .ts-wrapper.cliente-select.single .ts-control > .item{
+      font-size: 12px;
+      color: #111827;
+      font-weight: 500;
+      text-align: left;
+    }
+
+    select.cliente-select {
+      display: none !important;
+    }
+    .ts-wrapper.cliente-select {
+      display: inline-block !important;
+      width: 200px;
+
+      text-align: left;
+    }
+    .ts-wrapper.cliente-select .ts-control {
+      
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+
+    .ts-wrapper.cliente-select.single .ts-control{
+      display: flex !important;
+      flex-wrap: nowrap !important;    
+      align-items: center !important;
+      min-height: 34px; 
+      overflow: hidden !important;
+      padding-right: 28px !important;
+      border-radius: 6px !important;
+      border: 1px solid #d0d0d0 !important;
+    }
+
+    .ts-wrapper.cliente-select.single .ts-control > .item{
+      flex: 0 1 auto !important;
+      max-width: 100% !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .ts-wrapper.cliente-select.single .ts-control > input{
+      margin: 0 !important;
+      padding: 0 !important;
+      line-height: inherit !important;
+      min-width: 2px;
+    }
+
+    .ts-wrapper.cliente-select.focus.single .ts-control > input,
+    .ts-wrapper.cliente-select.focus.single .ts-control > input[type="text"]{
+      min-width: 60px !important;
+    }
+
+    .ts-wrapper.cliente-select .ts-dropdown .option{
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      line-height: 1.4 !important;
+    }
+
+    .ts-wrapper.cliente-select .ts-control .item {
+      padding: 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+
+      box-shadow: none !important;
+    }
+    .ts-wrapper.cliente-select .ts-control input {
+    
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* Estilo Buscador Superior */
+    .ts-wrapper.filter-cliente-select .ts-control  {
+      padding: 4px 8px !important;
+      border-radius: 6px !important;
+      border: 1px solid #d0d0d0 !important;
+      font-size: 13px !important;
+      line-height: 1.4 !important;
+      box-shadow: 0 0 4px rgba(0,0,0,0.05) !important;
+    }
+    .pm-filters .ts-wrapper {
+      width: 190px;
+    }
+
+    .pm-filters .ts-wrapper.filter-cliente-select.single .ts-control{
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+
+      overflow: hidden !important;
+      min-height: 34px !important;
+
+      padding-right: 28px !important; 
+    }
+
+    .pm-filters .ts-wrapper.filter-cliente-select.single .ts-control > .item{
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+
+      color: #111827 !important;  
+      font-size: 13.5px !important;  
+    }
+
+    .pm-filters .ts-wrapper.filter-cliente-select.single .ts-control > input[type="text"]{
+      width: auto !important;
+      min-width: 80px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    .pm-filters .ts-wrapper.filter-cliente-select .ts-dropdown .option{
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .pm-filters .ts-wrapper .ts-control {
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 13.5px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+      box-shadow: none;
+    }
+
+    .pm-filters .ts-wrapper .ts-control.focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-weak);
+    }
+
+    /* CSS Prueba*/
+    .col-cliente {
+      width: 100px;
+    }
+
+    /* CSS para Crear y Modificar OC */
+    .oc-link{
+      cursor: pointer;
+      color:#20A789;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .oc-link:hover{
+      opacity: .85;
+      background-color: #1821362c;
+      
+      /* CSS para link a Negocio*/
+    }
+    .nv-link{
+      cursor: pointer;
+      color:#20A789;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .nv-link:hover{
+      opacity: .85;
+      background-color: #1821362c;
+      
+    }
+
+    /* CSS Glosa Input*/
+    .glosa-input {
+      width: 150px !important; 
+    }
+
+    /* Input Emitir Fecha */
+    .emit-date-input {
+      width: 120px !important; 
+    }
+
+    /* Fecha (Negocio) */
+    .fecha-Negocio {
+      width: 70px;
+    }
+
+    .period-picker {
+      position: relative;
+      width: 200px;
+    }
+
+    .period-display {
+      width: 100%;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 13.5px;
+      text-align: left;
+      color: var(--ink);
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .period-display::after {
+      content: "▾";
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .period-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: #fff;
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      box-shadow: 0 14px 32px rgba(14, 24, 44, 0.18);
+      padding: 12px;
+      width: 240px;
+      display: none;
+      z-index: 20;
+    }
+
+    .period-dropdown.is-open {
+      display: block;
+    }
+
+    .period-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .period-header select {
+      flex: 1;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 13px;
+    }
+
+    .period-nav {
+      border: 1px solid #d0d7de;
+      background: #fff;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .period-subtitle {
+      text-align: center;
+      font-weight: 600;
+      font-size: 13px;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+
+    .period-body {
+      display: grid;
+      gap: 6px;
+    }
+
+    .period-body.is-month {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .period-body.is-year {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .period-option {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 6px 8px;
+      background: #f4f6fb;
+      text-align: center;
+      font-size: 12.5px;
+      cursor: pointer;
+    }
+
+    .period-option:hover {
+      border-color: #bfd3ff;
+      background: #e9f1ff;
+    }
+
+    .period-option.is-active {
+      background: #0b5fff;
+      color: #fff;
+      border-color: #0b5fff;
+      font-weight: 600;
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
+    .pm-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 8px 0 6px;
+    }
+
+    .pm-secondary {
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+
+    .pm-secondary:hover {
+      box-shadow: 0 0 0 3px var(--primary-weak);
+    }
+
+    .pm-secondary:active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .pm-secondary:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .pm-actions span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pm-table thead th {
+      position: sticky;
+      top: 0;
+      background: #f0f3f7;
+      z-index: 1;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: #475569;
+      text-align: left;
+      padding: 9px 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pm-table tbody td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .pm-table tbody tr.data-row:hover {
+      background: #fafcff;
+    }
+
+    .pm-table .w-checkbox {
+      width: 32px;
+    }
+
+    .pm-table .currency {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pm-table .group-row td {
+      background: #182136;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 11px;
+      padding: 10px 8px;
+    }
+
+        /* ====== Table ====== */
+    .pm-table {
+      width: max-content;
+      min-width: 100%;
+      border-collapse: collapse;
+    }
+    .pm-table thead th:nth-child(4),
+    .pm-table tbody td:nth-child(4){
+      width: 240px !important;
+      max-width: 240px !important;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .pm-table tbody td:nth-child(4) .ts-wrapper,
+    .pm-table tbody td:nth-child(4) .ts-control{
+      width: 100% !important;
+      max-width: 200px !important;
+    }
+
+    /* Ajustar el tamaño de fecha*/
+    .pm-table thead th.col-fecha,
+    .pm-table tbody td.fecha-Negocio{
+      width: 100px !important;
+      min-width: 100px !important;
+      white-space: nowrap;
+    }
+
+    /* Filas deshabilitadas por Facturacion Agrupada */
+    .pm-table tr.is-locked {
+      opacity: .65;
+    }
+
+    .pm-table tr.is-locked input,
+    .pm-table tr.is-locked select,
+    .pm-table tr.is-locked textarea {
+      background: #f3f4f6 !important;
+      color: #6b7280 !important;
+      cursor: not-allowed !important;
+    }
+
+    .pm-table .ts-wrapper.disabled .ts-control {
+      background: #f3f4f6 !important;
+      color: #6b7280 !important;
+      cursor: not-allowed !important;
+    }
+
+    .pm-table tr.is-locked .oc-link,
+    .pm-table tr.is-locked .nv-link {
+      pointer-events: none;
+      text-decoration: none;
+      opacity: .7;
+    }
+
+    .pm-table td.is-locked-cell{
+      background:#f3f4f6;
+      color:#6b7280;
+    }
+
+    .pm-table tr.is-locked input,
+    .pm-table tr.is-locked select,
+    .pm-table tr.is-locked textarea {
+      background: #f3f4f6 !important;
+      color: #6b7280 !important;
+      cursor: not-allowed !important;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+  </style>
+</head>
+
+<body class="programador-masivo">
+  <div class="pm-container">
+    <table class="pm-table"></table>
+    <!-- ===== Filters ===== -->
+    <div class="pm-filters">
+      <label>
+        Cliente
+        <select id="pm-filter-cliente" class="filter-cliente-select" placeholder="Filtrar por cliente...">
+          <option value="">Todos los clientes</option>
+        </select>
+      </label>
+
+      <label class="filter-period">
+        Fecha
+        <div class="period-picker" id="pm-period-picker">
+          <button type="button" class="period-display" id="pm-period-display"></button>
+          <div class="period-dropdown" id="pm-period-dropdown">
+            <div class="period-header">
+              <button type="button" class="period-nav" data-dir="-1">&#8249;</button>
+              <select id="pm-period-mode">
+                <option value="month">Mes</option>
+                <option value="year">Año</option>
+              </select>
+              <button type="button" class="period-nav" data-dir="1">&#8250;</button>
+            </div>
+            <div class="period-subtitle" id="pm-period-subtitle"></div>
+            <div class="period-body" id="pm-period-body"></div>
+          </div>
+          <input id="pm-filter-mes" type="month" class="is-hidden" />
+          <input id="pm-filter-year" type="number" min="2000" max="2100" step="1" class="is-hidden" />
+        </div>
+      </label>
+
+      <label>
+        Estado
+        <select id="pm-filter-estado">
+          <option value="all">Todos</option>
+          <option value="en_proceso">En proceso</option>
+          <option value="cerrado">Cerrado</option>
+        </select>
+      </label>
+
+      <label>
+        Programación
+        <select id="pm-filter-programacion">
+          <option value="all">Todos</option>
+          <option value="programado">Programado</option>
+          <option value="sin_programar">Sin programar</option>
+        </select>
+      </label>
+
+
+
+      <button id="pm-refresh" class="pm-secondary">Actualizar</button>
+      <button id="pm-see-grouped" class="pm-secondary">Revisar Facturas Agrupadas</button>
+      <button id="pm-selected-bills" class="pm-secondary" style="display:none;">Programar Facturas
+        Seleccionadas</button>
+      <span id="pm-selection-counter"></span>
+      </table>
+    </div>
+
+    <!-- ===== Loading ===== -->
+    <div id="pm-loading" class="pm-loading">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- ===== Table ===== -->
+    <div class="pm-table-wrap">
+      <table class="pm-table">
+        <thead>
+          <tr>
+            <th class="col-check"><input type="checkbox" id="pm-select-all" /></th>
+            <th class="col-id">#</th>
+            <th class="col-fecha">Fecha</th>
+            <th class="col-cliente">Cliente</th>
+            <th class="col-glosa">Glosa</th>
+            <th class="col-facturado">Facturado</th>
+            <th class="col-por-facturar">Por facturar</th>
+            <th class="col-monto-facturar">Monto a Facturar</th>
+            <th class="col-oc">OC</th>
+            <th class="col-auto">Auto</th>
+            <th class="col-emitir">Emitir el</th>
+            <th class="col-notificar">Notificar</th>
+            <th class="col-estado">Estado</th>
+          </tr>
+        </thead>
+        <tbody id="programador-masivo-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Requiere jQuery y tu objeto global `unaBase` ya cargados en tu app.
+    (function () {
+      if (window.unaBase && window.unaBase.toolbox && typeof window.unaBase.toolbox.init === "function") {
+        window.unaBase.toolbox.init();
+      }
+
+      const MONTH_LABELS = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+      const initialMonth = getCurrentMonthParam();
+      const initialYear = initialMonth.split("-")[0];
+
+      const state = {
+        rows: [],
+        filters: {
+          periodType: "month",
+          mes: initialMonth, // YYYY-MM (mes actual al iniciar)
+          year: initialYear,
+          estado: "all",
+          programacion: "all",
+          cliente: "",
+          clienteQuery: "",
+          clienteQueryRaw: ""
+
+        },
+        selected: new Set(),
+        clienteId: {},      // id => id cliente seleccionado
+        rowNotifyDirty: {}, // id => Email si usuario lo edito manualmente
+        rowDates: {},       // id => 'YYYY-MM-DD' (para el input)
+        rowNotify: {},      // id => email
+        rowGlosa: {},       // id => Glosa / Referencia
+        rowOcCliente: {},   // id => OC Cliente
+        montoFactura: {},
+        montoAFacturar: {}, // id => Monto A Facturar (editable por usuario)
+        auto: {},           // id => boolean (estado_programacion)
+        lockedNegocios: {}  // id => bloqueo de Negocios si están agrupados
+      };
+
+      const periodState = {
+        viewMode: state.filters.periodType,
+        currentYear: parseInt(state.filters.year, 10),
+        yearPageStart: parseInt(state.filters.year, 10) - 6,
+        isOpen: false
+      };
+
+      init();
+
+      function init() {
+        bindUI();
+        setupPeriodPicker();
+        updateMonthDisplay();
+        updateEstadoDisplay();
+        updateProgramacionDisplay();
+        fetchProgramableNegocios(); // mes actual por defecto
+
+        let _pmRefreshTimer = null;
+
+        $(document)
+          .off("pm:refreshRows")
+          .on("pm:refreshRows", function () {
+            clearTimeout(_pmRefreshTimer);
+            _pmRefreshTimer = setTimeout(function () {
+              fetchProgramableNegocios();
+            }, 150);
+          });
+      }
+
+      // Funciones para obtener ids filas seleccionadas
+      function idsSeleccionadas() {
+        return Array.from(state.selected);
+      }
+      function showFacturarSeleccionadasBtn() {
+        const ids = idsSeleccionadas();
+        const show = ids.length >= 2;
+        $("#pm-selected-bills").toggle(show);
+      }
+
+      function programarFacturasSeleccionadas() {
+        const selectedIds = idsSeleccionadas();
+        if (selectedIds.length < 2) {
+          toastr?.warning?.("Selecciona al menos 2 negocios.");
+          return;
+        }
+
+        const negocios = selectedIds
+          .map((rowId) => {
+            const row = state.rows.find(r => getRowId(r) === String(rowId));
+            return row ? String(getNegocioInternalId(row) || "") : "";
+          })
+          .filter(Boolean);
+
+        if (!negocios.length) {
+          toastr?.warning?.("No se encontraron negocios válidos en la selección.");
+          return;
+        }
+        unaBase.loadInto.dialog(
+          "/v3/views/negocios/facturas_agrupadas/dialog/setting_facturas.shtml?negocios=" + negocios.join("|"),
+          "Programar Facturas Agrupadas",
+          "x-large"
+        );
+      }
+
+      function revisarFacturasAgrupadas() {
+        unaBase.loadInto.dialog(
+          "/v3/views/negocios/facturas_agrupadas/dialog/grouped_bills.shtml?negocios=",
+          "Facturas Agrupadas",
+          "x-large"
+        );
+      }
+
+
+
+      /* ========================= UI bindings ========================= */
+      function bindUI() {
+        $("#pm-filter-mes").on("change", function () {
+          setMonthFilter(this.value, true);
+        });
+
+        // 
+        $("#pm-selected-bills")
+        .off("click.pm")
+        .on("click.pm", programarFacturasSeleccionadas);
+
+        $("#pm-filter-estado").on("change", function () {
+          setEstadoFilter(this.value, true);
+        });
+
+        // Refresh manual
+        $("#pm-refresh").on("click", fetchProgramableNegocios);
+
+        // Select all
+        $(".pm-table").on("change", "#pm-select-all", function () {
+          const checked = this.checked;
+          state.selected.clear();
+          const visibleRows = getVisibleRows();
+          
+          /* Obtiene negocios que no están agrupados */
+          const selectable = visibleRows.filter(r => !isNegocioLocked(String(r.id || "")));
+          selectable.map(getRowId).forEach(id => state.selected.add(id));
+          
+          $("#programador-masivo-table-body .row-select").prop("checked", checked);
+          updateSelectionCounter();
+          showFacturarSeleccionadasBtn();
+        });
+
+        // Traer todos grupos de facturas
+        $(document)
+        .off("click.pmSeeGrouped", "#pm-see-grouped")
+        .on("click.pmSeeGrouped", "#pm-see-grouped", function (e) {
+          e.preventDefault();
+          revisarFacturasAgrupadas();
+        });
+
+
+        // Filter rows if are programated or not or both
+        $("#pm-filter-estado").on("change", function () {
+          setEstadoFilter(this.value, true);
+        });
+
+        $("#pm-filter-programacion").on("change", function () {
+          setProgramacionFilter(this.value);
+        });
+
+        // Permite hacer click al id para ver el negocio
+        if (access._1) {
+          $("#programador-masivo-table-body").on("click", ".nv-cell, .nv-link", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const idnv =
+              $(this).data("idnv") ||
+              $(this).closest("tr").data("id");
+
+            if (!idnv) return;
+
+            const s = String(idnv);
+            debugger;
+            if (s) {
+              window.open(
+                "http://" + window.location.host + "/4DACTION/wbienvenidos#negocios/content.shtml?id=" + encodeURIComponent(s),
+                "_blank"
+              );
+            }
+          });
+        }
+
+
+
+        // Select individual row
+        $("#programador-masivo-table-body").on("change", ".row-select", function () {
+          const id = String($(this).data("id"));
+          if (this.checked) {
+            state.selected.add(id);
+          } else {
+            state.selected.delete(id);
+          }
+          updateSelectionCounter();
+          showFacturarSeleccionadasBtn();
+        });
+
+        // Glosa per row
+        $(".pm-table").on("change",".glosa-input", function () {
+          const $row = $(this).closest("tr");
+          const id = String($row.data("id"));
+
+          const value = ($(this).val() || "").trim();
+          state.rowGlosa[id] = value;
+
+          // Si estaba en auto y ahora la glosa quedó vacía → apagar auto
+          if (state.auto[id] && !value) {
+            state.auto[id] = false;
+            $row.find(".auto-toggle-input").prop("checked", false);
+            renderTable(state.rows);
+            sendRowUpdate(id);
+            return;
+          }
+
+          // Si sigue siendo válida, sólo actualizamos
+          sendRowUpdate(id);
+        });
+        
+        // detecta click en el OC Cliente, ya sea para crear o modificar.
+        $(".pm-table").on("click", ".oc-link", function (e) {
+          e.preventDefault();
+
+          const ocId = String($(this).data("ocid") || "").trim();
+          const negocio4Did = String($(this).data("negocio4did") || "").trim();
+          if (!negocio4Did) return;
+
+          let url = ocId;
+          if (ocId) {
+            // modificar existente
+            url =
+              "/v3/views/occlientes/content.shtml?id=" + encodeURIComponent(ocId) + "&neg=" + encodeURIComponent(negocio4Did);
+          } else {
+            // crear nueva
+            url =
+              "/v3/views/occlientes/content.shtml?neg=" + encodeURIComponent(negocio4Did);
+          }
+          _ocDialogOpen = true;
+          unaBase.loadInto.dialog(url, "OC. Cliente", "x-large");
+          debugger;
+          setTimeout(function () {
+            // toma el último dialog abierto
+            const $dlg = $(".ui-dialog-content:visible").last();
+            $dlg.one("dialogbeforeclose.pmOcRefresh", function () {
+              _ocDialogOpen = false;
+              scheduleNegocioRefresh();
+            });
+          }, 0);
+        });
+
+          // Email per row
+          $(".pm-table").on("change", ".notify-input", function () {
+            const $row = $(this).closest("tr");
+            const id = String($row.data("id"));
+
+            state.rowNotify[id] = ($(this).val() || "").trim();
+
+            state.rowNotifyDirty[id] = true;
+
+            if (state.auto[id] && !state.rowNotify[id]) {
+              state.auto[id] = false;
+              $row.find(".auto-toggle-input").prop("checked", false);
+              $row.find(".status-pill").text("Sin programación");
+  }
+
+  sendRowUpdate(id);
+          });
+
+          $(".pm-table").on("change", ".monto_a_facturar", function () {
+            const $row = $(this).closest("tr");
+            const id = String($row.data("id"));
+
+            let rawFromInput = ($(this).val() || "").trim();
+
+            let cleanedInput = rawFromInput.replace(/[^\d]/g, "");
+            let montoIngresado = cleanedInput ? parseInt(cleanedInput, 10) : 0;
+
+            // Monto a Facturar es la 7ma columna, por lo que se pone 6
+            let porFacturarStr = ($row.find("td").eq(6).text() || "").trim();
+            let cleanedPorFact = porFacturarStr.replace(/[^\d]/g, "");
+            let porFacturar = cleanedPorFact ? parseInt(cleanedPorFact, 10) : 0;
+
+            state.montoAFacturar[id] = montoIngresado;
+
+            if (montoIngresado > porFacturar) {
+              toastr.warning(
+                `El monto ingresado (${montoIngresado}) excede lo pendiente por facturar (${porFacturar}).`
+              );
+              $(this).val("");
+              this.dataset.raw = "";
+              state.montoAFacturar[id] = 0;
+              return;
+            }
+
+            if (!cleanedInput) {
+              this.dataset.raw = "";
+              $(this).val("");
+              state.montoAFacturar[id] = 0;
+            } else {
+              this.dataset.raw = montoIngresado;
+              $(this).val(formatCurrency(montoIngresado));
+            }
+
+            if (state.auto[id] && (!state.montoAFacturar[id] || state.montoAFacturar[id] <= 0)) {
+              state.auto[id] = false;
+              $row.find(".auto-toggle-input").prop("checked", false);
+              renderTable(state.rows);
+              sendRowUpdate(id);
+              return;
+            }
+
+            sendRowUpdate(id);
+          });
+
+        $(".pm-table").on("change", ".monto_facturar", function () {
+          const $row = $(this).closest("tr");
+          const id = String($row.data("id"));
+
+          // Valor ingresado (raw sin formatear)
+          const rawValue = this.dataset.raw || $(this).val();
+          const montoIngresado = unaBase.utilities.transformNumber(rawValue, "num");
+
+          // Obtener la columna "Por facturar" (8va celda: índice 7)
+          const porFacturarStr = $row.find("td").eq(7).text();
+          const porFacturar = unaBase.utilities.transformNumber(
+            porFacturarStr.replace(/[^0-9.,]/g, ""),
+            "num"
+          );
+          // Guardar el valor en el estado
+          state.montoFactura[id] = rawValue;
+
+          // Validación: No permitir exceder "por facturar"
+          if (montoIngresado > porFacturar) {
+            toastr.warning(`El monto ingresado (${montoIngresado}) excede lo pendiente por facturar (${porFacturar}).`);
+            $(this).val("");
+            this.dataset.raw = "";
+            return;
+          }
+
+          // Enviar actualización
+          sendRowUpdate(id);
+        });
+
+        // Toggle auto por fila
+        $(".pm-table").on("change", ".auto-toggle-input", function () {
+          const $row = $(this).closest("tr");
+          const id = String($row.data("id"));
+          if ((state.montoAFacturar[id]?.toString() === "") || (state.montoAFacturar[id] <= 0)) {
+            toastr.warning(`El por facturar no puede ser 0`);
+            this.checked = false;
+            return;
+          } else if (state.rowDates[id] === '') {
+            toastr.warning(`Por favor, añada una fecha`);
+            this.checked = false;
+            return;
+          }
+
+          let errores = [];
+          if ((state.rowOcCliente[id] === '') || (state.rowOcCliente[id] === '---------')) {
+            errores.push('No se ha añadido OC Cliente.');
+          }
+          if (state.rowNotify[id] === '') {
+            errores.push('No se ha añadido Correo Electrónico.');
+          }
+          const errorMsg = errores.join('<br>');
+          
+
+          const isAuto = !!this.checked;
+          if (isAuto){
+            alert(
+              "<span style='font-weight:bold;'>Hay campos incompletos:</span><br><br>" +
+              errorMsg +
+              "<br><br><span style='font-weight:bold;'>Por favor, recuerde completar los datos.</span>"
+            );
+          }
+          state.auto[id] = isAuto;
+
+          const $pill = $row.find(".status-pill");
+          $pill.text(isAuto ? "Programado (auto)" : "Sin programación");
+
+          sendRowUpdate(id);
+        });
+
+        // Fecha "emitir el" por fila
+        $(".pm-table").on("change", ".emit-date-input", function () {
+          const $row = $(this).closest("tr");
+          const id = String($row.data("id"));
+
+          state.rowDates[id] = (this.value || "").trim();
+
+          if (state.auto[id] && !state.rowDates[id]) {
+            state.auto[id] = false;
+            $row.find(".auto-toggle-input").prop("checked", false);
+            renderTable(state.rows);
+            sendRowUpdate(id);
+            return;
+          }
+
+          sendRowUpdate(id);
+        });
+
+        // ==== Filtro de cliente con TomSelect ====
+        const filtroClienteEl = document.getElementById('pm-filter-cliente');
+        if (filtroClienteEl) {
+          const tsFiltro = new TomSelect('#pm-filter-cliente', {
+            valueField: 'id',          // será el id de la empresa (cliente)
+            labelField: 'nombre',      // lo que se muestra: nombre | rut
+            searchField: ['nombre'],
+            preload: 'focus',
+            dropdownParent: 'body',
+            allowEmptyOption: true,
+            create: false,
+
+            onInitialize: function () {
+              this.clear(true);
+              this.control_input.placeholder = "Todos los clientes";
+            },
+
+            onType: function (str) {
+              setClienteQuery(str);
+            },
+
+            onChange: function (value) {
+              setClienteFilter(value || "");
+              this.setTextboxValue("");
+            },
+
+            load: function (query, callback) {
+              const params = buildRequestParams();
+              params.results = 500;            
+              params.q = query || "";               // texto a buscar (alias / nombre / etc.)
+
+              $.ajax({
+                url: "/4DACTION/_V3_getNegocio",
+                dataType: "json",
+                data: params,
+                success: function (response) {
+                  const rows = Array.isArray(response.rows) ? response.rows : [];
+                  const seen = new Set();
+                  const options = [];
+
+                  rows.forEach(row => {
+                    const empresa = row.empresa || {};
+                    const empresaId =
+                      empresa.id ||
+                      row.empresa_id ||
+                      row.cliente_id;
+
+                    if (!empresaId) return;
+                    if (seen.has(empresaId)) return;
+
+                    const base =
+                      (empresa.alias && empresa.alias.trim()) ||
+                      (empresa.razon_social && empresa.razon_social.trim()) ||
+                      (empresa.nombre && empresa.nombre.trim()) ||
+                      (row.cliente && row.cliente.trim()) ||
+                      "";
+                    const rutRaw = (empresa.rut || row.rutClient || "").trim();
+                    const hasName = !!base;
+                    const hasRut  = !!rutRaw;
+                    if (!hasName && !hasRut) return;
+                    let rutFmt = rutRaw;
+                    if (rutRaw && /^[0-9kK]+$/.test(rutRaw) && rutRaw.length > 1) {
+                      rutFmt = rutRaw.slice(0, -1) + "-" + rutRaw.slice(-1);
+                    }
+                    const label = hasName
+                      ? (rutFmt ? `${base} | ${rutFmt}` : base)
+                      : rutFmt;
+                    seen.add(empresaId);
+                    options.push({
+                      id: String(empresaId),   
+                      nombre: label
+                    });
+                  });
+
+                  callback(options);
+                },
+
+                error: function () {
+                  callback();
+                }
+              });
+            },
+
+            onChange: function (value) {
+              // value es el id del cliente (empresa.id)
+              setClienteFilter(value || "");
+            }
+          });
+        }
+
+
+
+      }
+
+      /* ========================= Rows Filter ========================= */
+      function getVisibleRows() {
+        let visible = state.rows.slice();
+
+        // Filtro por estado 
+        if (state.filters.programacion === "programado") {
+          visible = visible.filter(row => {
+            const id = getRowId(row);
+            return !!state.auto[id]; 
+          });
+        } else if (state.filters.programacion === "sin_programar") {
+          visible = visible.filter(row => {
+            const id = getRowId(row);
+            return !state.auto[id];     
+          });
+        }
+
+        // Filtro por cliente ID
+        const clienteFilterId = (state.filters.cliente || "").trim();
+        const clienteQuery = (state.filters.clienteQuery || "").trim();
+
+
+        if (clienteFilterId) {
+          visible = visible.filter((row) => String(row?.empresa?.id || "") === clienteFilterId);
+        } else if (clienteQuery) {
+          visible = visible.filter((row) => {
+            const nombre = (row?.empresa?.alias || row?.empresa?.razon_social || row?.empresa?.nombre || row?.cliente || "");
+            const rut = (row?.empresa?.rut || row?.rutClient || "");
+            const haystack = (nombre + " " + rut).toLowerCase();
+            return haystack.includes(clienteQuery);
+          });
+        }
+
+        return visible;
+      }
+
+      /* ========================= Period picker ========================= */
+      function setupPeriodPicker() {
+        const $display = $("#pm-period-display");
+        const $dropdown = $("#pm-period-dropdown");
+        const $mode = $("#pm-period-mode");
+
+        $display.on("click", function (event) {
+          event.stopPropagation();
+          if (periodState.isOpen) {
+            closePeriodDropdown();
+          } else {
+            openPeriodDropdown();
+          }
+        });
+
+        $mode.on("change", function () {
+          periodState.viewMode = this.value;
+          renderPeriodBody();
+        });
+
+        $dropdown.on("click", ".period-nav", function (event) {
+          event.preventDefault();
+          const dir = Number($(this).data("dir")) || 0;
+          if (periodState.viewMode === "month") {
+            periodState.currentYear += dir;
+          } else {
+            periodState.yearPageStart += dir * 12;
+          }
+          renderPeriodBody();
+        });
+
+        $(document).on("click", function (event) {
+          if (periodState.isOpen && !$(event.target).closest("#pm-period-picker").length) {
+            closePeriodDropdown();
+          }
+        });
+      }
+
+      function openPeriodDropdown() {
+        periodState.isOpen = true;
+        periodState.viewMode = state.filters.periodType || "month";
+        const referenceYear = parseInt(state.filters.year || (state.filters.mes ? state.filters.mes.split("-")[0] : new Date().getFullYear()), 10);
+        periodState.currentYear = Number.isFinite(referenceYear) ? referenceYear : new Date().getFullYear();
+        periodState.yearPageStart = periodState.currentYear - 6;
+        $("#pm-period-dropdown").addClass("is-open");
+        renderPeriodBody();
+      }
+
+      function closePeriodDropdown() {
+        periodState.isOpen = false;
+        $("#pm-period-dropdown").removeClass("is-open");
+      }
+
+      function renderPeriodDisplay() {
+        const $display = $("#pm-period-display");
+        let text = "Seleccionar";
+        if (state.filters.periodType === "year" && state.filters.year) {
+          text = state.filters.year;
+        } else if (state.filters.mes) {
+          text = formatMonthLabel(state.filters.mes);
+        }
+        $display.text(text);
+      }
+
+      function renderPeriodBody() {
+        const $mode = $("#pm-period-mode");
+        const $body = $("#pm-period-body");
+        const $subtitle = $("#pm-period-subtitle");
+        $mode.val(periodState.viewMode);
+        if (!Number.isFinite(periodState.currentYear)) {
+          periodState.currentYear = new Date().getFullYear();
+        }
+
+        if (periodState.viewMode === "year") {
+          $body.attr("class", "period-body is-year");
+          const selectedYear = Number(state.filters.year) || periodState.currentYear;
+          if (!Number.isFinite(periodState.yearPageStart)) {
+            periodState.yearPageStart = selectedYear - 6;
+          }
+          if (selectedYear < periodState.yearPageStart) {
+            periodState.yearPageStart = selectedYear - 6;
+          } else if (selectedYear >= periodState.yearPageStart + 12) {
+            periodState.yearPageStart = selectedYear - 11;
+          }
+          const start = periodState.yearPageStart;
+          const years = [];
+          for (let i = 0; i < 12; i++) {
+            years.push(start + i);
+          }
+          $subtitle.text(years[0] + " — " + years[years.length - 1]);
+          $body.empty();
+          years.forEach(function (year) {
+            const $btn = $("<button>")
+              .addClass("period-option")
+              .text(year)
+              .on("click", function (e) {
+                e.preventDefault();
+                setYearFilter(year, true);
+                closePeriodDropdown();
+              });
+            if (Number(state.filters.year) === year) {
+              $btn.addClass("is-active");
+            }
+            $body.append($btn);
+          });
+        } else {
+          $body.attr("class", "period-body is-month");
+          const selectedMonth = state.filters.periodType === "month" && state.filters.mes
+            ? parseInt(state.filters.mes.split("-")[1], 10)
+            : null;
+          const selectedYear = Number(state.filters.year);
+          $subtitle.text(periodState.currentYear);
+          $body.empty();
+          MONTH_LABELS.forEach(function (label, index) {
+            const monthIndex = index + 1;
+            const monthValue = String(monthIndex).padStart(2, "0");
+            const $btn = $("<button>")
+              .addClass("period-option")
+              .text(label)
+              .on("click", function (e) {
+                e.preventDefault();
+                setMonthFilter(periodState.currentYear + "-" + monthValue, true);
+                closePeriodDropdown();
+              });
+            if (
+              state.filters.periodType === "month" &&
+              selectedMonth === monthIndex &&
+              selectedYear === periodState.currentYear
+            ) {
+              $btn.addClass("is-active");
+            }
+            $body.append($btn);
+          });
+        }
+      }
+
+      /* ========================= Fetch ========================= */
+      function fetchProgramableNegocios() {
+        setLoading(true);
+        state.selected.clear();
+        $.ajax({
+          url: "/4DACTION/_V3_getNegocio",
+          dataType: "json",
+          data: buildRequestParams()
+        })
+          .done(function (response) {
+            const rows = Array.isArray(response.rows) ? response.rows : [];
+            let filteredRows = rows.filter(hasPendingBalanceToInvoice); // negocios con saldo
+            if (state.filters.periodType === "year" && state.filters.year) {
+              const expectedYear = String(state.filters.year);
+              filteredRows = filteredRows.filter(function (row) {
+                return extractRowYear(row) === expectedYear;
+              });
+            }
+
+            state.rows = filteredRows;
+
+            // Hidratar estado de programación desde el JSON
+            hydrateRowState(state.rows);
+
+            // limpiar selección inválida
+            const validIds = new Set(state.rows.map(getRowId));
+            state.selected = new Set(
+              Array.from(state.selected).filter((id) => validIds.has(id))
+            );
+
+            syncLocksFromGruposFacturacion(function () {
+              renderTable(state.rows);
+            });
+            finalizeLoading();
+          })
+          .fail(function () {
+            if (window.toastr && typeof window.toastr.error === "function") {
+              window.toastr.error("No fue posible cargar los negocios con saldo por facturar.");
+            }
+            renderTable([]);
+            finalizeLoading();
+          });
+      }
+
+      // Parámetros: sort por fecha_asignacion desc y filtro por mes actual en `fecha_asignacion`
+      function buildRequestParams() {
+        const p = {
+          page: 1,
+          results: 500, // más alto para traer todos los negocios del mes actual
+          q: "",
+          q2: "",
+          sort_by: "fecha_asignacion",
+          sort_order: "desc",
+          asignado_at_from: "",
+          asignado_at_to: "",
+          created_at_from: "",
+          created_at_to: "",
+          realizado_at_from: "",
+          realizado_at_to: "",
+          cerrado_at_from: "",
+          cerrado_at_to: "",
+          updated_at_from: "",
+          updated_at_to: "",
+          estado_en_proceso: true,
+          estado_cerrado: true
+        };
+
+        if (state.filters.periodType === "year" && state.filters.year) {
+          const year = String(state.filters.year).trim();
+          p.asignado_at_from = "";
+          p.asignado_at_to = "";
+          p.fecha_asignacion = "";
+          p.show_all_months = true; 
+        } else if (state.filters.mes && state.filters.mes.trim() !== "") {
+          // ejemplo: "2025-10"
+          p.fecha_asignacion = state.filters.mes.trim();
+        }
+
+        if (state.filters.estado === "en_proceso") {
+          p.estado_en_proceso = true;
+          p.estado_cerrado = false;
+        } else if (state.filters.estado === "cerrado") {
+          p.estado_en_proceso = false;
+          p.estado_cerrado = true;
+        } else {
+          p.estado_en_proceso = true;
+          p.estado_cerrado = true;
+        }
+
+        return p;
+      }
+
+      /* ========================= Render ========================= */
+      function renderTable(rows) {
+        const $body = $("#programador-masivo-table-body");
+        $body.empty();
+
+        const visibleRows = getVisibleRows();
+
+        if (!visibleRows.length) {
+          $body.append(
+            '<tr class="pm-empty"><td colspan="13">No hay negocios con saldo pendiente por facturar.</td></tr>'
+          );
+          updateSelectionCounter();
+          return;
+        }
+
+        visibleRows.sort((a, b) => getRowId(a).localeCompare(getRowId(b))).forEach((row) => { $body.append(renderRow(row)); });
+
+          updateSelectionCounter();
+          initClienteTomSelect();
+      }
+
+        function hydrateRowState(rows) {
+          state.rowDates = {};
+          state.rowNotify = {};
+          state.montoFactura = {};
+          state.montoAFacturar = {};
+          state.auto = {};
+          state.rowGlosa = {};
+          state.rowOcCliente = {};
+          state.clienteId = {};
+          
+
+          rows.forEach(function (row) {
+            const id = getRowId(row);
+            if (!id) return;
+            
+            const estadoProgramacion = !!row.estado_programacion;
+            const correoProgramacion = (row.correo_programacion || "").trim();
+            const fechaProgramacionRaw = row.fecha_programacion || "";
+            const montoFacturacion = row.monto_facturacion || "";
+            const glosa = row.glosa || row.referencia || row.text || "";
+            const ocCliente = row.oc_cliente_programacion || row.nro_oc_cliente || "";
+            const clienteId = row.empresa.id || null;
+            const montoAuto = row.monto_facturacion || 0;
+
+            state.auto[id] = estadoProgramacion;
+            state.rowNotifyDirty[id] = false;
+            state.rowNotify[id] = correoProgramacion;
+            state.rowDates[id] = toInputDate(fechaProgramacionRaw);
+            state.montoFactura[id] = montoFacturacion;
+            state.rowGlosa[id] = glosa;
+            state.rowOcCliente[id] = ocCliente;
+            state.clienteId[id] = clienteId;
+            state.montoAFacturar[id] = montoAuto;
+          });
+      }
+
+      function sendRowUpdate(id) {
+        if (isRowLockedByFolio(id)) {
+          console.warn("[Programador masivo] Fila bloqueada por grupo de facturación");
+          return;
+        }
+        if (!id) return;
+        const payload = buildRowPayload(id);
+        if (!payload) {
+          console.warn("[Programador masivo] No se pudo construir payload para el id:", id);
+          return;
+        }
+
+          function getEncodedSid() {
+            if (
+              typeof window !== "undefined" &&
+              window.unaBase &&
+              window.unaBase.sid
+            ) {
+              const encoded = window.unaBase.sid.encoded;
+              return (typeof encoded === "function") ? encoded() : (encoded || null);
+            }
+            return null;
+          }
+
+          function getHostnameOrigin() {
+            if (typeof window === "undefined" || !window.location) {
+              console.warn("[Programador masivo] window.location no está disponible.");
+              return null;
+            }
+            return window.location.origin;
+          }
+
+
+          const sid = getEncodedSid();
+          if (!sid) {
+            console.warn("[Programador masivo] No se pudo obtener SID para guardar la programación.");
+            toastr?.error?.("No es posible guardar porque falta la sesión (SID).");
+            return;
+          }
+
+          const hostname = getHostnameOrigin();
+          debugger;
+          console.log("hostname: ")
+          if (!hostname) {
+          
+            console.warn("[Programador masivo] No se pudo resolver hostname para el guardado.");
+            toastr?.error?.("No es posible guardar porque falta el hostname.");
+            return;
+          }
+
+          const requestBody = {
+            estado_programacion: Boolean(payload.estado_programacion),
+            glosa: payload.glosa || "",
+            cliente_id: payload.cliente_id || 1,
+            monto_a_facturar: payload.monto_a_facturar || 0,
+            fecha_programacion: payload.fecha_programacion || "00-00-00",
+            negocio_id: payload.negocio_id || payload.folio || null,
+          };
+          const requestUrl =
+            hostname + "/4DACTION/" +
+            "?sid=" +
+            encodeURIComponent(sid) +
+            "&hostname=" +
+            encodeURIComponent(hostname);
+        
+          if (Object.prototype.hasOwnProperty.call(payload, "correo_programacion")) {
+          requestBody.correo_programacion = payload.correo_programacion;
+          }
+
+        $.ajax({
+          url: "/4DACTION/_MASIVO_setNegocio",
+          method: "POST",
+          data: requestBody,
+          dataType: "json"
+        })
+          .done(function (response) {
+            console.debug("[Programador masivo] Programación guardada", payload, response);
+            if (window.toastr && typeof window.toastr.success === "function") {
+              window.toastr.success("Se actualizó correctamente.");
+            }
+          })
+          .fail(function (jqXHR) {
+            const message =
+              (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.message) ||
+              (jqXHR && jqXHR.responseText) ||
+              "No fue posible guardar la programación.";
+            console.error("[Programador masivo] Error guardando programación", message);
+            if (window.toastr && typeof window.toastr.error === "function") {
+              window.toastr.error(message);
+            }
+          });
+      }
+
+      function buildRowPayload(id) {
+        const row = state.rows.find(function (item) {
+          return getRowId(item) === id;
+        });
+        if (!row) return null;
+          const autoFlag = Object.prototype.hasOwnProperty.call(state.auto, id)
+            ? !!state.auto[id]
+            : false;
+          const emitirValue = state.rowDates[id] || "";
+          const notifyValue = state.rowNotify[id] || "";
+          const glosaValue = state.rowGlosa[id]  || "";
+          const rowClienteId = (state.clienteId && state.clienteId[id]) || row.empresa_id || (row.empresa && row.empresa.id) || row.cliente_id || null;
+          const montoAuto = (state.montoAFacturar && typeof state.montoAFacturar[id] !== "undefined") ? state.montoAFacturar[id] : 0;
+          const payload = {
+            estado_programacion: autoFlag,
+            glosa: glosaValue,
+            fecha_programacion: normalizeProgramacionDate(emitirValue),
+            negocio_id: getNegocioInternalId(row),
+            cliente_id: rowClienteId,
+            monto_a_facturar: montoAuto,
+            folio: id,
+          };
+
+          // solo si el usuario editó manualmente
+          if (state.rowNotifyDirty[id]) {
+            payload.correo_programacion = (state.rowNotify[id] || "").trim();
+          }
+
+          return payload;
+        }
+
+      const renderRow = (row) => {
+        const id = getRowId(row);
+        const negocio4Did = row.id;
+
+        const locked = isNegocioLocked(String(negocio4Did));
+        const lockGroupId = locked ? getLockedGroupId(String(negocio4Did)) : "";
+        const dis = locked ? "disabled" : "";
+        const rowClass = locked ? "data-row is-locked" : "data-row";
+
+        const isSelected = state.selected.has(id);
+
+        const fecha = formatDate(row.fecha_asignacion_ || row.fecha_asignacion);
+        const glosa = row.text || "";
+        const ocTipoCliente = row.tipo_oc_cliente || "";
+        const facturado = Number(row.total_facturado || 0);
+        const porFacturar = Number(row.saldo_por_facturar || 0);
+        const montoAFacturar = (state.montoAFacturar && typeof state.montoAFacturar[id] !== "undefined") ? state.montoAFacturar[id] : Number(row.monto_a_facturar || 0);
+        const porJustificar = Number(row.por_justificar || 0);
+        const ocNumsRaw = row.nro_oc_cliente || row.oc_cliente || "---------";
+        const ocIdsRaw  = row.id_oc_cliente || "";
+
+        const nums = splitSlashList(ocNumsRaw);
+        const ids  = splitSlashList(ocIdsRaw);      
+
+        let ocHtml = "";
+        if (!nums.length) {
+          // no hay OCs -> link para crear
+          ocHtml =
+            '<span class="oc-link" data-ocid="" data-negocio4did="' + escapeHtml(String(negocio4Did)) + '">Crear</span>';
+        } else {
+          ocHtml = nums.map((n, i) => {
+            const ocId = ids[i] || "";
+            return (
+              '<span class="oc-link" ' +
+              'data-ocid="' + escapeHtml(String(ocId)) + '" ' +
+              'data-negocio4did="' + escapeHtml(String(negocio4Did)) + '">' +
+              escapeHtml(n) +
+              '</span>'
+            );
+          }).join(' <span class="muted">/</span> ');
+        }
+
+
+        const notify = state.rowNotify[id] || "";
+        const emitDate = state.rowDates[id] || "";
+        const autoChecked = !!state.auto[id];
+        const statusLabel = autoChecked ? "Programado (auto)" : "Sin programación";
+
+        const checkboxAttr = isSelected ? "checked" : "";
+        const autoAttr = autoChecked ? "checked" : "";
+        const glosaAMostrar = (state.rowGlosa && Object.prototype.hasOwnProperty.call(state.rowGlosa, id)) ? state.rowGlosa[id] : (row.glosa || row.referencia || row.text || "");
+
+        // min = hoy
+        const today = new Date();
+        const minDate = today.toISOString().slice(0, 10);
+
+          return (
+            '<tr class=' + rowClass + ' data-id="' +
+            id +
+            '">' +
+            '<td class="w-checkbox"><input type="checkbox" class="row-select" data-id="' + id + '"' +
+            checkboxAttr + (locked ? " disabled" : "") +
+            " /></td>" +
+            '<td class="nv-cell" data-idnv="' + escapeHtml(negocio4Did) + '">' +
+              '<span class="nv-link" data-idnv="' + escapeHtml(negocio4Did) + '">' + escapeHtml(id) + '</span>' +
+            '</td>' +
+            "<td class='fecha-Negocio'>" +
+            (fecha || "<span class='muted'>—</span>") +
+            "</td>" +
+            "<td>" +
+            renderClienteCell(row, locked) +
+            "</td>" +
+            editableGlosaCell(glosaAMostrar, locked) +
+            '<td class="currency' + (locked ? ' is-locked-cell' : '') + '">' + 
+              formatCurrency(facturado) +
+            '</td>' +
+            '<td class="currency">' +
+            formatCurrency(porFacturar) +
+            "</td>" +
+            '<td class="currency" style="text-align:center;">' +
+            editableMontoCell(montoAFacturar) +
+            "</td>" +
+            '<td class="oc-cell">' +
+              ocHtml +
+            '</td>' +
+            '<td class="auto-toggle"><label class="switch"><input type="checkbox" class="auto-toggle-input"' +
+            autoAttr + (locked ? " disabled" : "") +
+            '><span class="slider"></span></label></td>' +
+            '<td class="date-cell"><input type="date" class="emit-date-input" value="' +
+            emitDate + '" min="' + minDate + '"' + (locked ? " disabled" : "") + '></td>' +
+            '<td class="notify-cell">' +
+            '<input type="email" class="notify-input" placeholder="correo@cliente" value="' +
+            escapeHtml(notify) + '"' + (locked ? ' disabled' : '') + '>' +
+            '</td>' +
+            '<td><span class="status-pill">' +
+            statusLabel +
+            "</span></td>" +
+            "</tr>"
+          );
+        }
+
+      /* ========================= Helpers ========================= */
+      function hasPendingBalanceToInvoice(row) {
+        const value = Number(row && row.saldo_por_facturar || 0);
+        return value > 0;
+      }
+
+      function getNegocioInternalId(row) {
+        if (!row) return "";
+        return (
+          row.id_negocio ||
+          row.negocio_id ||
+          row.idNegocio ||
+          row.id ||
+          row.folio ||
+          row.folio_negocio ||
+          ""
+        );
+      }
+
+      // Retorna valores separados por " / " como lista
+      function splitSlashList(v) {
+        const s = String(v || "").trim();
+        if (!s || s === "---------" || s === "----") return [];
+        return s.split("/").map(x => x.trim()).filter(Boolean);
+      }
+
+
+      function initClienteTomSelect() {
+        $(".cliente-select").each(function () {
+          if (this.tomselect) return;
+
+          const initialAlias = this.dataset.initialAlias || "";
+          const initialId = this.dataset.initialId || "";
+          const initialRut = this.dataset.initialRut || "";
+          const initialEmail = this.dataset.initialEmail || "";
+
+
+          const selectEl = this;
+
+          const ts = new TomSelect(selectEl, {
+            dropdownParent: 'body',
+            valueField: "id",
+            labelField: "nombre",
+            searchField: ["nombre"],
+            preload: false,          
+
+            shouldLoad: () => true,
+
+            load: function (query, callback) {
+              const self = this;
+
+              $.ajax({
+                url: "/4DACTION/_V3_getContactos",
+                dataType: "json",
+                data: {
+                  q: query || "",
+                  isClient: 1,
+                },
+                success: function (response) {
+                  const rows = Array.isArray(response.rows) ? response.rows : [];
+
+                  const options = rows
+                    .filter(r => String(r.tipo_empresa || "").trim().toUpperCase() === "CLIENTE")
+                    .filter(r => {
+                      const hasName =
+                        (r.alias && r.alias.trim()) ||
+                        (r.razon && r.razon.trim()) ||
+                        (r.nombre_completo && r.nombre_completo.trim());
+                      const hasRut = r.rut && r.rut.trim();
+                      return !!(hasName || hasRut);
+                    })
+                    .map(r => {
+                      const base =
+                        (r.alias && r.alias.trim()) ||
+                        (r.razon && r.razon.trim()) ||
+                        (r.nombre_completo && r.nombre_completo.trim());
+                      return {
+                        id: String(r.id),
+                        nombre: base ? (r.rut ? `${base} | ${r.rut}` : base) : 'Sin nombre | Sin RUT',
+                        email: (r.email || "").trim()
+                      };
+                    });
+
+                  callback(options);
+
+                  const current = self.getValue();
+                  if (current) {
+                    const fresh = options.find(o => o.id === String(current));
+                    if (fresh) {
+                      self.updateOption(String(current), fresh);
+                      self.refreshOptions(false);
+                    }
+                  }
+                },
+                error: function () {
+                  callback();
+                }
+              });
+            },
+
+            onInitialize: function () {
+              if (selectEl.disabled || selectEl.dataset.locked === "1") {
+                this.disable();
+                this.wrapper.classList.add("disabled");
+              }
+              if (initialId) {
+                const base = initialAlias.trim();
+                const label = base
+                  ? (initialRut ? `${base} | ${initialRut}` : base)
+                  : (initialRut || 'Sin nombre | Sin RUT');
+
+                this.addOption({ id: String(initialId), nombre: label, email: "" });
+                this.setValue(String(initialId), true);
+              }
+              this.wrapper.classList.remove('input-hidden');
+              setTimeout(() => this.blur(), 0);
+            },
+
+            onDropdownOpen: function () {
+              if (this.isDisabled || selectEl.disabled) return;
+              if (typeof this.clearCache === "function") this.clearCache();
+
+              const current = this.getValue();
+              const keep = current ? this.options[String(current)] : null;
+
+              this.clearOptions(); // borra todas las opciones del dropdown
+
+              if (keep) this.addOption(keep);
+
+              // Fuerza fetch en vacío para que traiga email desde el backend (actualizado)
+              this.load("", () => {
+                this.refreshOptions(false);
+                this.open();
+              });
+            },
+
+            onChange: function (value) {
+              const rowId = String($(selectEl).closest("tr").data("id"));
+              const v = String(value || "");
+
+              state.clienteId[rowId] = v;
+
+              const opt = v ? this.options[v] : null;
+              const defaultEmail = (opt && opt.email) ? String(opt.email).trim() : "";
+
+              // Mostrar email según cliente (sin guardar)
+              if (!v) {
+                state.rowNotify[rowId] = "";
+                $(selectEl).closest("tr").find(".notify-input").val("");
+              } else {
+                state.rowNotify[rowId] = defaultEmail;
+                $(selectEl).closest("tr").find(".notify-input").val(defaultEmail);
+              }
+
+              state.rowNotifyDirty[rowId] = false;
+
+              if (state.auto[rowId] && !v) {
+                state.auto[rowId] = false;
+                const $tr = $(selectEl).closest("tr");
+                $tr.find(".auto-toggle-input").prop("checked", false);
+                $tr.find(".status-pill").text("Sin programación");
+              }
+
+              sendRowUpdate(rowId);
+            },
+          });
+
+
+          ts.wrapper.style.display = "block";
+        });
+      }
+
+
+
+      function getClienteNombre(row) {
+        if (!row) return "Cliente sin nombre";
+        if (row.empresa) {
+          if (row.empresa.alias) return row.empresa.alias;
+          if (row.empresa.nombre) return row.empresa.nombre;
+          if (row.empresa.razon_social) return row.empresa.razon_social;
+        }
+        if (row.cliente) return row.cliente;
+        return "Cliente sin nombre";
+      }
+
+      function extractRowYear(row) {
+        if (!row) return "";
+        if (row.fecha_asignacion) {
+          const match = String(row.fecha_asignacion).match(/^(\d{4})/);
+          if (match) return match[1];
+        }
+        if (row.fecha_asignacion_) {
+          const parts = String(row.fecha_asignacion_).split("-");
+          if (parts.length === 3) {
+            return parts[2];
+          }
+        }
+        return "";
+      }
+
+      function getRowId(row) {
+        return String(row.folio || row.id || "");
+      }
+
+      function formatCurrency(n) {
+        const v = Number(n) || 0;
+        if (window.unaBase &&
+          window.unaBase.utilities &&
+          typeof window.unaBase.utilities.transformNumber === "function") {
+          return "$ " + window.unaBase.utilities.transformNumber(v, "int");
+        }
+        return "$ " + v.toLocaleString("es-CL");
+      }
+
+      function formatRutFromClient(rut) {
+        if (!rut) return "";
+        const s = String(rut).replace(/\D/g, ""); // por si acaso vienen cosas raras
+        if (s.length <= 1) return s;
+        const cuerpo = s.slice(0, -1);
+        const dv = s.slice(-1);
+        return cuerpo + "-" + dv;     // ejemplo: "111111111" -> "11111111-1"
+      }
+
+      // funciones falsas para evitar errores de funciones de la carpeta views/occlientes/list.shtml
+      (function () {
+        if (typeof window.refreshOcc === "function") return;
+        window.refreshOcc = function () {};
+        window.loadOcc = function () {};
+      })();
+
+      // Permite actualizar la fila que donde se modifica OC Cliente. 
+      let _ocDialogOpen = false;
+      let _ocRefreshTimer = null;
+      function scheduleNegocioRefresh() {
+        clearTimeout(_ocRefreshTimer);
+        _ocRefreshTimer = setTimeout(function () {
+          fetchProgramableNegocios();
+        }, 200);
+      }
+      // Si se guarda una OC desde el dialog (toolbox -> _V3_setOcc), se refresca
+      $(document).on("ajaxSuccess.pmOcRefresh", function (_e, _xhr, settings) {
+        if (!_ocDialogOpen) return;
+
+        const u = (settings && settings.url) ? String(settings.url) : "";
+        if (u.includes("_V3_setOcc")) {
+          scheduleNegocioRefresh();
+        }
+      });
+
+
+      function formatDate(v) {
+        if (!v || v === "00-00-0000" || v === "00-00-00") return "—";
+        return v;
+      }
+
+      function escapeHtml(s) {
+        return String(s || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function editableGlosaCell(glosa, locked) {
+        const safe = escapeHtml(glosa);
+        return (
+          '<td>' +
+            '<input type="text" class="glosa-input" value="' + safe + '"' +
+              (locked ? ' disabled' : '') +
+            '>' +
+          '</td>'
+        );
+      }
+      function editableMontoCell(porFacturar) {
+        // Valor actual que el usuario haya editado antes (si existe en el estado)
+        const rawValue = state.montoFactura && state.montoFactura[id]
+          ? state.montoAFacturar
+          : porFacturar;
+
+        const safeFormatted = escapeHtml(formatCurrency(rawValue));
+
+        return (
+          '<input ' +
+            'type="text" ' +
+            'class="monto_a_facturar" ' +
+            'value="' + safeFormatted + '" ' +
+            'data-raw="' + rawValue + '"' +
+            'style="text-align:right; max-width: 70%;"' +
+          '>'  
+        );
+      }
+
+      function renderClienteCell(row, locked) {
+        const alias =
+          (row.empresa && row.empresa.alias) ||
+          (row.empresa && row.empresa.nombre) ||
+          (row.empresa && row.empresa.razon_social) ||
+          row.cliente ||
+          "Cliente sin nombre";
+
+        const empresaId = row.empresa.id  || "";
+        const rutRaw = row.rutClient || "";
+        const rutFormatted = formatRutFromClient(rutRaw);
+        const emailIni = (row.empresa && row.correo_programacion) ? row.correo_programacion : "";
+
+        return (
+          '<select ' +
+          'class="cliente-select" ' +
+          (locked ? 'disabled ' : '') +
+          'data-locked="' + (locked ? "1" : "0") + '" ' +
+          'data-initial-alias="' + escapeHtml(alias) + '" ' +
+          'data-initial-id="' + escapeHtml(String(empresaId)) + '" ' +
+          'data-initial-rut="' + escapeHtml(String(rutFormatted)) + '" ' +
+          'data-initial-email="' + escapeHtml(String(emailIni)) + '"' +
+          '></select>'
+        );
+      }
+      
+      // Filtros por nombres de clientes.
+      function setClienteQuery(q) {
+        const raw = String(q || "");
+        state.filters.clienteQueryRaw = raw;
+        state.filters.clienteQuery = raw.trim().toLowerCase();
+        if (!state.filters.cliente) renderTable(state.rows);
+      }
+      function setClienteFilter(value) {
+        state.filters.cliente = String(value || "").trim();
+        state.filters.clienteQuery = ""; 
+        renderTable(state.rows);
+      }
+
+
+
+      function updateSelectionCounter() {
+        const total = state.selected.size;
+        $("#pm-selection-counter").text(total ? total + " seleccionados" : "");
+        setHeaderCheckboxState(state.rows.length);
+
+        const visibleRows = getVisibleRows();
+        setHeaderCheckboxState(visibleRows.length);
+      }
+
+      function setHeaderCheckboxState(totalRows) {
+        const checkbox = document.getElementById("pm-select-all");
+        if (!checkbox) return;
+        if (!totalRows) {
+          checkbox.checked = false;
+          checkbox.indeterminate = false;
+          return;
+        }
+        const selectedCount = state.selected.size;
+        checkbox.checked = selectedCount === totalRows;
+        checkbox.indeterminate = selectedCount > 0 && selectedCount < totalRows;
+      }
+
+      function setLoading(flag) {
+        $("#pm-loading").toggleClass("visible", !!flag);
+      }
+
+      function finalizeLoading() {
+        setLoading(false);
+        if (window.unaBase && window.unaBase.ui && typeof window.unaBase.ui.unblock === "function") {
+          window.unaBase.ui.unblock();
+        }
+        if (typeof $(".loading, #loading").hide === "function") {
+          $(".loading, #loading").hide();
+        }
+      }
+
+      function getCurrentMonthParam() {
+        const now = new Date();
+        const m = String(now.getMonth() + 1).padStart(2, "0");
+        return now.getFullYear() + "-" + m;
+      }
+
+      function setMonthFilter(value, triggerFetch) {
+        const normalized = value ? String(value).slice(0, 7) : "";
+        state.filters.periodType = "month";
+        state.filters.mes = normalized;
+        if (normalized) {
+          state.filters.year = normalized.split("-")[0];
+          periodState.currentYear = Number(state.filters.year);
+        }
+        periodState.viewMode = "month";
+        updateMonthDisplay();
+        if (triggerFetch) fetchProgramableNegocios();
+      }
+
+      function setYearFilter(year, triggerFetch) {
+        const normalizedYear = Number(year);
+        if (!Number.isFinite(normalizedYear)) return;
+        state.filters.periodType = "year";
+        state.filters.year = String(normalizedYear);
+        state.filters.mes = "";
+        periodState.currentYear = normalizedYear;
+        periodState.yearPageStart = normalizedYear - 6;
+        periodState.viewMode = "year";
+        updateMonthDisplay();
+        if (triggerFetch) fetchProgramableNegocios();
+      }
+
+      function setEstadoFilter(value, triggerFetch) {
+        state.filters.estado = value || "all";
+        updateEstadoDisplay();
+        if (triggerFetch) fetchProgramableNegocios();
+      }
+
+      function updateMonthDisplay() {
+        $("#pm-filter-mes").val(state.filters.mes || "");
+        $("#pm-filter-year").val(state.filters.year || "");
+        renderPeriodDisplay();
+      }
+
+      function updateEstadoDisplay() {
+        $("#pm-filter-estado").val(state.filters.estado || "all");
+      }
+
+      function setProgramacionFilter(value) {
+        state.filters.programacion = value || "all";
+        updateProgramacionDisplay();
+        renderTable(state.rows);
+      }
+
+      function setClienteFilter(value) {
+        state.filters.cliente = String(value || "").trim();
+        renderTable(state.rows);
+      }
+
+
+      function updateProgramacionDisplay() {
+        $("#pm-filter-programacion").val(state.filters.programacion || "all");
+      }
+
+
+      function formatMonthLabel(value) {
+        if (!value || value.length < 7) return value;
+        const parts = value.split("-");
+        const year = parts[0];
+        const monthIndex = Number(parts[1]) - 1;
+        const label = MONTH_LABELS[monthIndex] || parts[1];
+        return label + " " + year;
+      }
+
+      // Convierte de input date (YYYY-MM-DD) a formato 4D (DD-MM-YYYY)
+      function normalizeProgramacionDate(value) {
+        if (!value) return "00-00-00";
+        const str = String(value).slice(0, 10);
+        if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
+          const parts = str.split("-");
+          return parts[2] + "-" + parts[1] + "-" + parts[0];
+        }
+        if (/^\d{2}-\d{2}-\d{4}$/.test(str)) {
+          return str;
+        }
+        return "00-00-00";
+      }
+
+      // Convierte de formato 4D (DD-MM-YYYY / 00-00-00) o ISO a formato input date (YYYY-MM-DD)
+      function toInputDate(value) {
+        if (!value) return "";
+        const str = String(value).trim();
+        if (str === "00-00-00" || str === "00-00-0000") return "";
+        if (/^\d{4}-\d{2}-\d{2}/.test(str)) {
+          return str.slice(0, 10);
+        }
+        if (/^\d{2}-\d{2}-\d{4}$/.test(str)) {
+          const parts = str.split("-");
+          return parts[2] + "-" + parts[1] + "-" + parts[0];
+        }
+        return "";
+      }
+
+      /* Deshabilitar filas por Agrupacion */
+      function splitPipe(v) {
+        return String(v || "").split("|").map(s => s.trim()).filter(Boolean);
+      }
+
+      function syncLocksFromGruposFacturacion(done) {
+        $.ajax({
+          url: "/4DACTION/_MASIVO_getGruposFacturacion",
+          dataType: "json"
+        })
+          .done(function (data) {
+            const grupos = (data && (data.rows || data.grupo || [])) || [];
+            const map = {};
+
+            grupos.forEach(g => {
+              const gid = String(g.id_grupo || "").trim();
+              splitPipe(g.id_negocios_programacion).forEach(idNeg => {
+                map[String(idNeg)] = gid;
+              });
+            });
+
+            state.lockedNegocios = map;
+            if (typeof done === "function") done();
+          })
+          .fail(function () {
+            state.lockedNegocios = {};
+            if (typeof done === "function") done();
+          });
+      }
+
+      function isNegocioLocked(negocio4Did) {
+        return !!state.lockedNegocios[String(negocio4Did)];
+      }
+
+      function getLockedGroupId(negocio4Did) {
+        return state.lockedNegocios[String(negocio4Did)] || "";
+      }
+
+      function isRowLockedByFolio(folio) {
+        const row = state.rows.find(r => getRowId(r) === String(folio));
+        const negocioId = row ? String(row.id || "") : "";
+        return negocioId ? isNegocioLocked(negocioId) : false;
+      }
+
+    })();
+  </script>
+</body>
+
+</html>

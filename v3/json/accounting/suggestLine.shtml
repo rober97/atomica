@@ -1,0 +1,14 @@
+{
+	"details": [
+	<!--#4DLOOP aKey -->
+	  {
+		"llave_nv": "<!--#4DHTML _V3_escapeString(aTopLlaveNV{aKey})-->",
+		"nombre": "<!--#4DHTML _V3_escapeString(aTopNombreNV{aKey})-->",
+		"veces": <!--#4DHTML aTopVeces{aKey}-->,
+		"total": <!--#4DHTML aTopTotal{aKey}-->,
+		"ultima_fecha": "<!--#4DHTML aTopUltFecha{aKey}-->"
+	  }<!--#4DIF NOT(aKey{aKey} = aKey{Size of array(aKey)})-->,<!--#4DENDIF-->
+	<!--#4DENDLOOP-->
+	]
+  }
+  

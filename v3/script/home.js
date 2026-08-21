@@ -659,7 +659,7 @@ $(document).ready(function () {
 		},
 		text: false
 	});
-	$('html > body.menu > header > button.intercom-btn').button({
+	$('html > body.menu > header > button.chatwoot-btn').button({
 		icons: {
 			primary: 'ui-icon-comment'
 		},
@@ -709,7 +709,7 @@ $(document).ready(function () {
 			});
 		});
 	});
-	$('#icon-intercom').click(function () {
+	$('#icon-chatwoot').click(function () {
 		if (window.$chatwoot) window.$chatwoot.toggle();
 	});
 	$('#icon-notifications').click(function () {

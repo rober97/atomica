@@ -1608,7 +1608,11 @@
 	</body>
 
 
-	<script  src="https://statics-v3.s3.amazonaws.com/js/plugins/statics.js"></script>
+	<script  src="/v3/script/pluginsBack.js?<!--#4DTEXT _V3_version-->"></script>
+	<!-- Reemplaza al bundle externo https://statics-v3.s3.amazonaws.com/js/plugins/statics.js,
+	     que era una copia publicada del intercom() original y quedo desactualizada frente a
+	     este archivo del repo (no se estaba sirviendo pluginsBack.js en ningun lado). Si alguien
+	     mas apunta a ese bundle S3, hay que actualizarlo o borrarlo tambien. -->
 	<!-- https://statics-v3.s3.amazonaws.com/js/plugins/plugins.js -->
 	<script type="text/javascript">
 		$('.unblock-menu').click(function(){
